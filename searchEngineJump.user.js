@@ -1263,7 +1263,7 @@
           ">Automatic</option>" +
           "</select>" +
           "</span> " +
-          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>open in：" +
+          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>Open in：" +
           "<select id='iqxin-globalNewtab'>" +
           "<option value='globalDef'>current page</option>" +
           "<option value='globalNewtab'" +
