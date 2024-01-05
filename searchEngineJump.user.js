@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           test 搜索引擎快捷跳转+
+// @name           Test
 // @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改)
 // @contributor    MUTED64
 // @description    Fork版本搜索引擎跳转脚本，优化一些使用体验
@@ -149,18 +149,18 @@
       transtion: true,
       selectSearch: true,
       engineDetails: [
-        ["网页", "web", true],
-        ["翻译", "translate", true],
-        ["知识", "knowledge", true],
-        ["图片", "image", true],
-        ["视频", "video", true],
-        ["音乐", "music", true],
-        ["学术", "scholar", false],
-        ["社交", "sociality", true],
-        ["购物", "shopping", true],
-        ["下载", "download", false],
-        ["新闻", "news", false],
-        ["常用", "mine", false],
+        ["Search", "web", true],
+        ["Translate", "translate", true],
+        ["Social media", "sociality", true],
+        ["Knowledge", "knowledge", true],
+        ["Image", "image", true],
+        ["Video", "video", true],
+        ["Music", "music", true],
+        ["Scholar", "scholar", false],
+        ["Shopping", "shopping", true],
+        ["Download", "download", false],
+        ["News", "news", false],
+        ["Mine", "mine", false],
       ],
       engineList: engineList,
     };
@@ -708,9 +708,9 @@
       #initEngines() {
         const self = this;
         this.engineList.engineCategories.forEach(function (item) {
-          // console.log(item);  // 搜索菜单   ["网页", "web", true]
+          // console.log(item);  // 搜索菜单   ["search", "web", true]
           const category = item[1]; // "web"
-          const cName = item[0]; // "网页"
+          const cName = item[0]; // "search"
           let engines = [];
 
           self.engineList[category].forEach(function (engine) {
@@ -1263,7 +1263,7 @@
           ">Automatic</option>" +
           "</select>" +
           "</span> " +
-          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>open in：" +
+          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>Open in：" +
           "<select id='iqxin-globalNewtab'>" +
           "<option value='globalDef'>current page</option>" +
           "<option value='globalNewtab'" +
