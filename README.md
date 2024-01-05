@@ -1,4 +1,4 @@
-# SearchEngineJumpPlus 搜索引擎快捷跳转+
+# SearchEngineJumpPlus+
 
 <div align="center">
 <a href="https://greasyfork.org/zh-CN/scripts/454280-searchenginejumpplus" target="_blank">
@@ -7,9 +7,9 @@
 <img src="https://img.shields.io/badge/Download-OpenUserJS-green?logo=Tampermonkey&style=for-the-badge" alt="GreasyFork"></a>
 </div>
 
-## 项目说明
+## Project description
 
-本项目源自 [iqxin 维护的搜索引擎跳转脚本](https://github.com/qxinGitHub/searchEngineJump)，从 5.27.0 版本后 Fork 到本仓库独立开发。本来 Fork 过来是想给作者提 PR 的，然而作者不太常用 GitHub，之前一些人贡献的 PR 也没合并到主分支，加上 2022-12-03 后进行了大规模的重构导致没办法直接同步原仓库的更改，于是暂时 Detach Fork 了，以后会在这个仓库继续更新，并不定时推送到 GreasyFork 和 OpenUserJS。
+This project originates from the search engine jump script maintained by iqxin, and is independently developed from the fork to this repository after version 5.27.0. Originally, the fork came to propose a PR to the author, but the author doesn't use GitHub very often, and the PRs contributed by some people before were not merged into the main branch, and after 2022-12-03, a large-scale refactoring led to no way to directly synchronize the changes of the original repository, so it was temporarily Detach Forked, and it will continue to be updated in this repository in the future, and it will be pushed to GreasyFork and OpenUserJS from time to time.
 
 ## 使用说明
 
