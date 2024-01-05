@@ -9,7 +9,7 @@
 
 ## Project description
 
-This project originates from the search engine jump script maintained by iqxin, and is independently developed from the fork to this repository after version 5.27.0. Originally, the fork came to propose a PR to the author, but the author doesn't use GitHub very often, and the PRs contributed by some people before were not merged into the main branch, and after 2022-12-03, a large-scale refactoring led to no way to directly synchronize the changes of the original repository, so it was temporarily Detach Forked, and it will continue to be updated in this repository in the future, and it will be pushed to GreasyFork and OpenUserJS from time to time.。
+This project originates from the search engine jump script maintained by iqxin, and is independently developed from the fork to this repository after version 5.27.0. Originally, the fork came to propose a PR to the author, but the author doesn't use GitHub very often, and the PRs contributed by some people before were not merged into the main branch, and after 2022-12-03, a large-scale refactoring led to no way to directly synchronize the changes of the original repository, so it was temporarily Detach Forked, and it will continue to be updated in this repository in the future, and it will be pushed to GreasyFork and OpenUserJS from time to time.
 
 ## 使用说明
 
