@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name           SearchEngineJumpPlus 搜索引擎快捷跳转+
+// @name           test 搜索引擎快捷跳转+
 // @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改)
 // @contributor    MUTED64
 // @description    Fork版本搜索引擎跳转脚本，优化一些使用体验
@@ -1194,40 +1194,40 @@
 
         var btnStr2 =
           "<div>" +
-          "<span id='xin-reset' title='慎点,出厂重置'>清空设置</span>" +
-          "<span id='xin-modification' title='edit 分享自己的配置或清空配置'>配置文件</span>" +
+          "<span id='xin-reset' title='慎点,出厂重置'>Reset</span>" +
+          "<span id='xin-modification' title='edit 分享自己的配置或清空配置'>Configuration file</span>" +
           // "<span id='xin-importing' title='importing 导入更为专业的搜索引擎'>导入</span>" +
-          "<span id='xin-selectSearch' title='划词搜索, 只有非搜索页面才会生效, 开关功能需要刷新页面'>" +
-          "<label>划词搜索<input id='iqxin-selectSearch' type='checkbox' name='' " +
+          "<span id='xin-selectSearch' title='Only non-search pages will take effect, This setting requires to refresh the page'>" +
+          "<label>Word search<input id='iqxin-selectSearch' type='checkbox' name='' " +
           selectSearch_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-transtion' title='动画,该设置需要刷新页面生效'>" +
-          "<label>动画<input id='iqxin-transtion' type='checkbox' name='' " +
+          "<span id='xin-transtion' title='This setting requires to refresh the page'>" +
+          "<label>Animations<input id='iqxin-transtion' type='checkbox' name='' " +
           transition_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-foldlists' title='将当前所在搜索分类折叠'>" +
-          "<label>折叠当前搜索分类<input id='iqxin-foldlist' type='checkbox' name='' " +
+          "<span id='xin-foldlists' title='Collapse the current search categories'>" +
+          "<label>Hide current category<input id='iqxin-foldlist' type='checkbox' name='' " +
           foldlist_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
           "<span id='iqxin-fixedTopS' title='fixedTop 当滚动页面时,固定到页面顶端。某些页面的样式存在问题'>" +
-          "<label>固定到顶端<input id='iqxin-fixedTop' type='checkbox' name='' " +
+          "<label>pin to top<input id='iqxin-fixedTop' type='checkbox' name='' " +
           fixedTop_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='iqxin-fixedTopUpward' title='固定到顶端后,仅向上滚动才显示,需要刷新网页生效'>" +
-          "<label>仅上拉显示<input id='iqxin-fixedTopUpward-item' type='checkbox' name='' " +
+          "<span id='iqxin-fixedTopUpward' title='After it is fixed to the top, it will only be displayed when scrolling upwards, This setting requires to refresh the page'>" +
+          "<label>Pull-up display only<input id='iqxin-fixedTopUpward-item' type='checkbox' name='' " +
           fixedTopUpward_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
           "<span id='xin-HideTheSameLink' title='隐藏同站链接,如果想在同一个搜索网站,但是想通过不同语言来搜索, 可以取消该选项'>" +
-          "<label>隐藏同站链接<input id='iqxin-HideTheSameLink' type='checkbox' name='' " +
+          "<label>Hide same links<input id='iqxin-HideTheSameLink' type='checkbox' name='' " +
           HideTheSameLink_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-setBtnOpacity' title='设置按钮透明度,需要刷新页面'>设置按钮透明度 <input type='range' step='0.05'  min='0' max='1' value='" +
+          "<span id='xin-setBtnOpacity' title='设置按钮透明度,需要刷新页面'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
           (settingData.setBtnOpacity < 0
             ? -settingData.setBtnOpacity
             : settingData.setBtnOpacity) +
@@ -1246,34 +1246,34 @@
           "<span class='feedback' title='在 GreasyFork 进行反馈'><a target='_blank' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>Greasy Fork</a></span>" +
           "<span class='feedback' title='在 Github 进行反馈'><a target='_blank' href='https://github.com/MUTED64/SearchEngineJumpPlus'>GitHub</a></span>" +
           "<span id='xin-allOpen' title='后台打开该搜索分类的所有网站'>" +
-          "<label>一键搜索<input id='iqxin-allOpen-item' type='checkbox' name='' " +
+          "<label>One click search<input id='iqxin-allOpen-item' type='checkbox' name='' " +
           allOpen_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-centerDisplay' title='center 居中显示。主要是兼容AC-baidu:重定向优化百度搜狗谷歌搜索_去广告_favicon_双列'>居中：" +
+          "<span id='xin-centerDisplay' title='center 居中显示。主要是兼容AC-baidu:重定向优化百度搜狗谷歌搜索_去广告_favicon_双列'>Center：" +
           "<select id='iqxin-center'>" +
           "<option value='original'" +
           (settingData.center == 0 ? "selected" : "") +
-          ">默认</option>" +
+          ">default</option>" +
           "<option value='force'" +
           (settingData.center == 1 ? "selected" : "") +
-          ">强制</option>" +
+          ">force</option>" +
           "<option value='auto'" +
           (settingData.center == 2 ? "selected" : "") +
-          ">自动</option>" +
+          ">Automatic</option>" +
           "</select>" +
           "</span> " +
-          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>打开方式：" +
+          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>open in：" +
           "<select id='iqxin-globalNewtab'>" +
-          "<option value='globalDef'>默认页面</option>" +
+          "<option value='globalDef'>current page</option>" +
           "<option value='globalNewtab'" +
           (settingData.newtab ? "selected" : "") +
-          ">新标签页</option>" +
+          ">new tab</option>" +
           "</select>" +
           "</span> " +
-          "<span id='xin-addDel' title='add & del 增加新的或者删除现有的搜索'>增加 / 删除</span> " +
-          "<span id='moreSet' title='more set'>更多设置</span>" +
-          "<span id='xin-save' title='save & close'>保存并关闭</span>" +
+          "<span id='xin-addDel' title='add & del 增加新的或者删除现有的搜索'>Add / Delete</span> " +
+          "<span id='moreSet' title='more set'>Settings</span>" +
+          "<span id='xin-save' title='save & close'>Save & Close</span>" +
           "</div>";
         btnEle.innerHTML = btnStr;
         this.ele.appendChild(btnEle);
@@ -1290,7 +1290,7 @@
         nSearchList.id = "nSearchList";
         nSearchList.style.cssText =
           "visibility:hidden;opacity:0;transition:0.3s;position:absolute;bottom:10%;right:5%;padding:5px 10px;border-radius:4px;border:1px solid #EC6D51;color:#ec6d51;cursor:pointer;background:#fff;";
-        nSearchList.innerHTML = "增加新的搜索列表";
+        nSearchList.innerHTML = "new list";
         this.ele.appendChild(nSearchList);
 
         // 关闭按钮
@@ -1762,23 +1762,23 @@
           "position:fixed;" +
           "top:50%;left:50%;" +
           "transform:translate(-50%,-50%);" +
-          "background:#ccc;" +
+          "background:#333333;" +
           "border-radius:4px;" +
           "padding:10px 20px;";
         var innerH =
           " " +
           "<p><span style='color:red;font-size:1.2em;'>! ! !</span></br>" +
-          "此处有更多的设置选项,自由度更高,</br>" +
-          "但设置错误会导致脚本无法运行" +
+          "Here you have more options and more freedom,</br>" +
+          "but incorrect settings can cause the script to fail to run." +
           "</p>" +
           "<textarea wrap='off' cols='45' rows='20' style='overflow:auto;border-radius:4px;'>" +
           JSON.stringify(userSetting, false, 4) +
           "</textarea>" +
           "<br>" +
-          "<button id='xin-reset'>清空设置</button> &nbsp;&nbsp;&nbsp;" +
-          "<button id='xin-copyCode'>复制</button> &nbsp;&nbsp;&nbsp;" +
-          "<button id='codeboxclose' class='iqxin-closeBtn'>关闭</button> &nbsp;&nbsp;&nbsp;" +
-          "<button id='xin-codeboxsave' class='iqxin-enterBtn'>保存</button>" +
+          "<button id='xin-reset'>Reset</button> &nbsp;&nbsp;&nbsp;" +
+          "<button id='xin-copyCode'>Copy</button> &nbsp;&nbsp;&nbsp;" +
+          "<button id='codeboxclose' class='iqxin-closeBtn'>Close</button> &nbsp;&nbsp;&nbsp;" +
+          "<button id='xin-codeboxsave' class='iqxin-enterBtn'>Save</button>" +
           "";
         editbox.innerHTML = innerH;
         this.ele.appendChild(editbox);
