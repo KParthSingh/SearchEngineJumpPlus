@@ -8,8 +8,7 @@
 </div>
 
 ## Project Description
-
-This project originated from [iqxin maintained search engine jump script](https://github.com/qxinGitHub/searchEngineJump), which was Forked to this repository after version 5.27.0. Originally, Fork was intended to give PR to the author, but the author doesn't use GitHub very often, and the PRs contributed by some people before were not merged into the master branch, plus the large-scale refactoring after 2022-12-03 made it impossible to synchronise the changes in the original repository, so we temporarily Detach Forked the project, and we'll continue to update the project in this repository, and push the updates to the following repositories from time to time GreasyFork and OpenUserJS.
+This project is like a International version of https://github.com/MUTED64/SearchEngineJumpPlus forked after version 5.31.15
 
 ## Instructions
 
