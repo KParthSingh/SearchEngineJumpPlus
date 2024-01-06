@@ -1279,7 +1279,7 @@
         if (settingData.closeBtn) {
           var closebtnELe = document.createElement("span");
           closebtnELe.id = "xin-close";
-          closebtnELe.setAttribute("title", "close 关闭");
+          closebtnELe.setAttribute("title", "Close");
           this.ele.appendChild(closebtnELe);
         }
       }
