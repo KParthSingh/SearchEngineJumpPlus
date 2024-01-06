@@ -1181,12 +1181,12 @@
           "<span id='xin-reset' title='Be careful. This option resets settings'>Reset</span>" +
           "<span id='xin-modification' title='Share or delete configuration file'>Configuration file</span>" +
           // "<span id='xin-importing' title='importing 导入更为专业的搜索引擎'>导入</span>" +
-          "<span id='xin-selectSearch' title='Only non-search pages will take effect, requires to refresh the page'>" +
+          "<span id='xin-selectSearch' title='Only non-search pages will take effect, Requires to refresh the page'>" +
           "<label>Word search<input id='iqxin-selectSearch' type='checkbox' name='' " +
           selectSearch_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-transtion' title='requires to refresh the page'>" +
+          "<span id='xin-transtion' title='Requires to refresh the page'>" +
           "<label>Animations<input id='iqxin-transtion' type='checkbox' name='' " +
           transition_checked +
           " style='vertical-align:middle;'></label>" +
@@ -1201,7 +1201,7 @@
           fixedTop_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='iqxin-fixedTopUpward' title='After it is fixed to the top, it will only be displayed when scrolling upwards, requires to refresh the page'>" +
+          "<span id='iqxin-fixedTopUpward' title='After it is fixed to the top, it will only be displayed when scrolling upwards, Requires to refresh the page'>" +
           "<label>Pull-up display only<input id='iqxin-fixedTopUpward-item' type='checkbox' name='' " +
           fixedTopUpward_checked +
           " style='vertical-align:middle;'></label>" +
@@ -1211,7 +1211,7 @@
           HideTheSameLink_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-setBtnOpacity' title='Set button transparency, requires to refresh the page'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
+          "<span id='xin-setBtnOpacity' title='Set button transparency, Requires to refresh the page'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
           (settingData.setBtnOpacity < 0
             ? -settingData.setBtnOpacity
             : settingData.setBtnOpacity) +
