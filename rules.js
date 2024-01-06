@@ -1,1843 +1,2321 @@
-/*
-  把搜索引擎工具栏插入到指定网站的规则
+// ==UserScript==
+// @name           Test
+// @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改) & KParthSingh (modified)
+// @contributor    KParthSingh
+// @description    Fork version of the Fork version of the original search engine jump script
+// @version        release candidate 1
+// @created        2011-07-02
+// @lastUpdated    2023-06-13
 
-  name: 字符串，要加载的网站名称，方便查找
-  enabled: 布尔，是否启用
-  url: 正则表达式，用于匹配网址
-  engineList: 字符串，搜索引擎类型，可选值['web','music','video','image','download','shopping','translate','knowledge','sociality']
-  class: 字符串，添加一个class, 用来使用目标网站的样式
-  fixedTop: 数字，可选，固定在顶部的高度，单位 px
-  style: CSS样式，可选，自定义样式
-  style_ACBaidu: CSS样式，可选，自定义样式，在强制居中模式下启用，兼容 AC_Baidu 脚本
-  style_ZhihuChenglinzhi: CSS样式，可选，自定义样式，在强制居中模式下启用，兼容知乎排版优化脚本
-  insertIntoDoc: 对象，插入文档相关
-    target: 字符串，选中插入到原网页时所用的定位元素
-      可以使用 xpath 匹配，如: '//*[@id="subform_ctrl"]'
-      或者可以使用 css 匹配（需要加上 'css;' 的前缀），如: 'css;#subform_ctrl'
-      或传入一个函数并使用返回值来选中，如: () => document.querySelector('#subform_ctrl')
-    keyword: 字符串或函数，选中获取搜索框
-      可以使用 xpath 选中一个 form input 元素
-      或者可以使用 css 选中 input 元素（需要加上 'css;' 的前缀）
-      或传入一个函数并使用返回值来选中 input 元素
-    where: 字符串，插入到目标元素的位置,可选值['beforeBegin','afterBegin','beforeEnd','afterEnd']
-      'beforeBegin'(插入到给定元素的前面)
-      'afterBegin'(作为给定元素的第一个子元素)
-      'beforeEnd' (作为给定元素的最后一个子元素)
-      'afterEnd'(插入到给定元素的后面);
-  stylish: CSS样式，可选，修改原网页样式以适应搜索引擎跳转工具栏
-*/
+// @namespace      https://greasyfork.org/en/scripts/454280-searchenginejumpplus
+// @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
+// @require        https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/toGBK.user.js
+// @require        https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/engineList.js
+// @require        https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/rules.js
+// @resource       GLOBAL_STYLE https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/GlobalStyle.css
+// @icon           data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFSElEQVR4nMWXX4hdVxXGf2vfe89kJg61ia0DYzMTMWnoQ0FJtKmtJsFixT8DBSmYtGMLgq0PCqMEKwmxYzSGyUPBB7XRNi0FC6JtwYovgcS0klJD8SHakoExYhLQFkwn9/aeOfv7fDi3SStJ5o4muN4O7L32b33rz94H/s8WS10cvR3yVQaY++wnkESkwDK2sMy1EwXDtzRRziBhu+dGDG48smSA5kUP//wmAFIkrNwiGMOsBzYAQwTzEEeBY8BJO1fYtF+4laGPv/i/Afz1C1sAYwngZiKmsDcDI0DrHUtL4DRwMGAmUnVcCtpHPsrQbS/1DZDe+VFHblKziIjYBjwD3Iu5ARBwBjgJnAkwMAa+z+ZZqXEX8VZg0T784aUDzH3uk0DtVQvlVsMjwGpMB3gauAu8ieB2YDPwxR5gF/gQ+MeoNUFzACI4d+imvgDOp0BVRWo2AW62eRi8wvY/wNtrgGhDL+7a/gIcBLYBu4HrsPdSzr8K/JlcLk2BaCQstSxN2VptuYO93an7WES0UyORGg1Wfu0QKivyQhfb56yhn4B3Ynew1kD1oDTfJF20vi8NYBvjMVubbWHrOdtPhwaAYPVvfs8Hf1u32bJbDtXVbgFvAj4AOgTGzhPhGMdV/wCvbtmAJSyttzRiuWv7CdttAlY/f/iimwdvfQGiAfmtczg/jnOJ8/txtRbnvgAu6FSPtg1AC3wGPAvgWGRYqiSowLwC1Ru4GoFyFPc3ZM8DfGPLB1jZXlhe74sS6AAc+O6vL+tg6LaX2LP/SSA6tkpcYeee36/0D/C7Ve9BwZs97iLMEMDAE5N07z1wSQebvl/y3KkAGDIUsrHpRp8ACeDGw38kZdPMPtrILhvZ1yZ5TZJxvnwuW40GzSSaDa1vJq1oJXVbKZ9qpv5qoO6Cqr5ULB+zfNrygOX7LS+PlCgeu+eimz/1w0yWaTTScIqYTEERcDoiXovFauddAAA22CeRDyKD/Bnkbd32PNgUj09S/GwrUMt+x14hiWVFI1LEVyPidggi4hfOnuv3nr8AEGC5sj1j+4TtAcu7i4HlDwLLqRawMmtmnidn6JYLGIa7C/mbwHeAgYATQexPjVCVxcZd7SUACDCEfRyznXoMr8Sawf4lcDdwI7AKWAdss/0r2dOyr6kFpCn7hiyPRlDY5mM7z10W4F1KFT+/p6ZwDkgT2HuN19Tz3yXWG+NnJ8uR9h0FSStSRAFBwAmbpu3xbP/T9rzkp2zvtt2RzcvfG15EAaC8/8m6FkgmpWdsTyD/COtv9esnj1haZXvEtiXP2d5jc6es+3qHv8/2uO1v2d4hedA2H/n2vxZX4LwS+78E1PcDqprAOPZao9Gxs5PNkc6dXUKnIuI1Z8+lRijLo8AR2+OWqeeBS8n7bE8bd2x4Zc97FwcAaP307vqyiXi7QzBi7OyXGel8GkJEBAFUWUREIXlnL/LCvgBheZ9h2lLHyvxp5rrFAZZiG3e16zliBm3vsD0lu6i5ja0awppWrjrKmeOPjAL/UQP/rf1h11BPJHckT/dkL+vDjeXC0pRy3qGcB22x9oHZKwcAcPTh5UimzrWnexGXlrCFlAvlakq5eiiX3eLtSXnFAABe3j1c/0PgTp1z77NUKmesjHMulKuttq9X/eq+sgAAx35wTZ0OqWNrWqr2KVelqoqcF3DOL1r5dStfHQCoW03K9ApuWrnam/PCnHN+StZDRHSK1jLgCnXBpeymr/8dS+SFbmH7eiu/TkQnNRrkqmL20XVXFwBg7QOzRASSsDJFaxndssPso+uu9tH92b8BowSyPc/iZtEAAAAASUVORK5CYII=
+// @license        MIT
 
-const webRules = [
-  {
-    name: "google网页搜索",
-    enabled: true,
-    url: /^https?:\/\/www\.google(?:\.[A-z]{2,3}){1,2}\/[^?]+\?(?!tbm=)(?:&?q=|(?:[^#](?!&tbm=))+?&q=)(?:.(?!&tbm=))*$|(^https?:\/\/xn--flw351e\.ml\/search\?q=)/,
-    engineList: "web",
-    class: "s6JM6d",
-    fixedTop: 52,
-    style: `
-      z-index: 100;
-      margin-top:15px;
-      margin-bottom:5px;
-      position:sticky;
-      top: 57px;
-    `,
-    style_ACBaidu: `
-      text-align: center;
-      z-index: 100;
-      margin-top:5px;
-      margin: auto;
-    `,
-    insertIntoDoc: {
-      target: "css;#appbar",
-      keyword: "css;[name=q]",
-      where: "beforeBegin",
-    },
-    stylish:
-      "#appbar.hdtb-ab-o{height:0px !important;} #hdtbMenus{position:unset}",
-  },
-  {
-    name: "google-hash-query", // 不刷新页面显示搜索结果的google
-    enabled: true,
-    url: /^https?:\/\/www\.google(?:\.[A-z]{2,3}){1,2}\/[^#]*#(?:&?q=|.+?&q=).+/,
-    engineList: "web",
-    style: `
-      left: 142px;
-      z-index: 100;
-      margin-top:5px;
-    `,
-    style_ACBaidu: `
-      text-align: center;
-      z-index: 100;
-      margin:5px auto 0;
-    `,
-    insertIntoDoc: {
-      target: "css;#appbar",
-      keyword: function () {
-        var input = document.getElementById("lst-ib");
-        if (input) return input.value;
-      },
-      where: "beforeBegin",
-    },
-    stylish: "body.vasq #hdtbMenus.hdtb-td-o{top:100px !important}",
-  },
-  {
-    name: "百度网页搜索",
-    url: /^https?:\/\/www\.baidu\.com\/(?:s|baidu)/,
-    enabled: true,
-    engineList: "web",
-    fixedTop: 80,
-    fixedTop2: 88,
-    fixedTopTarget: "css;#wrapper_wrapper",
-    fixedTopWhere: "beforeBegin",
-    style: `
-      margin-top:8px;
-      z-index: 101;
-      left: 145px;
-    `,
-    style_ACBaidu: `
-      margin: 8px auto -5px;
-      z-index: 99;
-      text-align: center;
-      padding-left:0px !important;
-      background: rgba(248,248,248,0.4);
-      backdrop-filter: blur(10px);
-    `,
-    insertIntoDoc: {
-      keyword: "css;input#kw",
-      target: "css;#wrapper_wrapper",
-      where: "afterBegin",
-    },
-    stylish: `.headBlock,.se_common_hint{
-        display:none !important
-      }
-      #wrapper>.result-molecule{
-        z-index:300 !important
-      }
-      @media screen and (min-width: 1921px){
-        #sej-container{
-          left: calc(50vw - 439px) !important;
-        }
-      }
-      `,
-  },
-  {
-    name: "必应网页搜索",
-    url: /^https?:\/\/[^.]*\.bing\.com\/search/,
-    enabled: true,
-    engineList: "web",
-    style: `
-      margin-top: 1em;
-      left: 160px;
-      position: sticky;
-      top: 0.5em;
-    `,
-    style_ACBaidu: `
-      text-align: center;
-      margin: 0 auto -10px;
-      position: sticky;
-      top: 0.5em;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#sb_form_q",
-      target: "css;#b_content",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "DDG",
-    url: /^https?:\/\/duckduckgo\.com\/*/i,
-    enabled: true,
-    engineList: "web",
-    style: `
-    margin-top:5px;
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@name="q"]',
-      target: "css;.results--main",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "360",
-    url: /^https?:\/\/www\.so\.com\/s\?/,
-    enabled: true,
-    engineList: "web",
-    fixedTop: 50,
-    style: "margin: 1em 0 0 135px;position:sticky;top:55px;z-index:3001;",
-    insertIntoDoc: {
-      keyword: "//input[@name='q']",
-      target: "css;#tabs-wrap",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "雅虎网页搜索",
-    url: /^https?:\/\/search\.yahoo\.com\/search/i,
-    engineList: "web",
-    enabled: true,
-    fixedTop: 72,
-    style: `z-index:11;`,
-    insertIntoDoc: {
-      keyword: "css;#yschsp",
-      target: "css;#horizontal-bar",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "雅虎日本网页搜索",
-    url: /^https?:\/\/search\.yahoo\.co\.jp\/search/i,
-    engineList: "web",
-    enabled: true,
-    style: `
-      left:0px;
-      width:1050px;
-      display:flex;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-      margin: auto;
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@name="p"]',
-      target: "css;.Header__inner",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "台湾雅虎网页搜索",
-    url: /^https?:\/\/tw\.search\.yahoo\.com\/search/i,
-    engineList: "web",
-    enabled: true,
-    fixedTop: 52,
-    style: `
-      left:-10px;
-      margin-bottom:10px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#yschsp",
-      target: "css;#results",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "searx",
-    url: /^https?:\/\/searx\.me\/\?q/i,
-    engineList: "web",
-    enabled: true,
-    style: `
-      left:-10px;
-      margin-bottom:10px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#q",
-      target: "css;#categories",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "搜狗",
-    url: /^https?:\/\/www\.sogou\.com\/(?:web|s)/,
-    enabled: true,
-    engineList: "web",
-    fixedTop: 60,
-    style: `
-      top:-46px;
-      z-index:99;
-      left:-5px;
-    `,
-    style_ACBaidu: `
-      top:-46px;
-      z-index:99;
-      margin: auto;
-      padding-left: 0px !important;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#upquery",
-      target: "css;#wrapper",
-      where: "afterBegin",
-    },
-    stylish: "#float_uphint{display:none;}",
-  },
-  {
-    name: "yandex",
-    url: /^https?:\/\/yandex\.(?:com|ru)\/search/i,
-    engineList: "web",
-    enabled: true,
-    fixedTop: 96,
-    class: "main__center",
-    style: `
-    margin:1em 0;
-    `,
-    insertIntoDoc: {
-      keyword: "css;.input__control",
-      target: "css;.main__center",
-      where: "afterBegin",
-    },
-    stylish: ".main .main__center{padding-top:0px}",
-  },
-  {
-    name: "google网页分类搜索",
-    enabled: true,
-    url: /^https?:\/\/www\.google(?:\.[A-z]{2,3}){1,2}\/[^?]+\?(?:tbm=)(?:&?q=|(?:[^#](?!&tbm=))+?&q=)(?:.(?!&tbm=))*$/,
-    engineList: "web",
-    style: `
-      left: 142px;
-      z-index: 100;
-      margin-top:5px;
-    `,
-    insertIntoDoc: {
-      target: "css;#appbar",
-      keyword: '//input[@name="q"]',
-      where: "beforeBegin",
-    },
-    stylish: "body.vasq #hdtbMenus.hdtb-td-o{top:100px !important}",
-  },
-  {
-    name: "startpage",
-    enabled: true,
-    url: /^https?:\/\/(www\.)?startpage\.com\/[a-zA-Z]{2,3}\/search/,
-    engineList: "web",
-    fixedTop: 103,
-    style: `
-    z-index: 100;
-    `,
-    insertIntoDoc: {
-      target: "css;.layout-web__mainline",
-      keyword: '//input[@name="query"]',
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "infinitynewtab",
-    enabled: true,
-    url: /^https?:\/\/google\.infinitynewtab\.com\/\?q/i,
-    engineList: "web",
-    style: `
-      z-index: 100;
-      margin-top: 20px;
-    `,
-    insertIntoDoc: {
-      target: "css;.search-types",
-      keyword: '//input[@name="search"]',
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "ecosia",
-    enabled: true,
-    url: /^https?:\/\/www\.ecosia\.org\/search\?/i,
-    engineList: "web",
-    style: `
-      left: -10px;
-      margin-top: -20px;
-      z-index:1;
-      background-color:#fff;
-    `,
-    insertIntoDoc: {
-      target: "css;.mainline",
-      keyword: '//input[@name="q"]',
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "f搜",
-    enabled: true,
-    url: /^https?:\/\/fsoufsou\.com\/search/,
-    engineList: "web",
-    fixedTop: 111,
-    style: `
-      left: 50px;
-      z-index: -99999;
-      margin-top:5px;
-    `,
-    style_ACBaidu: `
-      text-align: center;
-      z-index: -99999;
-      margin:5px auto 0;
-    `,
-    insertIntoDoc: {
-      target: "css;.input-with-suggestion",
-      keyword: function () {
-        var input = document.getElementById("search-input");
-        if (input) return input.value;
-      },
-      where: "beforeEnd",
-    },
-    stylish: ".tabs-bottom-border{transform: translate(0, 32px); !important}",
-  },
-  {
-    name: "brave",
-    enabled: true,
-    url: /^https?:\/\/search\.brave\.com\/search\?/i,
-    engineList: "web",
-    class: "container-80",
-    style: `
-      z-index:1;
-    `,
-    insertIntoDoc: {
-      target: "css;#search-main",
-      keyword: '//input[@name="q"]',
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "neeva",
-    enabled: true,
-    url: /^https?:\/\/neeva\.com\/search\?/i,
-    engineList: "web",
-    fixedTop: 80,
-    style: `
-      z-index:1;
-    `,
-    insertIntoDoc: {
-      target: "css;#search header",
-      keyword: '//input[@name="q"]',
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "infinitynewtab",
-    enabled: true,
-    url: /^https?:\/\/google\.infinitynewtab\.com\/\?q/,
-    engineList: "web",
-    style: `
-      text-align:center;
-      position:fixed;
-      z-index:99999;
-      top:0;
-    `,
-    insertIntoDoc: {
-      target: "css;.searchbox-results",
-      keyword: "css;input.gsc-input",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "头条搜索",
-    url: /^https?:\/\/so\.toutiao\.com\/search/,
-    engineList: "web",
-    enabled: true,
-    fixedTop: 75,
-    style: `
-      left:146px;
-      z-index:99999;
-    `,
-    insertIntoDoc: {
-      target: "css;.result-content",
-      keyword: '//input[@type="search"]',
-      where: "beforeEnd",
-    },
-  },
-  {
-    name: "抖音搜索",
-    url: /^https?:\/\/www\.douyin\.com\/search/,
-    engineList: "web",
-    enabled: true,
-    fixedTop: 192,
-    fixedTopColor: "rgb(22,23,34)",
-    style: `
-      margin:-10px 0 0 -6px;
-      z-index:99999;
-      margin-top:8px;
-    `,
-    insertIntoDoc: {
-      target: "css;.CHUUyANc",
-      keyword: function () {
-        var input = document.querySelector('input[type="text"]');
-        if (input) return input.value;
-      },
-      where: "beforeEnd",
-    },
-    stylish: `
-      .J122YuOM{
-        padding-top:14px
-      }
-      .IFYTLgyk.FMy9BImq {
-        margin-top: 170px;
-      }
-      body {
-        --font-color-qxin: #bdc1bc;
-        --background-color-qxin: #202124f0;
-        --background-avtive-color-qxin: #424242;
-        --background-active-enable-qxin: #274144;
-        --background-active-disable-qxin: #583535;
-        --background-hover-color-qxin: #424242;
-        --trigger-shown-qxin: #424242 !important;
-        --background-btn-qxin: #292f36;
-        --background-setting-qxin: #202124;
-        --box-shadow-color-sej: hsla(0, 0%, 70%, 10%);
-        --border-color-sej: #3b4547;
-      }
-    `,
-  },
-];
-const knowledgeRules = [
-  {
-    name: "百度百科词条",
-    url: /^https?:\/\/baike\.baidu\.com\/item/,
-    engineList: "knowledge",
-    fixedTop: 65,
-    enabled: true,
-    style: `
-      text-align: center;
-      background: #fff;
-      margin: auto;
-      width: 100% !important;
-      position: sticky;
-      top: 66px;
-      z-index: 1001;
-      border-top-right-radius: 0;
-      border-top-left-radius: 0;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#query",
-      target: "css;.navbar-wrapper",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "百度百科搜索",
-    url: /^https?:\/\/baike\.baidu\.com\/search/,
-    engineList: "knowledge",
-    enabled: true,
-    fixedTop: 56,
-    style: `
-      padding-left: 120px;
-      margin: 5px 0 -10px 0px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#query",
-      target: "css;.header-wrapper",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "百度文库",
-    url: /^https?:\/\/wenku\.baidu\.com\/search/i,
-    engineList: "knowledge",
-    enabled: true,
-    fixedTop: 104,
-    style: `
-      top:20px;
-      margin-bottom:25px;
-      left:145px;
-      z-index:202;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#kw",
-      target: "css;#app > div.base-layout-content",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "百度知道",
-    url: /^https?:\/\/zhidao\.baidu\.com\/search/i,
-    engineList: "knowledge",
-    enabled: true,
-    style: `
-      border-top: 1px solid #e5e5e5;
-      border-bottom: 1px solid #e5e5e5;
-      margin-bottom: 1px;
-      left:112px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#kw",
-      target: "css;#header",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "维基百科",
-    url: /^https?:\/\/\D{2,5}\.wikipedia\.org\/wiki/i,
-    engineList: "knowledge",
-    enabled: true,
-    style: `
-      position: fixed;
-      margin: 0.1em auto;
-      left: 0;
-      right: 0;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        var url = window.location.href.substring(
-          window.location.href.lastIndexOf("/") + 1
-        );
-        return decodeURIComponent(url);
-      },
-      target: "css;#mw-head",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "萌娘百科",
-    url: /^https?:\/\/.*\.?moegirl\.org\.cn/i,
-    engineList: "knowledge",
-    enabled: true,
-    fixedTop: 52,
-    style: `
-      margin: -0.8em auto 0;
-      z-index: 3;
-      width: 1200px !important;
-      top: 12px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#firstHeading",
-      target: "css;#moe-topbanner-container",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "知乎",
-    url: /^https?:\/\/www\.zhihu\.com\/search\?/i,
-    engineList: "knowledge",
-    enabled: true,
-    fixedTop: 52,
-    style: `
-      margin: 10px auto 0px;
-      width:1000px !important;
-      z-index:19;
-      background: #fff;
-      box-shadow: 0 1px 3px 0 rgba(0,34,77,.05);  
-    `,
-    style_ZhihuChenglinz: `
-      margin: 10px auto 0px;
-      width:654px;
-      z-index:19;
-      background: #fff;
-      box-shadow: 0 1px 3px 0 rgba(0,34,77,.05);  
-    `,
-    insertIntoDoc: {
-      keyword: "css;.Input",
-      target: "css;.Search-container",
-      where: "beforeBegin",
-    },
-    stylish: ".TopSearch.Card{margin:30px auto;}",
-  },
-  {
-    name: "互动百科搜索页",
-    url: /^https?:\/\/so\.baike\.com\/doc/i,
-    engineList: "knowledge",
-    enabled: true,
-    style: `
-      border-top: 1px solid #e5e5e5;
-      text-align: center;
-      border-bottom: 1px solid #e5e5e5;
-      margin-bottom: 1px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;.ac_input",
-      target: "css;.bk-head",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "互动百科词条页",
-    url: /^https?:\/\/www\.baike\.com\/wiki/i,
-    engineList: "knowledge",
-    enabled: true,
-    style: `
-      border-top: 1px solid #e5e5e5;
-      text-align: center;
-      border-bottom: 1px solid #e5e5e5;
-      margin-bottom: 1px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;.ac_input",
-      target: "css;.bk-head",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "豆丁文档",
-    url: /^https?:\/\/www\.docin\.com\/search\.do/,
-    engineList: "knowledge",
-    enabled: true,
-    style: `
-      text-align: center;
-      margin:0 auto;
-      padding-top:1px;
-      border-top:1px solid #00000;
-      border-bottom:1px solid #D9E1F7;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#topsearch",
-      target: "css;.doc_hd_mini",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "Quora",
-    url: /^https?:\/\/www\.quora\.com\/search\?/i,
-    enabled: true,
-    engineList: "knowledge",
-    fixedTop: 53,
-    style: `
-      left:calc((100% - 1120px) / 2);
-      margin-top: 30px;
-    `,
-    insertIntoDoc: {
-      keyword:
-        "css;#root > div > div.q-box > div > div.q-fixed.qu-fullX.qu-zIndex--header.qu-bg--raised.qu-borderBottom.qu-boxShadow--medium.qu-borderColor--raised > div > div:nth-child(2) > div > div.q-box.qu-flex--auto.qu-mx--small.qu-alignItems--center > div > div > form > div > div > div > div > div > input",
-      target:
-        "css;#root > div > div.q-box > div > div:nth-child(3) > div > div",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "StackOverflow",
-    url: /^https?:\/\/stackoverflow\.com\/search\?/i,
-    enabled: true,
-    engineList: "knowledge",
-    fixedTop: 50,
-    style:
-      "width: min(100%, 1264px) !important;position: sticky;top: 50px;z-index:1001;margin:auto",
-    insertIntoDoc: {
-      keyword: "css; #search > div > input",
-      target: "css;body > div.container",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "知乎(搜狗)",
-    url: /^https?:\/\/zhihu\.sogou\.com\/zhihu/,
-    enabled: true,
-    engineList: "knowledge",
-    fixedTop: 55,
-    style: `
-      margin: auto;
-      width: 1000px;
-      z-index:99;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#upquery",
-      target: "css;#header",
-      where: "afterEnd",
-    },
-    stylish: ".header{ margin-bottom: 5px; }",
-  },
-];
-const videoRules = [
-  {
-    name: "优酷",
-    url: /^https?:\/\/www\.soku\.com\/search_video\//,
-    engineList: "video",
-    enabled: true,
-    fixedTop: 54,
-    style: `
-      width:1190px;
-      margin:0 auto;
-      z-index:99999;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#headq",
-      target: "css;.sk_container",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "土豆",
-    url: /^https?:\/\/www\.soku\.com\/t\/nisearch\//,
-    enabled: true,
-    engineList: "video",
-    style: `
-      padding-left: 10px;
-      border-top: 1px solid #FC6500;
-      border-bottom: 1px solid #FC6500;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#headq",
-      target: "css;body > .sk_container",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "哔哩哔哩",
-    url: /^https?:\/\/search\.bilibili\.com\/*/,
-    enabled: true,
-    engineList: "video",
-    fixedTop: 74,
-    style: `
-      width:980px;
-      margin:10px auto 10px;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        if (document.querySelector("#search-keyword")) {
-          return document.querySelector("#search-keyword").value;
+// @noframes
+// @match          *://**/*
+// @exclude        *://mega.nz/*
+// @grant          GM_getValue
+// @grant          GM_setValue
+// @grant          GM_addStyle
+// @grant          GM_deleteValue
+// @grant          GM_setClipboard
+// @grant          GM_registerMenuCommand
+// @grant          GM_openInTab
+// @grant          GM_getResourceText
+// @grant          GM_info
+// @grant          window.onurlchange
+// @run-at         document-idle
+
+// ==/UserScript==
+
+(function () {
+  "use strict";
+
+  startScript();
+  listenUrlChange();
+
+  // For some websites with iframe and some websites need delay to load
+  function startScript() {
+    if (window.self != window.top) return;
+
+    console.info(
+      `\n%c ${GM_info.script.name} v${GM_info.script.version} \n%c 问题反馈(GitHub):\t\thttps://github.com/MUTED64/SearchEngineJumpPlus/issues/new\t\t\t\t\t\t\t\n%c 问题反馈(GreasyFork):\thttps://greasyfork.org/scripts/454280-searchenginejumpplus-搜索引擎快捷跳转/feedback\t\n`,
+      "color:#eee;background:#444;padding:6px 0;border-radius:6px 6px 0 0;",
+      "color:#444;background:#eee;padding:6px 0;border-radius:0 6px 0 0",
+      "color:#444;background:#eee;padding:6px 0;border-radius:0 0 6px 6px;"
+    );
+
+    const delayList = [
+      /^https?:\/\/google\.infinitynewtab\.com\/\?q/,
+      /^https?:\/\/www\.zhihu\.com\/search\?/,
+      /^https?:\/\/www\.iciba\.com\/word\?/,
+      /^https?:\/\/neeva\.com\/search\?/i,
+      /^https?:\/\/s\.taobao\.com\/search/,
+      /^https?:\/\/y\.qq\.com\/n\/ryqq\/search/i,
+      /^https?:\/\/www\.quora\.com\/search\?/i,
+      /^https?:\/\/search\.bilibili\.com\/*/,
+      /^https?:\/\/github\.com/i,
+      /^https?:\/\/(www\.)?baidu\.com/i,
+    ];
+    const needDelay = delayList.some(
+      (delaySite) => location.href.search(delaySite) !== -1
+    );
+
+    if (needDelay) {
+      setTimeout(function () {
+        const isRunning = document.querySelector("sejspan");
+        if (isRunning) {
+          return;
         } else {
-          return document.querySelector(".search-input-el").value;
+          mainLogic();
         }
-      },
-      target: function () {
-        if (document.querySelector(".head-contain")) {
-          return document.querySelector(".head-contain");
-        } else {
-          return document.querySelector(".search-input");
-        }
-      },
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "AcFun",
-    url: /^https?:\/\/www\.acfun\.cn\/search/,
-    enabled: true,
-    engineList: "video",
-    fixedTop: 46,
-    style: `
-      width:980px;
-      margin: -30px 0 10px 0;
-      text-align:center;
-      position:sticky;
-      top: 65px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#search-text--standalone",
-      target: "css;.search__main__container",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "YouTube",
-    url: /^https?:\/\/www\.youtube\.com\/results/,
-    enabled: true,
-    engineList: "video",
-    fixedTop: 58,
-    style: `
-      z-index:9;
-      margin: 60px auto -60px;
-      text-align: center;
-      backgroud:#fff;
-      position: relative;
-    `,
-    insertIntoDoc: {
-      keyword: "css;input#search",
-      target: "css;#page-manager",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "niconico",
-    url: /^https?:\/\/www\.nicovideo\.jp\/search\//,
-    enabled: true,
-    engineList: "video",
-    style: `
-      border-top: 1px solid #E8E8E8;
-      border-bottom: 1px solid #E8E8E8;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#search_united",
-      target: "css;.tagListBox",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "Iqiyi",
-    url: /^https?:\/\/so\.iqiyi\.com\/so\/q/,
-    enabled: true,
-    engineList: "video",
-    fixedTop: 60,
-    style: `
-      margin:0 auto;
-      width:1180px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#data-widget-searchword",
-      target: "css;.mod_search_header",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "腾讯视频",
-    url: /^https?:\/\/v\.qq\.com\/x\/search/i,
-    engineList: "video",
-    enabled: true,
-    fixedTop: 60,
-    style: "width:1140px;margin:1em auto;z-index: 11;position:sticky;top:70px;",
-    insertIntoDoc: {
-      keyword: "css;#keywords",
-      target: "css;#search_container > div.wrapper > div.wrapper_main",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "樱花动漫",
-    url: /^https?:\/\/www\.imomoe\.ai\/search/,
-    engineList: "video",
-    enabled: true,
-    style: `
-      width:1140px;
-      margin:-10px auto 10px;,
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@name="searchword"]',
-      target: "css;.head",
-      where: "afterEnd",
-    },
-  },
-];
-const musicRules = [
-  {
-    name: "百度音乐",
-    url: /^https?:\/\/music\.baidu\.com\/search/,
-    enabled: true,
-    engineList: "music",
-    style: `
-      border-top: 0px solid #0064C4;
-      margin-bottom: 5px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#ww",
-      target: "css;.nav-wrapper",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "一听音乐",
-    url: /^https?:\/\/so\.1ting\.com\/song/i,
-    enabled: true,
-    engineList: "music",
-    style: `
-      text-align: center;
-      border-bottom: 1px solid #13B310;
-      border-top: 1px solid #13B310;
-      margin:auto;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#keyword",
-      target: "css;.nav",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "xiami",
-    url: /^https?:\/\/www\.xiami\.com\/search/,
-    enabled: true,
-    engineList: "music",
-    style: `
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#search_text",
-      target: "css;.search_result",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "QQ音乐",
-    url: /^https?:\/\/y\.qq\.com\/n\/ryqq\/search/i,
-    enabled: true,
-    engineList: "music",
-    style: `
-      margin: 1em auto;
-      position: sticky;
-      top: 68px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#app>div>div.mod_search>div.mod_search_input>input",
-      target: "css;#app > div > div.main > div > div",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "网易云音乐",
-    url: /^https?:\/\/music\.163\.com\/.*?#\/search/i,
-    enabled: true,
-    engineList: "music",
-    fixedTop: 0,
-    style: `
-      margin:auto;
-      top:3px;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        return decodeURI(document.URL.match(/s=(.+?)(&|$)/)[1]);
-      },
-      target: "css;.m-subnav.m-subnav-up.f-pr.j-tflag",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "音悦台",
-    url: /^https?:\/\/so\.yinyuetai\.com\/\?keyword/,
-    enabled: true,
-    engineList: "music",
-    style: `
-      border-bottom: 1px solid #2B6DAE;
-      border-top: 1px solid #2B6DAE;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        var url = window.location.href.substring(
-          window.location.href.lastIndexOf("=") + 1
-        );
-        return decodeURIComponent(url);
-      },
-      target: "css;.content",
-      where: "afterEnd",
-    },
-  },
-];
-const imageRules = [
-  {
-    name: "百度图片",
-    url: /^https?:\/\/image\.baidu\.com\/search/i,
-    enabled: true,
-    engineList: "image",
-    fixedTop: 72, //关闭关联联想的情况下
-    // fixedTop:135,  //
-    style: `
-      left:127px;
-      z-index:1000;
-      margin-top:10px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;input#kw",
-      target: "css;.s_tab",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "谷歌图片",
-    url: /^https?:\/\/\w{2,10}\.google(?:\.\D{1,3}){1,2}\/[^?]+\?.*&tbm=isch/i,
-    enabled: true,
-    engineList: "image",
-    fixedTop: 52,
-    style: `
-      left: 160px;
-      margin: 10px 0;
-    `,
-    insertIntoDoc: {
-      keyword: "css;input[name=q]",
-      target: "css;#yDmH0d > div.T1diZc.KWE8qe > c-wiz > div.ndYZfc",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "必应图片",
-    url: /^https?:\/\/.*\.bing\.com\/images\/search/i,
-    enabled: true,
-    fixedTop: 88,
-    engineList: "image",
-    style: `
-      left:160px;
-      margin-top:15px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#sb_form_q",
-      target: "css;#b_content",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "flickr",
-    url: /^https?:\/\/www\.flickr\.com\/search\//,
-    engineList: "image",
-    enabled: true,
-    style: `
-      z-index:1999;
-      width:100%;
-      border-top:1px solid #EBF1FF;
-      border-bottom:0px solid #EBF1FF;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        var input = document.getElementById("autosuggest-input");
-        if (input) {
-          return input.value;
-        } else {
-          var m = location.search.match(/q=([^&]+)/i);
-          if (m) {
-            return decodeURIComponent(m[1]);
+      }, 1000);
+    } else {
+      mainLogic();
+    }
+  }
+
+  // For SPA websites with javascript router
+  function listenUrlChange() {
+    if (window.onurlchange === null) {
+      let lastURL = decodeURI(location.href).replaceAll(" ", "+");
+      window.addEventListener("urlchange", (e) => {
+        const newURL = decodeURI(e.url).replaceAll(" ", "+");
+        if (lastURL === newURL) return;
+        lastURL = newURL;
+        document.querySelectorAll("sejspan")?.forEach((i) => i.remove());
+        startScript();
+      });
+    }
+  }
+
+  function mainLogic() {
+    const rules = searchEngineJumpPlusRules;
+    let engineList = searchEngineJumpPlusEngines;
+
+    // 有些图标需要重复使用
+    const icon = {
+      edit: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAACDklEQVR4nJXVzUtUURjH8Y/mSNKkki2iwiApxHQ1q/6C+gusoCB6oxbRRqFNL4sWtRKqhVSLIDe1CqpNiwjKIilKLKKFEr2Z2qI0xxHN0+LOm+PMOPOc1T2H7/f5ncO991BdNer30zmxKrl0xV2zKJjRoy6aqkkvbbdVLPuUq+8+5uGXnVILki7qsxgtNDtrTNLcijHvrdYsft0/wQ8DZgSzeqMUDW4IJceYHcvwCd1ies0KZvWI1TnhIH6574Olgg0E74zmhZ902j304by4Cxp5LPjtQNmjy3XPVK2rgmCBCcGgdVXhdBgUBCMEwVMNVeIvBMFLifKC8vgrndFBlRJUhJcWFMd3ZfGuzFRxwWrdu3KTxQQVhi8lqApfKVhf0d4bc2/OckG9Pkur7r3TEw+1FRO0GxdM2Vc2/HHBgr1If935UTfigbt5+C27MeSo9+m5GJYitlCwWR2G8oQZ/FgWX1aFgnZMG852v5nFR4rhMn+2dDVJYFpKqy0SDksUhF9FsE0bWgyIa9bIanihoEUcDTrSz4ueOVMOLxQkzVkrZcaoNz755rmpcnihYNghm3w26Ys/5cGcIKgRBJDyqCIquj8C1PqKZvHK+qVrJ5bMRwmGterU64pkkZupWO3RjXkzUZj9+jVZMGK6IsEaHTbgjpOSUYZL/pa5m4qPIbtyznpHvJaqGB53O33h4T/3VzLuzDhE6AAAAABJRU5ErkJggg==",
+      del: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADAFBMVEUAAADsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVH///9VVVVWVlZXV1dYWFhZWVlaWlpbW1tcXFxdXV1eXl5fX19gYGBhYWFiYmJjY2NkZGRlZWVmZmZnZ2doaGhpaWlqampra2tsbGxtbW1ubm5vb29wcHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+fn5/f3+AgICBgYGCgoKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6Pj4+QkJCRkZGSkpKTk5OUlJSVlZWWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSlpaWmpqanp6eoqKipqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5ubm6urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vMzMzNzc3Ozs7Pz8/Q0NDR0dHS0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e3t7f39/g4ODh4eHi4uLj4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7///8dej9TAAAAU3RSTlMAAABm7P/sZgAAABPO////zhQAAB/i/////////+IfAAAe4fvk4AAAAAAd/+Q3GxwAFR85FQBjz+LPY+v////r6//////rZM/h4c9jABUdHRUAAP0EcPoAAAEuSURBVHic7ZRnc8IwDIbdEUZHGB0kDsMOMcOMttBBB93Qvcj//y9VjB0Czh13/dz3ixT5OVmSYyMktLK6tm74oYxEMpVGUW1sbm2bM8DMZHP5OWBnd2+/YNnYAWHbKhRL5cocQKjrWFWPuSDmVS3HpUQu1eoNQkiTM9xqd7oHoG6n3cKMNyHcqNfQ4VGPUsr7nh0FbK/PIdw7PkGnZwOZNrqF9AfnF+jyaigLixYp/eH1Dbq9u4eAHyOAHh5HaPz0DCnjANjm5fUNvX98QoGCxyo5Fjmh0K/vH2hzAi0KnqnymMgJrU6gzemQBM+DZpX1/XBYUyAYTTAuZTUg+Aw8Zf+BvwJLR730sPTjXgD0H2YB0BUClXKpGAeE1y+fy2ZMfX12gdOpZMLQAfkE/AL7e5vGZF+dOQAAAABJRU5ErkJggg==",
+      setting: `<svg style="width: 16px;" class="icon" id="sej-setting-button" viewBox="0 0 512 512"><path d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z" fill="none" stroke="var(--font-color-qxin)" stroke-linecap="round" stroke-linejoin="round" stroke-width="42"/></svg>`,
+    };
+
+    const scriptSettingData = {
+      status: 1,
+      message:
+        "$相关说明$(status: 这个在将来或许很重要)..." +
+        "(version: 若有新功能加入,靠这个版本号识别)..." +
+        "(addSearchItems: 允许更新时,添加新的搜索网站到你的搜索列表)..." +
+        "(modifySearchItems: 允许更新时,修改你的搜索列表中的项目)..." +
+        "(closeBtn: 设置页面右上角的“关闭”按钮是否显示。true显示,false隐藏)..." +
+        "(newtab: 新标签页打开。0为默认设置,1为新标签页打开)..." +
+        "(foldlist: 折叠当前搜索分类列表。true为折叠,false为展开。)..." +
+        "(setBtnOpacity: 设置按钮的透明度,值为0-1之间的数,0为透明,1为完全显示,中间值半透明。注：-1为直接关闭按钮,关闭之前请确定自己知道如何再次打开它)..." +
+        "(debug: debug模式,开启后,控制台会输出一些信息,“关闭并保存”按钮将不会在刷新页面)..." +
+        "(fixedTop: 将搜索栏固定到顶端。 true开启,false关闭)..." +
+        "(fixedTopUpward: 固定顶端后，搜索栏下拉不会出现，只有上拉时才出现。 true开启,false关闭)..." +
+        "(baiduOffset: 在百度页面鼠标划过的菜单会出现位移,若有使用其他的style样式,可以修改这个来修复二级菜单的偏移)..." +
+        "(getIcon: 自己添加搜索后获取图标的方式。0为自动，能连接谷歌的情况下用谷歌获取，无法连接的情况下，域名加favicon.ico获取；1为域名加favicon获取，2为使用谷歌获取，3为使用dnspot的服务获取(不建议使用)。或者添加网址，关键字使用%s代替，未测试)..." +
+        "(allOpen:一键搜索，点击相关分类后，打开该分类下的所有搜索)..." +
+        "(HideTheSameLink:隐藏同站链接。默认开启,百度页面会隐藏百度搜索。如果想在同一个搜索网站,但是想通过不同语言来搜索, 可以选择false来实现)..." +
+        "(center:是否居中显示，主要是为了兼容脚本 ac 百度  ： 0 不居中，强制在左。 1, 强制居中 。 2,自动判断)..." +
+        "(icon: 图标的显示方式, 0 关闭文字, 只保留图标, 1 显示网站图标,2 显示抽象图标。当脚本中不存在抽象图标时,显示网站图标)..." +
+        "(transtion: 是否有动画效果, true为开启所有动画效果,false关闭所有动画(包括模糊效果)。)" +
+        "(selectSearch: 划词搜索功能, true为开启划词搜索,false关闭)" +
+        "(engineDetails: 第一个值为分类列表标题名称,第二个值与enginelist相关联,必须匹配,第三个值true为显示列表,false为禁用列表。排列顺序与跳转栏上的显示顺序相同，可以用它将分类列表按自己喜欢排序)..." +
+        "(engineList: 各个搜索的相关信息)" +
+        "(rules: 已弃用--将搜索样式插入到目标网页,同脚本中的rules设置相同,优先级高于脚本中自带的规则。自带了360搜索,可仿写)...",
+      version: GM_info.script.version,
+      addSearchItems: true,
+      modifySearchItems: true,
+      closeBtn: true,
+      newtab: 0,
+      foldlist: true,
+      setBtnOpacity: 0.7,
+      debug: false,
+      fixedTop: true,
+      fixedTopUpward: false,
+      baiduOffset: -120,
+      getIcon: 0,
+      allOpen: false,
+      HideTheSameLink: true,
+      center: 2,
+      icon: 1,
+      transtion: true,
+      selectSearch: true,
+      engineDetails: [
+        ["Search", "web", true],
+        ["Translate", "translate", true],
+        ["Video", "video", true],
+        ["Music", "music", true],
+        ["Social", "sociality", true],
+        ["Knowledge", "knowledge", true],
+        ["Image", "image", true],
+        ["Shopping", "shopping", true],
+        ["News", "news", true],
+        ["Scholar", "scholar", false],
+        ["Download", "download", false],
+        ["Other", "mine", false],
+      ],
+      engineList: engineList,
+    };
+    // --------------------可设置项结束------------------------
+    class Settings {
+      #storedSettingData = GM_getValue("searchEngineJumpData");
+      #scriptSettingData = scriptSettingData;
+      settingData;
+
+      constructor() {
+        this.initSettings();
+      }
+
+      #isVersionOutdated(storedSettingVersion, currentVersion) {
+        storedSettingVersion = storedSettingVersion.toString();
+        currentVersion = currentVersion.toString();
+        const arr1 = storedSettingVersion.split(".");
+        const arr2 = currentVersion.split(".");
+        const length1 = arr1.length;
+        const length2 = arr2.length;
+        const minlength = Math.min(length1, length2);
+        let i = 0;
+        for (i; i < minlength; i++) {
+          let a = parseInt(arr1[i]);
+          let b = parseInt(arr2[i]);
+          if (a > b) {
+            return false; // 版本超前
+          } else if (a < b) {
+            return true; // 版本过时
           }
         }
-      },
-      target: "css;.using-slender-advanced-panel",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "pixiv",
-    url: /^https?:\/\/www\.pixiv\.net\/search\.php/i,
-    engineList: "image",
-    enabled: true,
-    style: `
-      margin: 0 auto;
-      text-align: center;
-      font-family: 微软雅黑;
-    `,
-    insertIntoDoc: {
-      keyword: "css;input[name=word]",
-      target: "css;body",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "花瓣",
-    url: /^https?:\/\/huaban\.com\/search\/\?/,
-    engineList: "image",
-    enabled: true,
-    style: `
-      border-top:1px solid #EBF1FF;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#query",
-      target: "css;#search_switch",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "Pinterest",
-    url: /^https?:\/\/www\.pinterest\.com\/search\//,
-    engineList: "image",
-    enabled: true,
-    style: `
-      text-align: center;
-      margin-top:-11px;
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@name="q"]',
-      target: "css;.headerContainer",
-      where: "afterEnd",
-    },
-  },
-];
-const downloadRules = [
-  {
-    name: "海盗湾thepiratebay",
-    url: /^https?:\/\/thepiratebay\.org\/search/i,
-    engineList: "bittorrent",
-    enabled: true,
-    style: `
-      text-align: center;
-      z-index: 9999;
-    `,
-    insertIntoDoc: {
-      keyword: "css;.inputbox",
-      target: "css;#SearchResults",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "动漫花园",
-    url: /^https?:\/\/share\.dmhy\.org\/topics\/list\?keyword\=/i,
-    engineList: "download",
-    enabled: true,
-    style: `
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#keyword",
-      target: "css;.table.clear",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "ED2K",
-    url: /^https?:\/\/www\.ed2000\.com\/filelist\.asp/i,
-    engineList: "download",
-    enabled: true,
-    insertIntoDoc: {
-      keyword: "css;.searchtxt",
-      target: "css;.topsearch",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "人人影视",
-    url: /^https?:\/\/www\.zimuzu\.tv\/search\//,
-    engineList: "download",
-    enabled: true,
-    style: `
-      border-bottom: 1px solid #00AFFF;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@name="q"]',
-      target: "css;.Header",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "subHD字幕",
-    url: /^https?:\/\/subhd\.com\/search/i,
-    engineList: "download",
-    enabled: true,
-    style: `
-      border-bottom: 0px solid #CAD9EA;
-      border-top: 0px solid #CAD9EA;
-      text-align: center;
-      top: -20px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#sn",
-      target: "css;.navbar.navbar-inverse",
-      where: "afterEnd",
-    },
-  },
-];
-const translateRules = [
-  {
-    name: "谷歌翻译",
-    url: /^https?:\/\/translate\.google(?:\.\D{1,4}){1,2}/i,
-    enabled: true,
-    engineList: "translate",
-    style: `
-      margin:10px 0px 0px 0px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;.D5aOJc ",
-      target: "css;.MOkH4e ",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "百度翻译",
-    url: /^https?:\/\/fanyi\.baidu\.com/i,
-    enabled: true,
-    engineList: "translate",
-    style: `
-      margin: -20px 0 10px 0;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        return document.querySelector("#baidu_translate_input").value;
-      },
-      target: "css;.inner",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "必应词典",
-    url: /^https?:\/\/.*\.bing\.com\/dict\/search\?q\=/i,
-    enabled: true,
-    engineList: "translate",
-    style: `
-      margin-top:6px;
-      left: 148px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#sb_form_q",
-      target: "css;#b_header",
-      where: "beforeEnd",
-    },
-  },
-  {
-    name: "有道翻译",
-    url: /^https?:\/\/dict\.youdao\.com\/search/i,
-    enabled: true,
-    engineList: "translate",
-    fixedTop: 94,
-    style: `
-      margin:auto;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#query",
-      target: "css;#container",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "有道翻译2",
-    url: /^https?:\/\/dict\.youdao\.com\/w/i,
-    enabled: true,
-    engineList: "translate",
-    fixedTop: 64,
-    style: `
-      padding-left:0px;
-      text-align:center;
-      margin: 2px auto 0;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#query",
-      target: "css;.c-topbar-wrapper",
-      where: "beforeEnd",
-    },
-  },
-  {
-    name: "海词",
-    url: /^https?:\/\/dict\.cn\/./,
-    enabled: true,
-    engineList: "translate",
-    style: `
-      z-index: 99;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#q",
-      target: "css;.main",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "金山词霸",
-    url: /^https?:\/\/www\.iciba\.com\/word/i,
-    enabled: true,
-    engineList: "translate",
-    fixedTop: 122,
-    style: `
-      z-index: 0;
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@type="search"]',
-      target: "css;.Search_input__1qgiU",
-      where: "afterEnd",
-    },
-  },
-];
-const shoppingRules = [
-  {
-    name: "淘宝搜索",
-    url: /^https?:\/\/s\.taobao\.com\/search/,
-    enabled: true,
-    engineList: "shopping",
-    fixedTop: 56,
-    style: `
-      margin:1em auto 0;
-      width: 1446px !important;
-      justify-content: center;
-      z-index: 99999;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        var input = document.querySelector("#q");
-        if (input) {
-          return input.value;
-        } else {
-          var m = location.search.match(/q=([^&]+)/);
-          if (m) {
-            return decodeURIComponent(m[1]);
+        if (length1 > length2) {
+          for (let j = i; j < length1; j++) {
+            if (parseInt(arr1[j]) != 0) {
+              return false; // 版本超前
+            }
+          }
+          return false; // 版本相同
+        } else if (length1 < length2) {
+          for (let j = i; j < length2; j++) {
+            if (parseInt(arr2[j]) != 0) {
+              return true; // 版本过时
+            }
+          }
+          return false; // 版本相同
+        }
+        return false; // 版本相同
+      }
+
+      #checkSettingDataIntegrity() {
+        for (const value in this.#scriptSettingData) {
+          if (!this.settingData.hasOwnProperty(value)) {
+            console.warn(`属性不存在：${value}`);
+            this.settingData[value] = this.#scriptSettingData[value];
+            GM_setValue("searchEngineJumpData", this.settingData);
           }
         }
-      },
-      target: "css;div.PageContent--contentWrap--mep7AEm",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "天猫超市搜索",
-    url: /^https?:\/\/list\.tmall\.com\/search_product\.htm.*from=chaoshi/i,
-    enabled: true,
-    engineList: "shopping",
-    fixedTop: 37,
-    style: `
-      z-index:9999;
-      margin: 2px auto -10px;
-      left:0;
-      right:0;
-      text-align:center;
-      position:absolute;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#mq",
-      target: "css;.headerCon",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "天猫搜索",
-    url: /^https?:\/\/list\.tmall\.com\/search_product\.htm/i,
-    enabled: true,
-    engineList: "shopping",
-    fixedTop: 34,
-    style: `
-      margin: 10px auto -10px;
-      text-align:center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#mq",
-      target: "css;.headerCon",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "京东",
-    url: /^https?:\/\/search\.jd\.com\/Search/,
-    enabled: true,
-    engineList: "shopping",
-    style: `
-      text-align:center; 
-      margin: 1em auto -0.5em auto;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#key",
-      target: "css;#J_searchWrap",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "苏宁",
-    url: /^https?:\/\/search\.suning\.com/i,
-    enabled: true,
-    engineList: "shopping",
-    style: `
-      border-bottom: 1px solid #E5E5E5;
-      border-top: 1px solid #E5E5E5;
-      margin: 1em auto;
-      width: 1390px !important;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#searchKeywordsHidden",
-      target: "css;.ng-header",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "1号店",
-    url: /^https?:\/\/search\.yhd\.com\/c0-0\/k/i,
-    enabled: true,
-    engineList: "shopping",
-    style: `
-      border-bottom: 1px solid #E5E5E5;
-      border-top: 1px solid #E5E5E5;
-      text-align: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#keyword",
-      target: "css;#global_top_bar",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "什么值得买",
-    url: /^https?:\/\/search\.smzdm\.com\/\?/i,
-    enabled: true,
-    engineList: "shopping",
-    fixedTop: 40,
-    style: `
-      width: 100% !important;
-      margin: 0 auto 1em auto;
-      position: sticky;
-      top: 42px;
-      z-index: 100;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#J_search_input",
-      target: "css;#content > div.content-inner",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "亚马逊",
-    url: /^https?:\/\/www\.amazon\.cn\/s\?k/i,
-    enabled: true,
-    engineList: "shopping",
-    style: `
-      margin:2px 0 -10px 0;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#twotabsearchtextbox",
-      target: "css;.sg-row",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "1688",
-    url: /^https?:\/\/s\.1688\.com\/selloffer\/offer_search/i,
-    enabled: true,
-    engineList: "shopping",
-    fixedTop: 88,
-    style: `
-      margin:-10px auto 5px;
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@name="keywords"]',
-      target: "css;.header-container",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "慢慢买",
-    url: /^https?:\/\/ss\.manmanbuy\.com\/Default\.aspx\?key/i,
-    enabled: true,
-    engineList: "shopping",
-    style: `
-      text-align:center;
-    `,
-    insertIntoDoc: {
-      keyword: '//input[@name="key"]',
-      target: "css;#resultcomment",
-      where: "beforeBegin",
-    },
-  },
-];
-const socialityRules = [
-  {
-    name: "新浪微博",
-    url: /^https?:\/\/s\.weibo\.com\/weibo\//i,
-    enabled: true,
-    engineList: "sociality",
-    fixedTop: 48,
-    style: `
-      width: auto !important;
-      position: sticky;
-      top:70px;
-      margin: 1em 0 0.6em 15em;
-      z-index: 10;
-    `,
-    insertIntoDoc: {
-      keyword: "css;.woo-input-main",
-      target: "css;.m-main .woo-box-flex",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "百度贴吧全吧搜索",
-    url: /^https?:\/\/tieba\.baidu\.com\/f\/search/i,
-    enabled: true,
-    engineList: "sociality",
-    fixedTop: 60,
-    style: `
-      left: 121px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#wd1",
-      target: "css;#head > div.search_main_wrap",
-      where: "afterEnd",
-    },
-    stylish: `@media screen and (min-width: 1920px){#sej-container{left:424px !important;}}`,
-  },
-  {
-    name: "百度贴吧",
-    url: /^https?:\/\/tieba\.baidu\.com\/f/i,
-    enabled: true,
-    engineList: "sociality",
-    fixedTop: 60,
-    style: `
-      margin: 0 auto 1em;
-      z-index: 10;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#wd1",
-      target: "css;#head",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "豆瓣1",
-    url: /^https?:\/\/(movie|music|book)\.douban\.com\/subject_search?/,
-    enabled: true,
-    engineList: "sociality",
-    style: `
-      border-top: 1px solid #e5e5e5;
-      text-align: center;
-      border-bottom: 1px solid #e5e5e5;
-      margin-bottom: 1px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#inp-query",
-      target: "css;.nav-secondary",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "豆瓣2",
-    url: /^https?:\/\/www\.douban\.com\/search/i,
-    enabled: true,
-    engineList: "sociality",
-    style: `
-      margin: -1em 0 1em 7em;
-      position: sticky;
-      top: 0.1em;
-    `,
-    insertIntoDoc: {
-      keyword:
-        "css;#content > div > div.article > div.mod-search > form > fieldset > div.inp > input",
-      target: "css;#content > div > div.article > div.mod-search",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "微信(搜狗)",
-    url: /^https?:\/\/weixin\.sogou\.com\/weixin\?/,
-    enabled: true,
-    engineList: "sociality",
-    fixedTop: 55,
-    style: "width: 1000px !important;margin: 8px auto -5px;z-index:99;",
-    insertIntoDoc: {
-      keyword: "//input[@name='query']",
-      target: "css;#main",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "小红书",
-    url: /^https?:\/\/www\.xiaohongshu\.com\/search_result/,
-    enabled: true,
-    engineList: "sociality",
-    style: `
-      margin: -1em auto 1em;
-      position: sticky;
-      top: -1em;
-    `,
-    insertIntoDoc: {
-      keyword:
-        "css;#app > div.layout > div.header-container.showSearchBoxOrHeaderFixed > header > div.input-box > input",
-      target:
-        "css;#app > div.layout > div.main-container > div.feeds-page > div.middle",
-      where: "beforeBegin",
-    },
-  },
-];
-const scholarRules = [
-  {
-    name: "百度学术",
-    url: /^https?:\/\/xueshu\.baidu\.com\/(?:s|baidu)/,
-    enabled: true,
-    engineList: "scholar",
-    style: `
-      text-align: center;
-      position: sticky;
-      top:62px;
-      z-index:99999;
-    `,
-    insertIntoDoc: {
-      keyword: "css;input#kw",
-      target: "css;#container",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "谷歌学术",
-    enabled: true,
-    url: /^https?:\/\/scholar\.google(?:\.\D{1,3}){1,2}\/scholar\?/,
-    engineList: "scholar",
-    style: `
-      z-index:1001;
-      position:relative;
-      margin: 1em 0 0.5em 11em;
-      position: sticky;
-      top: 0.1em;
-    `,
-    insertIntoDoc: {
-      target: "css;#gs_ab",
-      keyword: '//input[@name="q"]',
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "cnki",
-    url: /^https?:\/\/kns\.cnki\.net\/kns8\/defaultresult\/index/i,
-    enabled: true,
-    engineList: "scholar",
-    style: `
-      border-top:1px solid #D9E1F7;
-      border-bottom:1px solid #D9E1F7;
-      margin:0.6em 0 0.5em 465px;
-      position: sticky;
-      top: 0.1em;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#txt_search.search-input",
-      target: "css;.search-box",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "知网",
-    enabled: true,
-    url: /^https?:\/\/epub\.cnki\.net\/kns\/brief\/default_result\.aspx/i,
-    engineList: "scholar",
-    style: `
-      border-bottom:1px solid #E5E5E5;
-      border-top:1px solid #E5E5E5;
-      z-index:999;
-      position:relative;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#txt_1_value1",
-      target: "css;#TopSearchBar",
-      where: "afterEnd",
-    },
-  },
-  {
-    name: "万方",
-    enabled: true,
-    url: /^https?:\/\/s\.wanfangdata\.com\.cn\/Paper/i,
-    engineList: "scholar",
-    style: `
-      z-index:999;
-      width: 1200px !important;
-      margin: 1em auto 1em;
-      position:sticky;
-      top: 0.1em;
-      justify-content: center;
-    `,
-    insertIntoDoc: {
-      keyword: "css;input.search-input",
-      target: "css;.me-container.container-wrapper",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "EBSCO",
-    enabled: true,
-    url: /^https?:\/\/.*?ebscohost\.com\/.*?results/i,
-    engineList: "scholar",
-    style: `
-      border-bottom:1px solid #E5E5E5;
-      border-top:1px solid #E5E5E5;
-      position:relative;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#SearchTerm1",
-      target: "css;#findFieldOuter",
-      where: "afterend",
-    },
-  },
-  {
-    name: "Springer",
-    enabled: true,
-    url: /^https?:\/\/link\.springer\.com\/search\?query=/i,
-    engineList: "scholar",
-    style: `
-      border-bottom:1px solid #E5E5E5;
-      border-top:1px solid #E5E5E5;
-      position:relative;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#query",
-      target: "css;#content",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "JSTOR",
-    enabled: true,
-    url: /^https?:.*?jstor.org\/action\/doAdvancedSearch/i,
-    engineList: "scholar",
-    style: `
-      border-bottom:1px solid #E5E5E5;
-      border-top:1px solid #E5E5E5;
-      position:relative;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#searchBox",
-      target: "css;.tabs-search-results",
-      where: "beforeBegin",
-    },
-  },
-];
-const enterpriseRules = [
-  //  用户补充: kidzgy
-  //  https://greasyfork.org/zh-CN/scripts/27752/discussions/90497
-  {
-    name: "企查查",
-    url: /^https?:\/\/www\.qcc\.com\/(?:web|firm|)/,
-    engineList: "enterprise",
-    enabled: true,
-    fixedTop: 56,
-    style: `
-      width:1250px;
-      margin: 0 auto;
-      padding-left: 15px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#searchKey",
-      target: "css;.app-nheader",
-      where: "AfterEnd",
-    },
-    stylish:
-      " .bigsearch-nav.fixed > .nav-wrap { position: static !important; }",
-  },
-  {
-    name: "天眼查",
-    url: /^https?:\/\/www\.tianyancha\.com\/(?:search|company)/,
-    engineList: "enterprise",
-    enabled: true,
-    fixedTop: 73,
-    style: `
-      top:80px;
-      margin: 0 auto;
-      width:1248px;
-    `,
-    insertIntoDoc: {
-      keyword: "css;#header-company-search",
-      target: "css;.tyc-header",
-      where: "AfterEnd",
-    },
-    stylish:
-      "#web-content.mt122{margin-top:90px !important} .search-bar{position:static !important}",
-  },
-];
-const codingRules = [
-  {
-    name: "Runoob",
-    enabled: true,
-    url: /^https?:.*?runoob\.com\//i,
-    engineList: "mine",
-    style: `
-      border-bottom:1px solid #E5E5E5;
-      border-top:1px solid #E5E5E5;
-      position:relative;
-      text-align:center;
-      margin: 0 auto 2em;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        var url = window.location.href.substring(
-          window.location.href.lastIndexOf("=") + 1
-        );
-        return decodeURIComponent(url);
-      },
-      target: "css;.main>.row",
-      where: "afterBegin",
-    },
-  },
-  {
-    name: "GitHub",
-    enabled: true,
-    url: /^https?:\/\/github\.com\/search/i,
-    engineList: "mine",
-    fixedTop: 2,
-    style: `
-      margin: 1em auto;
-    `,
-    insertIntoDoc: {
-      keyword: 'css;span[data-target="search-input.inputButtonText"]',
-      target:
-        "css;body > div.logged-in.env-production.page-responsive.full-width > div.application-main > main",
-      where: "beforeBegin",
-    },
-  },
-  {
-    name: "MDN",
-    enabled: true,
-    url: /^https?:\/\/developer\.mozilla\.org\/.{2,5}\/search/,
-    engineList: "mine",
-    style: `
-      position:relative;
-      text-align:center;
-    `,
-    insertIntoDoc: {
-      keyword: function () {
-        var url = window.location.href.substring(
-          window.location.href.lastIndexOf("=") + 1
-        );
-        return decodeURIComponent(url);
-      },
-      target: "css;.results-search-form",
-      where: "afterEnd",
-    },
-  },
-];
+      }
 
-const searchEngineJumpPlusRules = [
-  ...webRules,
-  ...knowledgeRules,
-  ...videoRules,
-  ...musicRules,
-  ...imageRules,
-  ...downloadRules,
-  ...translateRules,
-  ...shoppingRules,
-  ...socialityRules,
-  ...scholarRules,
-  ...enterpriseRules,
-  ...codingRules,
-];
+      #checkUpdate() {
+        if (
+          this.#isVersionOutdated(
+            this.#storedSettingData.version,
+            this.#scriptSettingData.version
+          )
+        ) {
+          this.settingData.version = this.#scriptSettingData.version;
+          this.settingData.message = this.#scriptSettingData.message;
+
+          // 5.29.9 更新
+          if (
+            this.settingData.setBtnOpacity === "0.2" &&
+            this.#isVersionOutdated(this.#storedSettingData.version, "5.29.9")
+          ) {
+            this.settingData.setBtnOpacity = "0.7";
+          }
+
+          // 5.30.2 更新
+          if (
+            this.#isVersionOutdated(this.#storedSettingData.version, "5.30.2")
+          ) {
+            this.deleteOutdatedSearchItems(["https://so.letv.com/s?wd=%s"]);
+            this.modifyOutdatedSearchItems(
+              "https://s.weibo.com/weibo/%s",
+              "https://s.weibo.com/weibo/?q=%s"
+            );
+          }
+
+          // 5.30.4 更新
+          if (
+            this.#isVersionOutdated(this.#storedSettingData.version, "5.30.4")
+          ) {
+            this.modifyOutdatedSearchItems(
+              "https://www.startpage.com/do/asearch$post$query",
+              "https://www.startpage.com/sp/search$post$query"
+            );
+          }
+
+          // 5.31.1 更新
+          if (
+            this.#isVersionOutdated(this.#storedSettingData.version, "5.31.1")
+          ) {
+            this.modifyOutdatedSearchItemsTarget("https://zh.moegirl.org/%s");
+            this.modifyOutdatedSearchItemsTarget(
+              "https://tieba.baidu.com/f?kw=%s&ie=utf-8"
+            );
+            this.modifyOutdatedSearchItemsTarget(
+              "https://github.com/search?utf8=✓&q=%s"
+            );
+          }
+
+          // 5.31.8 更新
+          if (
+            this.#isVersionOutdated(this.#storedSettingData.version, "5.31.8")
+          ) {
+            this.modifyOutdatedSearchItems(
+              "https://cn.bing.com/search?q=%s",
+              "https://www.bing.com/search?q=%s"
+            );
+          }
+
+          console.info(
+            `\n%c ${GM_info.script.name} 设置已更新 \n%c 本地设置版本号:\t\t${
+              this.#storedSettingData.version
+            }\t\t\t\t\t\t\t\n%c 当前版本号:\t\t\t${
+              this.settingData.version
+            }\t\t\t\t\t\t\t\n`,
+            "color:#eee;background:#444;padding:6px 0;border-radius:6px 6px 0 0;",
+            "color:#444;background:#eee;padding:6px 0;border-radius:0 6px 0 0",
+            "color:#444;background:#eee;padding:6px 0;border-radius:0 0 6px 6px;"
+          );
+          GM_setValue("searchEngineJumpData", this.settingData);
+        }
+      }
+
+      initSettings() {
+        if (this.#storedSettingData) {
+          this.settingData = Object.assign({}, this.#storedSettingData);
+          this.#checkSettingDataIntegrity();
+          this.#checkUpdate();
+        } else {
+          this.settingData = this.#scriptSettingData;
+          GM_setValue("searchEngineJumpData", this.settingData);
+        }
+
+        this.initEngineCategories();
+      }
+
+      initEngineCategories() {
+        this.settingData.engineList.engineCategories = [];
+        for (
+          let engineCategoryIndex = 0;
+          engineCategoryIndex < this.settingData.engineDetails.length;
+          engineCategoryIndex++
+        ) {
+          if (this.settingData.engineDetails[engineCategoryIndex][2]) {
+            this.settingData.engineList.engineCategories[engineCategoryIndex] =
+              this.settingData.engineDetails[engineCategoryIndex];
+          } else {
+            this.settingData.engineList.engineCategories[-engineCategoryIndex] =
+              this.settingData.engineDetails[engineCategoryIndex];
+          }
+        }
+      }
+
+      getMatchedRule() {
+        for (const rule of [...rules]) {
+          if (rule.url.test(location.href)) {
+            return rule;
+          }
+        }
+        return null;
+      }
+
+      addSearchItem(newItem, category) {
+        this.settingData.engineList[category].push(newItem);
+      }
+      // 更新已过期的搜索链接
+      modifyOutdatedSearchItems(oldURL, newURL) {
+        for (const value in this.settingData.engineList) {
+          var item = this.settingData.engineList[value];
+          for (let i = 0; i < item.length; i++) {
+            if (item[i].url === oldURL) {
+              item[i].url = newURL;
+            }
+          }
+        }
+      }
+      // 更新搜索target 不为 _blank
+      modifyOutdatedSearchItemsTarget(url) {
+        for (const value in this.settingData.engineList) {
+          var item = this.settingData.engineList[value];
+          for (let i = 0; i < item.length; i++) {
+            if (item[i].url === url) {
+              delete item[i].blank;
+            }
+          }
+        }
+      }
+      deleteOutdatedSearchItems(urlList) {
+        for (const value in this.settingData.engineList) {
+          var item = this.settingData.engineList[value];
+          for (let i = 0; i < item.length; i++) {
+            if (urlList.includes(item[i].url)) {
+              console.warn("删除搜索引擎：" + item[i].name);
+              item.splice(i, 1);
+            }
+          }
+        }
+      }
+      // 更新图标
+      modifyOutdatedSearchItemsIcon(url, newIcon) {
+        for (let i = 0; i < this.settingData.engineList.length; i++) {
+          if (this.settingData.engineList[i].url == url) {
+            //用户可能自己更改网站名称,所以此处用url来匹配
+            this.settingData.engineList[i].favicon = newIcon;
+          }
+        }
+      }
+      // 更新本地 rule
+      modifyOutdatedSearchItemsRule(name, value) {
+        var oldRule = this.settingData.rules;
+        for (let item in oldRule) {
+          if (oldRule[item].name == name) {
+            console.log("匹配成功, 更新 rule : ", name);
+            oldRule[item] = value;
+          }
+        }
+      }
+    }
+
+    class DropDownList {
+      zIndex = 100000001;
+      hidden = true;
+      showDelay = 233;
+      hideDelay = 233;
+      aShownClass = "sej-drop-list-trigger-shown";
+
+      constructor(a, list) {
+        this.a = a;
+        this.list = list;
+        this.init();
+      }
+
+      init() {
+        var a = this.a;
+        var list = this.list;
+
+        var self = this;
+
+        // 关闭动画
+        if (!settingData.transtion) {
+          this.showDelay = 0;
+          this.hideDelay = 0;
+        }
+
+        // 进入显示
+        a.addEventListener("mouseenter", function () {
+          clearTimeout(self.hideTimerId);
+
+          if (self.hidden) {
+            self.showTimerId = setTimeout(function () {
+              self.show();
+            }, self.showDelay);
+          } else {
+            var style = list.style;
+            style.top = parseFloat(list.style.top) - 6 + "px";
+            style.zIndex = this.zIndex + 1;
+            style.opacity = 1;
+          }
+        });
+
+        // 离开隐藏
+        a.addEventListener("mouseleave", function () {
+          clearTimeout(self.showTimerId);
+
+          if (!self.hidden) {
+            list.style.top = parseFloat(list.style.top) + 6 + "px";
+            list.style.opacity = 0.04;
+            self.hideTimerId = setTimeout(function () {
+              self.hide();
+            }, self.hideDelay);
+          }
+        });
+
+        list.addEventListener("mouseenter", function () {
+          clearTimeout(self.hideTimerId);
+
+          var style = list.style;
+          style.zIndex = this.zIndex + 1;
+          style.opacity = 1;
+          style.top = parseFloat(list.style.top) - 6 + "px";
+        });
+
+        list.addEventListener("mouseleave", function () {
+          list.style.opacity = 0.04;
+          list.style.top = parseFloat(list.style.top) + 6 + "px";
+          self.hideTimerId = setTimeout(function () {
+            self.hide();
+          }, self.hideDelay);
+        });
+      }
+      show() {
+        if (!this.hidden) return;
+        this.hidden = false;
+
+        var scrolled = this.#getScrolled();
+        var aBCRect = this.a.getBoundingClientRect();
+        var thisBCRect = this.a.parentNode.getBoundingClientRect();
+
+        var style = this.list.style;
+
+        var top = scrolled.y + aBCRect.bottom;
+        var left = scrolled.x + aBCRect.left;
+
+        style.top = top + 6 + "px";
+        style.left = left + "px";
+
+        style.zIndex = this.zIndex - 1;
+        style.display = "block";
+        // 二级搜索居中显示
+        style.left =
+          left -
+          (this.list.getBoundingClientRect().width - aBCRect.width) / 2 +
+          "px";
+
+        setTimeout(function () {
+          style.opacity = 1;
+          style.top = top + "px";
+        }, 30);
+        this.a.classList.add(this.aShownClass);
+      }
+      hide() {
+        if (this.hidden) return;
+        this.hidden = true;
+
+        var style = this.list.style;
+        style.display = "none";
+        style.opacity = 0.2;
+
+        this.a.classList.remove(this.aShownClass);
+      }
+      // 获取已滚动的距离
+      #getScrolled(container) {
+        if (container) {
+          return {
+            x: container.scrollLeft,
+            y: container.scrollTop,
+          };
+        }
+        return {
+          x:
+            "scrollX" in window
+              ? window.scrollX
+              : "pageXOffset" in window
+              ? window.pageXOffset
+              : document.documentElement.scrollLeft || document.body.scrollLeft,
+          y:
+            "scrollY" in window
+              ? window.scrollY
+              : "pageYOffset" in window
+              ? window.pageYOffset
+              : document.documentElement.scrollTop || document.body.scrollTop,
+        };
+      }
+    }
+
+    class SettingButton {
+      settingButtonElement;
+
+      constructor(jumpBarContainer, settingData) {
+        this.parentJumpBarContainer = jumpBarContainer;
+        this.settingData = settingData;
+        this.#addButtonToJumpBar();
+        this.settingButtonElement?.addEventListener("click", () =>
+          this.#activateSettingButton()
+        );
+        GM_registerMenuCommand("设置菜单", () => this.#activateSettingButton());
+      }
+      #addButtonToJumpBar() {
+        if (this.settingData.setBtnOpacity >= 0) {
+          this.settingButtonElement = document.createElement("span");
+          this.settingButtonElement.id = "setBtn";
+          this.settingButtonElement.title = "Settings";
+          GM_addStyle(`#setBtn{opacity: ${this.settingData.setBtnOpacity};}`);
+          this.settingButtonElement.innerHTML = icon.setting;
+          this.parentJumpBarContainer.appendChild(this.settingButtonElement);
+        }
+      }
+      #activateSettingButton() {
+        if (!this.settingPanel) {
+          document.querySelector("#settingLayerMask")?.remove();
+          this.settingPanel = new SettingPanel();
+        }
+        this.settingPanel.show();
+      }
+    }
+
+    class JumpBar {
+      engineButtonTemplate =
+        '<a class="sej-engine" target="$blank$" data-iqxincategory="$category$" encoding="$encoding$" gbk="$gbk$" url="$url$"><img src="$favicon$" class="sej-engine-icon" />$name$</a>';
+      dropDownLists = [];
+      container;
+      inputTarget;
+      insertTarget;
+      insertPositionLabel;
+      matchedRule;
+      engineList;
+      settingData;
+
+      constructor(engineList, settingData, matchedRule) {
+        this.engineList = engineList;
+        this.settingData = settingData;
+        this.matchedRule = matchedRule;
+        const inited = this.#initContainer();
+        if (inited === false) return;
+        this.#initEngines();
+        this.#addEnginesToDOM();
+        this.#addStyle();
+        if (this.settingData.fixedTop && this.matchedRule) {
+          const originalContainerDistanceTop =
+            this.container.getBoundingClientRect().top + window.scrollY;
+          // 判断是否需要只在向上滚动时显示
+          if (this.settingData.fixedTopUpward) {
+            window.onwheel = document.onwheel = (e) => {
+              e.wheelDelta > 0
+                ? this.#fixedToTop(
+                    this.matchedRule.fixedTop,
+                    this.matchedRule.fixedTopColor,
+                    originalContainerDistanceTop
+                  )
+                : {};
+            };
+          } else {
+            window.onscroll = () => {
+              this.#fixedToTop(
+                this.matchedRule.fixedTop,
+                this.matchedRule.fixedTopColor,
+                originalContainerDistanceTop
+              );
+            };
+          }
+        }
+        document.querySelectorAll("sejspan a.sej-engine").forEach((engine) => {
+          engine.addEventListener("mousedown", (e) => {
+            this.#jumpToSelectedEngine(e);
+          });
+        });
+      }
+      #initContainer() {
+        if (this.matchedRule?.enabled) {
+          this.inputTarget = this.#getInputTarget();
+          this.insertTarget = this.#getInsertTarget();
+          this.insertPositionLabel = this.#getInsertPositionLabel();
+          if (this.inputTarget && this.insertTarget) {
+            this.#createContainerDOM();
+          } else {
+            console.warn(
+              `未找到输入框或插入位置，跳过初始化：\n输入框：${this.inputTarget}\n插入位置：${this.insertTarget}`
+            );
+          }
+        } else if (this.#isOnSelectSearchMode()) {
+          this.inputTarget = {};
+          this.insertTarget = document.body;
+          this.insertPositionLabel = "beforeend";
+          this.#createContainerDOM();
+          this.container.classList.add("selectSearch");
+          document.addEventListener("selectionchange", () =>
+            this.#toggleSelectSearchJumpBar()
+          );
+        } else {
+          console.info("未启用搜索跳转，跳过初始化");
+          return false;
+        }
+
+        this.matchedRule?.class
+          ? (this.container.className += ` ${this.matchedRule.class}`)
+          : {};
+        // 由于与要插入网页的样式无法很好的兼容,更改源网页的样式
+        if (this.matchedRule?.stylish) {
+          GM_addStyle(this.matchedRule.stylish);
+        }
+        return true;
+      }
+      #createContainerDOM() {
+        this.container = document.createElement("sejspan");
+        this.container.id = "sej-container";
+        this.container.className = "rwl-exempt";
+        if (
+          this.matchedRule?.style.includes("sticky") ||
+          this.matchedRule?.style.includes("fixed")
+        ) {
+          this.containerWrapper = this.container;
+        } else {
+          this.containerWrapper = document.createElement("sejspan");
+          this.containerWrapper.id = "sej-container-wrapper";
+          this.containerWrapper.appendChild(this.container);
+        }
+      }
+      #toggleSelectSearchJumpBar() {
+        const selection = getSelection();
+        if (selection.isCollapsed) {
+          this.container.style.top = "-50px";
+        } else {
+          this.inputTarget.textContent = selection.toString();
+          this.container.style.top = "2px";
+        }
+      }
+      #isOnSelectSearchMode() {
+        if (
+          (!this.matchedRule || !this.matchedRule.enabled) &&
+          this.settingData.selectSearch
+        ) {
+          return true;
+        }
+      }
+      #getInputTarget() {
+        return typeof this.matchedRule?.insertIntoDoc.keyword == "function"
+          ? this.matchedRule.insertIntoDoc.keyword
+          : this.#getElementBySelector(this.matchedRule?.insertIntoDoc.keyword);
+      }
+      #getInsertTarget() {
+        return typeof this.matchedRule?.insertIntoDoc.target == "function"
+          ? this.matchedRule.insertIntoDoc.target()
+          : this.#getElementBySelector(this.matchedRule?.insertIntoDoc.target);
+      }
+      #getInsertPositionLabel() {
+        return this.matchedRule?.insertIntoDoc.where.toLowerCase();
+      }
+      #initEngines() {
+        const self = this;
+        this.engineList.engineCategories.forEach(function (item) {
+          // console.log(item);  // 搜索菜单   ["search", "web", true]
+          const category = item[1]; // "web"
+          const cName = item[0]; // "search"
+          let engines = [];
+
+          self.engineList[category].forEach(function (engine) {
+            const engineUrl = engine.url;
+            if (engine.disable) return;
+            if (
+              self.settingData.HideTheSameLink &&
+              self.matchedRule?.url.test(engineUrl)
+            )
+              return; // 去掉跳转到当前引擎的引擎
+
+            let engineListButton = self.engineButtonTemplate
+              .replace("$encoding$", (engine.encoding || "utf-8").toLowerCase())
+              .replace("$url$", engineUrl)
+              .replace("$name$", engine.name)
+              .replace("$category$", category);
+
+            // 图标
+            if (engine.favicon) {
+              engineListButton = engineListButton.replace(
+                "$favicon$",
+                engine.favicon
+              );
+            } else {
+              engineListButton = engineListButton.replace(
+                'src="$favicon$"',
+                ""
+              );
+            }
+            // gbk编码
+            if (engine.gbk) {
+              engineListButton = engineListButton.replace("$gbk$", engine.gbk);
+            } else {
+              engineListButton = engineListButton.replace('gbk="$gbk$"', "");
+            }
+            // 新标签页
+            if (settingData.newtab || engine.blank) {
+              engineListButton = engineListButton.replace("$blank$", "_blank");
+            } else {
+              engineListButton = engineListButton.replace(
+                'target="$blank$"',
+                ""
+              );
+            }
+
+            engines.push(engineListButton);
+          });
+          // 非空列表
+          if (!engines.length) return;
+
+          engines = engines.join("");
+
+          // 展开当前搜索分类列表
+          if (
+            !self.settingData.foldlist &&
+            category == self.matchedRule?.engineList
+          ) {
+            self.container.innerHTML = engines;
+          } else {
+            const dropDownList = document.createElement("sejspan");
+            dropDownList.className = "sej-drop-list rwl-exempt";
+            dropDownList.innerHTML = engines;
+
+            //  a:主搜索菜单
+            // dropList: 搜索子菜单
+            const jumpBarButton =
+              dropDownList.firstElementChild.cloneNode(true);
+            jumpBarButton.className =
+              jumpBarButton.className + " sej-drop-list-trigger";
+
+            // 隐藏主搜索菜单的图标
+            if (!self.settingData.icon) {
+              cName = "";
+            }
+
+            jumpBarButton.lastChild.nodeValue = cName;
+            self.dropDownLists.push([jumpBarButton, dropDownList]);
+          }
+        });
+      }
+      #addEnginesToDOM() {
+        this.dropDownLists.forEach((item) => {
+          this.container.appendChild(item[0]); //将搜索列表放入主搜索
+          document.body.appendChild(item[1]); // 插入搜索子菜单
+          new DropDownList(item[0], item[1]);
+        });
+
+        switch (this.insertPositionLabel) {
+          case "beforebegin": // 'beforeBegin'(插入到给定元素的前面) ;
+            this.insertTarget.parentNode.insertBefore(
+              this.containerWrapper,
+              this.insertTarget
+            );
+            break;
+          case "afterbegin": // 'afterBegin'(作为给定元素的第一个子元素) ;
+            if (this.insertTarget.firstChild) {
+              this.insertTarget.insertBefore(
+                this.containerWrapper,
+                this.insertTarget.firstChild
+              );
+            } else {
+              this.insertTarget.appendChild(this.container);
+            }
+            break;
+          case "beforeend": // 'beforeEnd' (作为给定元素的最后一个子元素) ;
+            this.insertTarget.appendChild(this.containerWrapper);
+            break;
+          case "afterend": // 'afterEnd'(插入到给定元素的后面);.
+            if (this.insertTarget.nextSibling) {
+              this.insertTarget.parentNode.insertBefore(
+                this.containerWrapper,
+                this.insertTarget.nextSibling
+              );
+            } else {
+              this.insertTarget.parentNode.appendChild(this.container);
+            }
+            break;
+          default:
+            this.insertTarget.appendChild(this.containerWrapper);
+            break;
+        }
+      }
+      #addStyle() {
+        if (this.matchedRule?.style) {
+          // 判断是否存在脚本 “AC-baidu:重定向优化百度搜狗谷歌搜索_去广告_favicon_双列”
+          if (this.settingData.center == 2) {
+            // 自动判断是否添加
+            if (
+              document.querySelector(".AC-style-logo") &&
+              this.matchedRule.style_ACBaidu
+            ) {
+              this.matchedRule.style = this.matchedRule.style_ACBaidu;
+            }
+          } else if (this.settingData.center == 1) {
+            //  强制添加
+            this.matchedRule.style = this.matchedRule.style_ACBaidu
+              ? this.matchedRule.style_ACBaidu
+              : this.matchedRule.style;
+          } //
+          // 判断是否存在脚本“知乎排版优化”
+          if (document.getElementById("SearchMain")) {
+            if (
+              document.getElementById("SearchMain").style.marginLeft == "150px"
+            ) {
+              this.matchedRule.style = this.matchedRule.style_ZhihuChenglinz;
+              this.matchedRule.fixedTop = null;
+            }
+          }
+          this.container.style.cssText = this.matchedRule.style;
+        }
+
+        //兼容ac百度中lite选项, fixedtop和正常的不一样
+        setTimeout(function () {
+          if (
+            document.querySelector(".AC-baiduLiteStyle") &&
+            matchedRule.fixedTop2
+          ) {
+            matchedRule.fixedTop = matchedRule.fixedTop2;
+          }
+        }, 2500);
+
+        // 吸附顶部时的占位
+        if (
+          getComputedStyle(this.container).position !== "sticky" &&
+          this.containerWrapper !== this.container &&
+          !this.#isOnSelectSearchMode()
+        ) {
+          this.containerWrapper.style.height =
+            this.container.offsetHeight +
+            parseFloat(getComputedStyle(this.container).marginTop) +
+            parseFloat(getComputedStyle(this.container).marginBottom) +
+            "px";
+          this.containerWrapper.style.position = "relative";
+          this.containerWrapper.style.display = "flow-root";
+        }
+      }
+      #fixedToTop(fixedTop, color, originalContainerDistanceTop) {
+        if (!this.container) {
+          return;
+        }
+
+        fixedTop = fixedTop ? fixedTop : 0;
+
+        if (this.container.style.position != "sticky") {
+          const rect = this.container.getBoundingClientRect();
+          if (originalContainerDistanceTop - window.scrollY <= fixedTop) {
+            this.container.style.position = "fixed";
+            this.container.style.top = fixedTop + "px";
+            this.container.style.left = rect.left + "px";
+            this.container.style.padding = "0";
+            this.container.style.margin = "0";
+            this.container.style.backgroundColor = color;
+          } else {
+            this.container.style.cssText = matchedRule.style;
+          }
+        }
+      }
+      #jumpToSelectedEngine(e) {
+        const target = e.target;
+
+        if (!target) return;
+        if (!target.classList.contains("sej-engine")) return;
+
+        let searchKeyword;
+        if (typeof this.inputTarget == "function") {
+          searchKeyword = this.inputTarget();
+        } else {
+          if (this.inputTarget.nodeName == "INPUT") {
+            searchKeyword = this.inputTarget.value;
+          } else {
+            searchKeyword = this.inputTarget.textContent;
+          }
+        }
+
+        // 如果搜索内容是通过某一网站搜索, 就去掉。 例: 0 site:zhihu.com  只保留0, 后面的网站会去掉
+        if (!this.settingData.HideTheSameLink) {
+          searchKeyword = searchKeyword.replace(/site:[^\s]+/, "");
+        }
+
+        // 编码 解码
+        // 对搜索词编码 (未做解码处理，浏览器自动处理) 网站1688采用gbk编码
+        const ogbk = target.getAttribute("gbk");
+        if (ogbk) {
+          searchKeyword = toGBK(searchKeyword);
+        } else {
+          searchKeyword = encodeURIComponent(searchKeyword);
+        }
+
+        let targetURL = target.getAttribute("url");
+
+        // 一键搜索
+        if (
+          this.settingData.allOpen &&
+          target.classList.contains("sej-drop-list-trigger")
+        ) {
+          var list = this.engineList[target.dataset.iqxincategory];
+
+          for (var i = 0; i < list.length; i++) {
+            if (
+              list[i].url.indexOf("site:") < 0 &&
+              matchedRule?.url.test(list[i].url)
+            )
+              continue;
+            if (list[i].disable) continue;
+            var href = list[i].url.replaceAll("%s", searchKeyword);
+            GM_openInTab(href);
+          }
+          target.setAttribute("onclick", "return false;");
+          return;
+        }
+
+        // 如果有post请求
+        var postSign = targetURL?.indexOf("$post$");
+        if (postSign && postSign !== -1) {
+          target.addEventListener("click", function (e) {
+            e.preventDefault();
+          });
+          var f = this.#getEngineJumpPostForm(
+            targetURL.substring(0, postSign),
+            [
+              targetURL.substring(postSign + 6),
+              decodeURIComponent(searchKeyword),
+            ],
+            target.getAttribute("target")
+          );
+          document.body.appendChild(f);
+          f.submit();
+        } else {
+          target.href = target
+            .getAttribute("url")
+            .replaceAll("%s", searchKeyword);
+        }
+
+        if (this.#isOnSelectSearchMode()) {
+          target.target = "_blank";
+        }
+        if (target?.target !== "_blank") {
+          target.target = "_top";
+        }
+      }
+      #getElementBySelector(selector) {
+        if (selector?.startsWith("css;")) {
+          return document.querySelector(selector.slice(4));
+        } else {
+          return document.evaluate(selector, document, null, 9, null)
+            .singleNodeValue;
+        }
+      }
+      #getEngineJumpPostForm(url, value, newTab) {
+        const postForm = document.createElement("form");
+        postForm.method = "post";
+        postForm.action = url;
+        postForm.style.cssText = "display:none;";
+        postForm.innerHTML = `<input type="hidden" name="${value[0]}" value="${value[1]}"/>`;
+        newTab ? (postForm.target = "_blank") : {};
+        return postForm;
+      }
+    }
+
+    class SettingPanel {
+      static dragEl = null;
+      aPatternParent = "<div></div>";
+      ele = document.createElement("div");
+      mask = document.createElement("div");
+      parentTemp = null;
+      editTemp = null;
+      online = null;
+
+      constructor() {
+        this.init();
+      }
+      init() {
+        // console.log("init...");
+        var that = this;
+
+        this.ele.id = "settingLayer";
+        this.mask.id = "settingLayerMask";
+
+        this.addGlobalStyle();
+
+        this.addContent();
+
+        this.mask.addEventListener("click", function () {
+          that.hide();
+        });
+        this.ele.addEventListener("click", function (e) {
+          e.stopPropagation();
+        });
+
+        this.mask.appendChild(this.ele);
+        document.body.appendChild(this.mask);
+
+        // 绑定事件
+        this.ele.addEventListener("click", that.domClick.bind(this), false);
+        this.dragEvent();
+        this.setDragNode(this.ele); //设置拖动
+        // input[range]
+        that.rangeChange(true);
+        document
+          .querySelector("#setBtnOpacityRange")
+          .addEventListener("input", that.rangeChange);
+
+        document
+          .querySelector("#xin-save")
+          .addEventListener("click", function () {
+            that.saveData();
+            that.hide();
+            that.reloadSet();
+          });
+        document
+          .querySelector("#xin-addDel")
+          .addEventListener("click", function (e) {
+            that.addDel(e);
+          });
+        document
+          .querySelector("#xin-modification")
+          .addEventListener("click", function () {
+            that.editCodeBox();
+          });
+        window.addEventListener("resize", this.windowResize.bind(this));
+      }
+      dragEvent() {
+        var that = this;
+        var odivsdrag = document.querySelectorAll(".drag");
+        [].forEach.call(odivsdrag, function (odiv) {
+          odiv.addEventListener("dragstart", that.domdragstart, false);
+          odiv.addEventListener("dragenter", that.domdragenter, false);
+          odiv.addEventListener("dragover", that.domdragover, false);
+          odiv.addEventListener("dragleave", that.domdragleave, false);
+          odiv.addEventListener("drop", that.domdrop, false);
+          odiv.addEventListener("dragend", that.domdropend, false);
+        });
+      }
+      addContent() {
+        var aPattern =
+          '<span draggable="true" class="drag">' +
+          '<span class="sej-engine"' +
+          ' data-xin="$xin$" ' +
+          ' data-iqxinimg="$img$" ' +
+          ' data-iqxintitle="$title$" ' +
+          ' data-iqxinlink="$link$" ' +
+          ' data-iqxintarget="$blank$" ' +
+          ' data-iqxindisabled="$disabled$" ' +
+          ' data-iqxingbk="$gbk$" ' +
+          '><img src="$favicon$" class="sej-engine-icon"/><span>$name$</span></span>' +
+          ' <span class="iqxin-set-edit" title="Edit"><img class="sej-engine-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAQAAADZc7J/AAACDklEQVR4nJXVzUtUURjH8Y/mSNKkki2iwiApxHQ1q/6C+gusoCB6oxbRRqFNL4sWtRKqhVSLIDe1CqpNiwjKIilKLKKFEr2Z2qI0xxHN0+LOm+PMOPOc1T2H7/f5ncO991BdNer30zmxKrl0xV2zKJjRoy6aqkkvbbdVLPuUq+8+5uGXnVILki7qsxgtNDtrTNLcijHvrdYsft0/wQ8DZgSzeqMUDW4IJceYHcvwCd1ies0KZvWI1TnhIH6574Olgg0E74zmhZ902j304by4Cxp5LPjtQNmjy3XPVK2rgmCBCcGgdVXhdBgUBCMEwVMNVeIvBMFLifKC8vgrndFBlRJUhJcWFMd3ZfGuzFRxwWrdu3KTxQQVhi8lqApfKVhf0d4bc2/OckG9Pkur7r3TEw+1FRO0GxdM2Vc2/HHBgr1If935UTfigbt5+C27MeSo9+m5GJYitlCwWR2G8oQZ/FgWX1aFgnZMG852v5nFR4rhMn+2dDVJYFpKqy0SDksUhF9FsE0bWgyIa9bIanihoEUcDTrSz4ueOVMOLxQkzVkrZcaoNz755rmpcnihYNghm3w26Ys/5cGcIKgRBJDyqCIquj8C1PqKZvHK+qVrJ5bMRwmGterU64pkkZupWO3RjXkzUZj9+jVZMGK6IsEaHTbgjpOSUYZL/pa5m4qPIbtyznpHvJaqGB53O33h4T/3VzLuzDhE6AAAAABJRU5ErkJggg=="/></span>' +
+          ' <span class="iqxin-set-del" title="Delete"><img class="sej-engine-icon" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAADAFBMVEUAAADsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVHsbVH///9VVVVWVlZXV1dYWFhZWVlaWlpbW1tcXFxdXV1eXl5fX19gYGBhYWFiYmJjY2NkZGRlZWVmZmZnZ2doaGhpaWlqampra2tsbGxtbW1ubm5vb29wcHBxcXFycnJzc3N0dHR1dXV2dnZ3d3d4eHh5eXl6enp7e3t8fHx9fX1+fn5/f3+AgICBgYGCgoKDg4OEhISFhYWGhoaHh4eIiIiJiYmKioqLi4uMjIyNjY2Ojo6Pj4+QkJCRkZGSkpKTk5OUlJSVlZWWlpaXl5eYmJiZmZmampqbm5ucnJydnZ2enp6fn5+goKChoaGioqKjo6OkpKSlpaWmpqanp6eoqKipqamqqqqrq6usrKytra2urq6vr6+wsLCxsbGysrKzs7O0tLS1tbW2tra3t7e4uLi5ubm6urq7u7u8vLy9vb2+vr6/v7/AwMDBwcHCwsLDw8PExMTFxcXGxsbHx8fIyMjJycnKysrLy8vMzMzNzc3Ozs7Pz8/Q0NDR0dHS0tLT09PU1NTV1dXW1tbX19fY2NjZ2dna2trb29vc3Nzd3d3e3t7f39/g4ODh4eHi4uLj4+Pk5OTl5eXm5ubn5+fo6Ojp6enq6urr6+vs7Ozt7e3u7u7v7+/w8PDx8fHy8vLz8/P09PT19fX29vb39/f4+Pj5+fn6+vr7+/v8/Pz9/f3+/v7///8dej9TAAAAU3RSTlMAAABm7P/sZgAAABPO////zhQAAB/i/////////+IfAAAe4fvk4AAAAAAd/+Q3GxwAFR85FQBjz+LPY+v////r6//////rZM/h4c9jABUdHRUAAP0EcPoAAAEuSURBVHic7ZRnc8IwDIbdEUZHGB0kDsMOMcOMttBBB93Qvcj//y9VjB0Czh13/dz3ixT5OVmSYyMktLK6tm74oYxEMpVGUW1sbm2bM8DMZHP5OWBnd2+/YNnYAWHbKhRL5cocQKjrWFWPuSDmVS3HpUQu1eoNQkiTM9xqd7oHoG6n3cKMNyHcqNfQ4VGPUsr7nh0FbK/PIdw7PkGnZwOZNrqF9AfnF+jyaigLixYp/eH1Dbq9u4eAHyOAHh5HaPz0DCnjANjm5fUNvX98QoGCxyo5Fjmh0K/vH2hzAi0KnqnymMgJrU6gzemQBM+DZpX1/XBYUyAYTTAuZTUg+Aw8Zf+BvwJLR730sPTjXgD0H2YB0BUClXKpGAeE1y+fy2ZMfX12gdOpZMLQAfkE/AL7e5vGZF+dOQAAAABJRU5ErkJggg=="></span>' +
+          "</span>";
+        var details = engineList.engineCategories;
+        // 若根据数组长度获取,负数引导的为属性,不再length长度之内,所以来个大体的数字,当都为空时,结束循环
+        // var detailsLength = details.length;
+        var detailsLength = 99;
+        for (let i = 0; i < detailsLength; i++) {
+          var j = i;
+          j = details[j] ? j : -j;
+          if (!details[j]) {
+            break;
+          }
+
+          var odiv = document.createElement("div");
+          odiv.id = details[j][1]; // "web"
+          odiv.classList.add("iqxin-items");
+
+          var oDivTitle = document.createElement("div");
+          oDivTitle.classList.add("sejtitle", "drag");
+          oDivTitle.setAttribute("draggable", "true");
+          oDivTitle.dataset.iqxintitle = details[j][1];
+          oDivTitle.dataset.xin = j;
+          oDivTitle.innerHTML =
+            '<span class="iqxin-pointer-events">' +
+            details[j][0] +
+            "</span>" +
+            '<span class="iqxin-title-edit" title="Edit"><img class="sej-engine-icon" src="' +
+            icon.edit +
+            '"/></span>' +
+            ' <span class="iqxin-set-title-del" title="Delete"><img class="sej-engine-icon" src="' +
+            icon.del +
+            '"></span>';
+          odiv.appendChild(oDivTitle);
+
+          var oDivCon = document.createElement("div");
+          oDivCon.classList.add("sejcon");
+          var oDivConStr = "";
+          var engineListItem = engineList[details[j][1]];
+          var itemLength = engineListItem.length;
+          for (let ii = 0; ii < itemLength; ii++) {
+            var jj = ii;
+            if (!engineListItem[jj]) {
+              break;
+            }
+            var a = aPattern
+              .replace("$name$", engineListItem[jj].name)
+              .replace("$favicon$", engineListItem[jj].favicon)
+              .replace("$xin$", jj);
+            // 添加属性
+            a = a
+              .replace("$img$", engineListItem[jj].favicon)
+              .replace("$title$", engineListItem[jj].name)
+              .replace("$link$", engineListItem[jj].url);
+            if (engineListItem[jj].blank) {
+              a = a.replace("$blank$", "_blank");
+            } else {
+              a = a.replace('data-iqxintarget="$blank$"', "");
+            }
+            if (engineListItem[jj].disable) {
+              a = a.replace("$disabled$", "true");
+            } else {
+              a = a.replace('data-iqxindisabled="$disabled$"', "");
+            }
+            if (engineListItem[jj].gbk) {
+              a = a.replace("$gbk$", "true");
+            } else {
+              a = a.replace('data-iqxingbk="$gbk$"', "");
+            }
+
+            oDivConStr += a;
+          }
+
+          oDivConStr += "<span class='iqxin-additem'>+</span>";
+
+          oDivCon.innerHTML = oDivConStr;
+          odiv.appendChild(oDivCon);
+
+          this.ele.appendChild(odiv);
+        }
+
+        // 更多设置 菜单
+        var btnEle2 = document.createElement("div");
+        btnEle2.id = "btnEle2";
+        var fixedTop_checked = settingData.fixedTop ? "checked" : "";
+        var fixedTopUpward_checked = settingData.fixedTopUpward
+          ? "checked"
+          : "";
+        var transition_checked = settingData.transtion ? "checked" : "";
+        var selectSearch_checked = settingData.selectSearch ? "checked" : "";
+        var foldlist_checked = settingData.foldlist ? "checked" : "";
+        var allOpen_checked = settingData.allOpen ? "checked" : "";
+        var HideTheSameLink_checked = settingData.HideTheSameLink
+          ? "checked"
+          : "";
+
+        var btnStr2 =
+          "<div>" +
+          "<span id='xin-reset' title='慎点,出厂重置'>Reset</span>" +
+          "<span id='xin-modification' title='edit 分享自己的配置或清空配置'>Configuration file</span>" +
+          // "<span id='xin-importing' title='importing 导入更为专业的搜索引擎'>导入</span>" +
+          "<span id='xin-selectSearch' title='Only non-search pages will take effect, This setting requires to refresh the page'>" +
+          "<label>Word search<input id='iqxin-selectSearch' type='checkbox' name='' " +
+          selectSearch_checked +
+          " style='vertical-align:middle;'></label>" +
+          "</span>" +
+          "<span id='xin-transtion' title='This setting requires to refresh the page'>" +
+          "<label>Animations<input id='iqxin-transtion' type='checkbox' name='' " +
+          transition_checked +
+          " style='vertical-align:middle;'></label>" +
+          "</span>" +
+          "<span id='xin-foldlists' title='Collapse the current search categories'>" +
+          "<label>Hide current category<input id='iqxin-foldlist' type='checkbox' name='' " +
+          foldlist_checked +
+          " style='vertical-align:middle;'></label>" +
+          "</span>" +
+          "<span id='iqxin-fixedTopS' title='fixedTop 当滚动页面时,固定到页面顶端。某些页面的样式存在问题'>" +
+          "<label>pin to top<input id='iqxin-fixedTop' type='checkbox' name='' " +
+          fixedTop_checked +
+          " style='vertical-align:middle;'></label>" +
+          "</span>" +
+          "<span id='iqxin-fixedTopUpward' title='After it is fixed to the top, it will only be displayed when scrolling upwards, This setting requires to refresh the page'>" +
+          "<label>Pull-up display only<input id='iqxin-fixedTopUpward-item' type='checkbox' name='' " +
+          fixedTopUpward_checked +
+          " style='vertical-align:middle;'></label>" +
+          "</span>" +
+          "<span id='xin-HideTheSameLink' title='隐藏同站链接,如果想在同一个搜索网站,但是想通过不同语言来搜索, 可以取消该选项'>" +
+          "<label>Hide same links<input id='iqxin-HideTheSameLink' type='checkbox' name='' " +
+          HideTheSameLink_checked +
+          " style='vertical-align:middle;'></label>" +
+          "</span>" +
+          "<span id='xin-setBtnOpacity' title='设置按钮透明度,需要刷新页面'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
+          (settingData.setBtnOpacity < 0
+            ? -settingData.setBtnOpacity
+            : settingData.setBtnOpacity) +
+          "' id='setBtnOpacityRange'><i style='display:inline-block;width:3em;text-align:center;' class='iqxin-setBtnOpacityRangeValue' title='按钮 显示/隐藏(非透明)),请确定知道自己如何再次打开; 火狐非高级玩家建议别禁用'></i></span>" +
+          "</div>";
+        // "<div><span>test</span></div>";
+        btnEle2.innerHTML = btnStr2;
+        this.ele.appendChild(btnEle2);
+
+        // 添加按钮
+        var btnEle = document.createElement("div");
+        btnEle.id = "btnEle";
+
+        var btnStr =
+          "<div class='btnEleLayer'>" +
+          "<span class='feedback' title='(needs to change yet)'><a target='_blank' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>(change this)</a></span>" +
+          "<span class='feedback' title='Give feedback on Github'><a target='_blank' href='https://github.com/KParthSingh/SearchEngineJumpPlus/'>GitHub</a></span>" +
+          "<span id='xin-allOpen' title='后台打开该搜索分类的所有网站'>" +
+          "<label>One click search<input id='iqxin-allOpen-item' type='checkbox' name='' " +
+          allOpen_checked +
+          " style='vertical-align:middle;'></label>" +
+          "</span>" +
+          "<span id='xin-centerDisplay' title='center 居中显示。主要是兼容AC-baidu:重定向优化百度搜狗谷歌搜索_去广告_favicon_双列'>Center：" +
+          "<select id='iqxin-center'>" +
+          "<option value='original'" +
+          (settingData.center == 0 ? "selected" : "") +
+          ">default</option>" +
+          "<option value='force'" +
+          (settingData.center == 1 ? "selected" : "") +
+          ">force</option>" +
+          "<option value='auto'" +
+          (settingData.center == 2 ? "selected" : "") +
+          ">Automatic</option>" +
+          "</select>" +
+          "</span> " +
+          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>Open in：" +
+          "<select id='iqxin-globalNewtab'>" +
+          "<option value='globalDef'>current page</option>" +
+          "<option value='globalNewtab'" +
+          (settingData.newtab ? "selected" : "") +
+          ">new tab</option>" +
+          "</select>" +
+          "</span> " +
+          "<span id='xin-addDel' title='add & del 增加新的或者删除现有的搜索'>Add / Delete</span> " +
+          "<span id='moreSet' title='more set'>Settings</span>" +
+          "<span id='xin-save' title='save & close'>Save & Close</span>" +
+          "</div>";
+        btnEle.innerHTML = btnStr;
+        this.ele.appendChild(btnEle);
+
+        // 可以拖动的顶栏
+        var dragDom = document.createElement("div");
+        dragDom.id = "dragDom";
+        dragDom.style.cssText =
+          "height:16px;width:97%;position:absolute;top:0;cursor:move;";
+        this.ele.appendChild(dragDom);
+
+        // 增加搜索列表
+        var nSearchList = document.createElement("div");
+        nSearchList.id = "nSearchList";
+        nSearchList.style.cssText =
+          "visibility:hidden;opacity:0;transition:0.3s;position:absolute;bottom:10%;right:5%;padding:5px 10px;border-radius:4px;border:1px solid #EC6D51;color:#ec6d51;cursor:pointer;background:#fff;";
+        nSearchList.innerHTML = "new list";
+        this.ele.appendChild(nSearchList);
+
+        // 关闭按钮
+        if (settingData.closeBtn) {
+          var closebtnELe = document.createElement("span");
+          closebtnELe.id = "xin-close";
+          closebtnELe.setAttribute("title", "close 关闭");
+          this.ele.appendChild(closebtnELe);
+        }
+      }
+      show() {
+        var style = this.mask.style;
+        var eleStyle = this.ele.style;
+        style.display = "flex";
+        eleStyle.transform = "translateY(-20%)";
+        document.body.style.overflow = "hidden";
+
+        this.windowResize();
+
+        setTimeout(function () {
+          style.opacity = 1;
+          eleStyle.transform = "none";
+        }, 30);
+      }
+      hide() {
+        this.allBoxClose(); // 关闭所有次级窗口、菜单
+
+        var style = this.mask.style;
+        this.ele.style.transform = "translateY(20%)";
+        style.opacity = 0;
+        setTimeout(function () {
+          style.display = "none";
+          document.body.style.overflow = "auto";
+        }, 500);
+      }
+      reset() {
+        if (confirm("将会删除用户设置！")) {
+          GM_deleteValue("searchEngineJumpData");
+          location.reload();
+        }
+      }
+      // 增加 “添加删除框”
+      addDel(e) {
+        if (e.target.classList.contains("iqxin-btn-active")) {
+          this.addDelremove();
+        } else {
+          // console.log("不存在,增加增加");
+          var obtn = document.querySelector("#xin-addDel");
+          obtn.classList.add("iqxin-btn-active");
+
+          var odom = document.querySelectorAll(".iqxin-set-del");
+          [].forEach.call(odom, function (div) {
+            div.classList.add("iqxin-set-active");
+          });
+
+          // 标题添加删除框
+          var odom = document.querySelectorAll(".iqxin-set-title-del");
+          [].forEach.call(odom, function (div) {
+            // console.log(div);
+            div.classList.add("iqxin-set-active");
+          });
+
+          // 增加单个搜索
+          var oitemAdd = document.querySelectorAll(".iqxin-additem");
+          [].forEach.call(oitemAdd, function (div) {
+            // console.log(div);
+            div.classList.add("iqxin-set-active");
+          });
+
+          // 添加搜索列表
+          var olistAdd = document.querySelector("#nSearchList");
+          olistAdd.classList.add("iqxin-set-active");
+        }
+      }
+      // 关闭 “添加删除框”
+      addDelremove(bool) {
+        var obtn = document.querySelector(".iqxin-btn-active");
+        if (obtn) {
+          obtn.classList.remove("iqxin-btn-active");
+
+          var odom = document.querySelectorAll(".iqxin-set-active");
+          [].forEach.call(odom, function (div) {
+            div.classList.remove("iqxin-set-active");
+          });
+
+          var oitemAdd = document.querySelectorAll(".iqxin-additem");
+          [].forEach.call(oitemAdd, function (div) {
+            div.classList.remove("iqxin-set-active");
+          });
+        }
+        this.addItemBoxRemove();
+      }
+
+      // 界面,框：添加新的搜索
+      addItemBox() {
+        this.isOnline();
+        this.addItemBoxRemove();
+
+        var newDiv = document.createElement("div");
+        newDiv.id = "newSearchBox";
+        newDiv.style.cssText = "top:43%;opacity:0.1;";
+        newDiv.innerHTML = `<span>Name : </span><input id='iqxin-newTitle' placeholder='Name required' onfocus='this.select()' /> <br/><br/>
+             <span>URL&nbsp;&nbsp;&nbsp: </span><input id='iqxin-newLink' placeholder='URL required' onfocus='this.select()' /> <br/><br/>
+             <span>Logo : </span><input id='iqxin-newIcon' placeholder='Optional, leave it blank to get it automatically.' onfocus='this.select()' /> <br/><br/>
+             <span>Open in :
+             <select id="iqxin-newTarget" style="border-radius: 4px;border: none;padding: 2px 0 2px 2px">
+             <option value="default">Current page</option>
+             <option value="newtab">New Tab</option>
+             <select>
+             </span>
+             <br/><br/>
+             <span><a target='_blank' style='color:#999;' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>Instructions(change in future)</a></span>
+             &nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp&nbsp;
+             <button id='addItemBoxEnter' class='addItemBoxEnter addItemBoxBtn iqxin-enterBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
+             <button id='addItemBoxCancel' class='addItemBoxCancel addItemBoxBtn iqxin-closeBtn'>Close</button>`;
+
+        this.ele.appendChild(newDiv);
+        setTimeout(function () {
+          newDiv.style.cssText = "";
+        }, 10);
+        document.querySelector("#iqxin-newTitle").focus();
+      }
+      // 内部逻辑,：添加新的搜索
+      addItemEnger() {
+        var otitle, olink, oimg, oblank;
+        otitle = document.querySelector("#iqxin-newTitle").value;
+        olink = document.querySelector("#iqxin-newLink").value;
+        oimg = document.querySelector("#iqxin-newIcon").value;
+        oblank = document.querySelector("#iqxin-newTarget").selectedIndex;
+
+        if (!oimg) {
+          oimg = this.getICON(olink);
+        }
+
+        var a =
+          '<span class="sej-engine"' +
+          ' data-iqxinimg="$img$" ' +
+          ' data-iqxintitle="$title$" ' +
+          ' data-iqxinlink="$link$" ' +
+          ' data-iqxintarget="$blank$" ' +
+          '><img src="$favicon$" class="sej-engine-icon" />$name$</span>' +
+          '<span class="iqxin-set-edit" title="Edit">' +
+          '<img class="sej-engine-icon" src="' +
+          icon.edit +
+          '">' +
+          "</span> " +
+          '<span class="iqxin-set-del iqxin-set-active" title="Delete">' +
+          '<img class="sej-engine-icon" src="' +
+          icon.del +
+          '">' +
+          "</span>";
+
+        a = a
+          .replace("$img$", oimg)
+          .replace("$title$", otitle)
+          .replace(
+            "$link$",
+            olink.indexOf("://") === -1 ? "https://" + olink : olink
+          );
+
+        if (oblank) {
+          a = a.replace('data-iqxintarget="$blank$"', "");
+        } else {
+          a = a.replace("$blank$", "_blank");
+        }
+
+        a = a.replace("$name$", otitle).replace("$favicon$", oimg);
+
+        var ospan = document.createElement("span");
+        ospan.className = "drag";
+        ospan.innerHTML = a;
+
+        this.parentNode.insertBefore(ospan, this.parentNode.lastChild);
+
+        // 添加完成,移除添加框
+        this.addItemBoxRemove();
+      }
+      addItemBoxRemove(ele) {
+        ele = ele ? ele : "#newSearchBox";
+        var newBox = document.querySelector(ele);
+        if (newBox) {
+          // newBox.style.transform = "translateY(30%)";
+          newBox.style.top = "60%";
+          newBox.style.opacity = "0";
+          setTimeout(function () {
+            newBox.parentNode.removeChild(newBox);
+          }, 550);
+        }
+      }
+      // 获取图标
+      getICON(olink) {
+        let ourl;
+        let mark;
+        let protocol;
+        let host;
+
+        if (olink.indexOf("://") !== -1) {
+          protocol = olink.split("://")[0] ? olink.split("://")[0] : "https";
+          host = olink.split("://")[1].split("/")[0];
+        } else {
+          protocol = "https";
+          host = olink.split("/")[0];
+        }
+
+        const siteURL = protocol + "://" + host;
+
+        if (isNaN(settingData.getIcon)) {
+          ourl = settingData.getIcon;
+        } else {
+          mark = parseInt(settingData.getIcon);
+          switch (mark) {
+            case 1:
+              ourl = siteURL + "/favicon.ico";
+              break;
+            case 2:
+              ourl = "https://www.google.com/s2/favicons?domain=" + siteURL;
+              break;
+            case 3:
+              ourl =
+                "https://statics.dnspod.cn/proxy_favicon/_/favicon?domain=" +
+                host;
+              break;
+          }
+        }
+
+        if (ourl) {
+          ourl = ourl.replace("%s", siteURL);
+          return ourl;
+        }
+        if (this.online) {
+          ourl = "https://www.google.com/s2/favicons?domain=" + host;
+          return ourl;
+        } else {
+          ourl = protocol + "://" + host + "/favicon.ico";
+          return ourl;
+        }
+      }
+
+      // 界面, 框: 添加新的搜索列表
+      addSearchListBox() {
+        var odiv = document.querySelector("#newSearchListBox");
+        if (odiv) {
+          this.boxClose("#newSearchListBox");
+          return;
+        }
+        var newDiv = document.createElement("div");
+        newDiv.id = "newSearchListBox";
+
+        var myDate = new Date();
+        // var hash = "user" + myDate.getFullYear() + myDate.getMonth() + myDate.getDate() + myDate.getHours() +myDate.getMinutes()+myDate.getSeconds();
+        var hash = "user" + myDate.getTime();
+
+        newDiv.innerHTML =
+          "" +
+          "<span>List Name: </span><input id='iqxin-newSearchListName' onfocus='this.select()'>" +
+          "<br><br>" +
+          "<span>Internal Name: </span><input id='iqxin-newSearchListInnerName' onfocus='this.select()' value='" +
+          hash +
+          "'>" +
+          "<br><br>" +
+          "<button id='addSearchListBoxEnter' class='addSearchListBoxEnter addItemBoxBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp" +
+          "<button id='addSearchListBoxCancel' class='addSearchListBoxCancel addItemBoxBtn'>Close</button>" +
+          "";
+        this.ele.appendChild(newDiv);
+
+        document.querySelector("#iqxin-newSearchListName").focus();
+      }
+      addSearchListEnger() {
+        var name = document.querySelector("#iqxin-newSearchListName").value;
+        var innerName = document.querySelector(
+          "#iqxin-newSearchListInnerName"
+        ).value;
+
+        if (innerName.length === 0) {
+          alert("内部名称不能为空");
+          return;
+        }
+        if (name.length === 0) {
+          name = innerName;
+        }
+
+        var odiv = document.createElement("div");
+        odiv.id = innerName;
+        odiv.className = "iqxin-items";
+        odiv.innerHTML =
+          "" +
+          '<div class="sejtitle" data-iqxintitle="' +
+          innerName +
+          '" data-xin="99">' +
+          '<span class="iqxin-pointer-events">' +
+          name +
+          "</span>" +
+          '<span class="iqxin-title-edit" title="Edit">' +
+          '<img class="sej-engine-icon" src="' +
+          icon.edit +
+          '">' +
+          "</span> " +
+          '<span class="iqxin-set-title-del iqxin-set-active" title="Delete">' +
+          '<img class="sej-engine-icon" src="' +
+          icon.del +
+          '">' +
+          "</span>" +
+          "</div>" +
+          '<div class="sejcon">' +
+          '<span class="iqxin-additem iqxin-set-active">+</span>' +
+          "</div>" +
+          "";
+
+        // this.boxClose("#newSearchListBox");
+        this.addItemBoxRemove("#newSearchListBox");
+
+        var btnEle = document.querySelector("#btnEle");
+        btnEle.parentNode.insertBefore(odiv, btnEle);
+      }
+
+      boxClose(ele) {
+        var odiv = document.querySelector(ele);
+        if (odiv) {
+          odiv.parentNode.removeChild(odiv);
+        }
+      }
+
+      // 界面 框：修改框
+      addEditBox(e) {
+        this.addItemBoxRemove();
+
+        var target = e.target.parentNode.firstChild;
+
+        var otitle = target.dataset.iqxintitle;
+        var olink = target.dataset.iqxinlink;
+        var oicon = target.dataset.iqxinimg;
+        var otarget = target.dataset.iqxintarget;
+        var odisabled = target.dataset.iqxindisabled;
+        let oGBK = target.dataset.iqxingbk;
+
+        this.editTemp = target;
+
+        var strblank;
+        if (otarget) {
+          strblank =
+            '<option value="default">Current page</option><option value="newtab">New Tab</option> ';
+        } else {
+          strblank =
+            '<option value="default">Current page</option><option value="newtab" selected="selected">New Tab</option>';
+        }
+
+        var strGBK = "";
+        if (oGBK) {
+          strGBK = "checked='checked'";
+        }
+
+        var newDiv = document.createElement("div");
+        newDiv.id = "newSearchBox";
+        // 从鼠标点击所在的项目展开菜单(2021-03-16,从上线至今,动画一直有卡顿现象)
+        // newDiv.style.cssText = "top:"+(e.screenY-120) +"px;left:"+(e.screenX-140) +"px;";
+        newDiv.style.cssText = "top:43%;opacity:0.1;";
+        var innerHTML = `
+          <span>Name : </span><input id="iqxin-newTitle" placeholder="Name required" onfocus="this.select()" value="${otitle}" /> <br/><br/>
+          <span>URL&nbsp;&nbsp;&nbsp: </span><input id="iqxin-newLink" placeholder="URL required" onfocus="this.select()" value="${olink}" /> <br/><br/>
+          <span>Logo : </span><input id="iqxin-newIcon" placeholder="Optional, leave it blank to get it automatically." onfocus="this.select()" value="${oicon}" /> <br/><br/>
+          <span>Open in :
+              <select id="iqxin-newTarget" style="border-radius: 4px;border: none;padding: 2px 0 2px 2px">
+                  ${strblank}
+              <select>
+          </span>
+          <br/><br/>
+          <span style=""><label>GBK Encoding：<input type="checkbox" name="" id="iqxin-newGBK" ${strGBK} style="vertical-align:middle;"></label></span>
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button id="editItemBoxEnter" class="editItemBoxEnter addItemBoxBtn iqxin-enterBtn">Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
+          <button id="addItemBoxCancel" class="addItemBoxCancel addItemBoxBtn iqxin-closeBtn">Close</button>
+          `;
+
+        newDiv.innerHTML = innerHTML;
+
+        this.ele.appendChild(newDiv);
+        setTimeout(function () {
+          newDiv.style.cssText = "";
+        }, 10);
+        document.querySelector("#iqxin-newTitle").select();
+      }
+      addEditBoxEnger() {
+        var otitle, olink, oimg, oblank, ogbk;
+        otitle = document.querySelector("#iqxin-newTitle").value;
+        olink = document.querySelector("#iqxin-newLink").value;
+        oimg = document.querySelector("#iqxin-newIcon").value;
+        oblank = document.querySelector("#iqxin-newTarget").selectedIndex;
+        ogbk = document.querySelector("#iqxin-newGBK").checked;
+
+        this.editTemp.dataset.iqxintitle = otitle;
+        this.editTemp.lastChild.innerText = otitle; //文本节点
+
+        this.editTemp.dataset.iqxinlink = olink;
+        this.editTemp.dataset.iqxinimg = oimg;
+        this.editTemp.firstChild.src = oimg;
+
+        // 是否新标签页打开
+        if (oblank) {
+          this.editTemp.removeAttribute("data-iqxintarget");
+        } else {
+          this.editTemp.dataset.iqxintarget = "_blank";
+        }
+        // 是否禁用
+        if (ogbk) {
+          this.editTemp.dataset.iqxingbk = "true";
+        } else {
+          this.editTemp.removeAttribute("data-iqxingbk");
+        }
+
+        // 修改完成,移除添加框
+        this.addItemBoxRemove();
+      }
+
+      // 标题编辑
+      addTitleEditBox(e) {
+        this.addItemBoxRemove();
+
+        var element = e.target.parentNode.firstChild;
+        element.classList.remove("iqxin-pointer-events");
+
+        var flag = document.querySelector("#titleEdit");
+        // 存在编辑的标题 && 之前的编辑的节点与点击的节点是同一个节点
+        if (flag && flag.parentNode == element) {
+          element.innerHTML = element.firstChild.value
+            ? element.firstChild.value
+            : "空";
+          element.classList.add("iqxin-pointer-events");
+        } else {
+          //  存在编辑的标题,但与点击的不是同一个节点
+          if (flag) {
+            flag.parentNode.innerHTML = flag.parentNode.firstChild.value;
+          }
+          var oldhtml = element.innerHTML;
+          var newobj = document.createElement("input");
+          newobj.id = "titleEdit";
+          newobj.type = "text";
+          newobj.value = oldhtml;
+          // newobj.onblur = function(){
+          //     element.innerHTML = this.value?this.value:oldhtml;
+          // }
+          newobj.onkeydown = function (e) {
+            if ((e.keyCode || e.which) == 13) {
+              element.innerHTML = this.value ? this.value : oldhtml;
+            } else if ((e.keyCode || e.which) == 27) {
+              element.innerHTML = oldhtml;
+            }
+
+            element.classList.add("iqxin-pointer-events");
+          };
+          element.innerHTML = "";
+          element.appendChild(newobj);
+          newobj.select();
+        }
+      }
+      addTitleEditBoxRemove() {
+        var odiv = document.querySelector("#titleEdit");
+        if (odiv) {
+          odiv.parentNode.innerHTML = odiv.value ? odiv.value : "空";
+        }
+      }
+
+      // 高级菜单,配置文件编辑界面
+      editCodeBox() {
+        console.log("原始数据： ", settingData);
+        var userSetting = GM_getValue("searchEngineJumpData");
+        var editbox = document.createElement("div");
+        // var sData =
+        editbox.id = "iqxin-editCodeBox";
+        editbox.style.cssText =
+          "position:fixed;" +
+          "top:50%;left:50%;" +
+          "transform:translate(-50%,-50%);" +
+          "background:#333333;" +
+          "border-radius:4px;" +
+          "padding:10px 20px;";
+        var innerH =
+          " " +
+          "<p><span style='color:red;font-size:1.2em;'>! ! !</span></br>" +
+          "Here you have more options and more freedom,</br>" +
+          "but incorrect settings can cause the script to fail to run." +
+          "</p>" +
+          "<textarea wrap='off' cols='45' rows='20' style='overflow:auto;border-radius:4px;'>" +
+          JSON.stringify(userSetting, false, 4) +
+          "</textarea>" +
+          "<br>" +
+          "<button id='xin-reset'>Reset</button> &nbsp;&nbsp;&nbsp;" +
+          "<button id='xin-copyCode'>Copy</button> &nbsp;&nbsp;&nbsp;" +
+          "<button id='codeboxclose' class='iqxin-closeBtn'>Close</button> &nbsp;&nbsp;&nbsp;" +
+          "<button id='xin-codeboxsave' class='iqxin-enterBtn'>Save</button>" +
+          "";
+        editbox.innerHTML = innerH;
+        this.ele.appendChild(editbox);
+      }
+      editCodeBoxSave() {
+        var codevalue = document.querySelector(
+          "#iqxin-editCodeBox textarea"
+        ).value;
+        if (codevalue) {
+          GM_setValue("searchEngineJumpData", JSON.parse(codevalue));
+          // 刷新页面
+          setTimeout(function () {
+            location.reload();
+          }, 300);
+        } else {
+          // alert("输入为空");
+          this.reset();
+        }
+      }
+      editCodeBoxClose() {
+        var box = document.querySelector("#iqxin-editCodeBox");
+        if (box) {
+          box.parentNode.removeChild(box);
+        }
+      }
+      // “设置按钮” 透明度
+      setBtnOpacityFun() {
+        if (~window.navigator.userAgent.indexOf("Chrome")) {
+          var odom = document.querySelector("#setBtnOpacityRange");
+          var odomV = odom.value;
+          // odom.style.backgroundSize = odom.value*100 +"% 100%";
+          console.log(odomV, settingData.setBtnOpacity);
+          if (settingData.setBtnOpacity < 0) {
+            document.querySelector(".iqxin-setBtnOpacityRangeValue").innerHTML =
+              odomV.toString().padEnd(4, "0");
+            odom.style.background =
+              "-webkit-linear-gradient(left,#3ABDC1,#83e7ea) no-repeat, #fff";
+          } else {
+            document.querySelector(".iqxin-setBtnOpacityRangeValue").innerHTML =
+              "禁用";
+            odom.style.background =
+              "-webkit-linear-gradient(left,#bdbdbd,#c6c7c7) no-repeat, #fff";
+          }
+          odom.style.backgroundSize = odom.value * 100 + "% 100%";
+
+          settingData.setBtnOpacity = -settingData.setBtnOpacity;
+        } else {
+          this.showPopUp("抱歉,目前只支持chrome类浏览器", 2500);
+        }
+      }
+
+      // 标题点击 （开关搜索列表）（可以并入到下面的点击事件）
+      titleClick(e) {
+        var target = e.target;
+        target.dataset.xin = -parseInt(target.dataset.xin);
+        target.dataset.xin > 0
+          ? this.showPopUp("启用")
+          : this.showPopUp("禁用");
+      }
+      // 点击事件   此处的 if 需要根据实际情况替换成 elseif (switch)
+      domClick(e) {
+        var targetClass = e.target.className;
+        var targetid = e.target.id;
+
+        // 删除搜索
+        if (~e.target.className.indexOf("iqxin-set-del")) {
+          // console.log(e.target);
+          e.target.parentNode.parentNode.removeChild(e.target.parentNode);
+        }
+        // 删除搜索列表
+        if (~e.target.className.indexOf("iqxin-set-title-del")) {
+          // console.log(e.target, e.target.parentNode.parentNode);
+          e.target.parentNode.parentNode.parentNode.removeChild(
+            e.target.parentNode.parentNode
+          );
+        }
+
+        if (~e.target.className.indexOf("iqxin-additem")) {
+          this.parentNode = e.target.parentNode;
+          this.addItemBox();
+        }
+        if (e.target.className === "sej-engine") {
+          e.target.dataset.iqxindisabled = e.target.dataset.iqxindisabled
+            ? ""
+            : "true";
+          e.target.dataset.iqxindisabled
+            ? this.showPopUp("禁用")
+            : this.showPopUp("启用");
+        }
+        if (~targetClass.indexOf("addItemBoxCancel")) {
+          this.addItemBoxRemove();
+        }
+        // 添加新的搜索 确定
+        if (~targetClass.indexOf("addItemBoxEnter")) {
+          this.addItemEnger();
+        }
+        // 添加新的搜索列表 确定
+        if (targetid === "nSearchList") {
+          this.addSearchListBox();
+        }
+        if (targetid === "addSearchListBoxEnter") {
+          this.addSearchListEnger();
+        }
+        if (targetid === "addSearchListBoxCancel") {
+          this.addItemBoxRemove("#newSearchListBox");
+        }
+
+        // 修改搜索 确定
+        if (~targetClass.indexOf("editItemBoxEnter")) {
+          this.addEditBoxEnger();
+        }
+
+        // 编辑框
+        if (~e.target.className.indexOf("iqxin-set-edit")) {
+          this.addEditBox(e);
+        }
+        // 标题编辑框
+        if (~targetClass.indexOf("iqxin-title-edit")) {
+          e.stopPropagation();
+          this.addTitleEditBox(e);
+        }
+        if (~targetClass.indexOf("sejtitle")) {
+          this.titleClick(e);
+        }
+        // codebox  源代码编辑框
+        if (targetid === "codeboxclose") {
+          this.editCodeBoxClose();
+        } else if (targetid === "xin-reset") {
+          this.reset();
+        } else if (targetid === "xin-codeboxsave") {
+          this.editCodeBoxSave();
+        } else if (targetid === "xin-copyCode") {
+          GM_setClipboard(JSON.stringify(settingData, false, 4));
+          this.showPopUp("复制成功");
+        }
+
+        //  点击更多菜单
+        if (targetid === "moreSet") {
+          document.querySelector("#btnEle2").classList.toggle("btnEle2active");
+          // iqxin-btn-active
+          e.target.classList.toggle("iqxin-btn-active");
+        }
+
+        // 关闭"设置菜单按钮"
+        if (targetClass === "iqxin-setBtnOpacityRangeValue") {
+          this.setBtnOpacityFun();
+        }
+
+        // 关闭设置菜单
+        if (targetid === "xin-close") {
+          this.hide();
+        }
+
+        // 空白地方点击
+        if (
+          ~targetClass.indexOf("iqxin-items") ||
+          targetid === "settingLayer" ||
+          targetClass === "btnEleLayer"
+        ) {
+          this.allBoxClose();
+        }
+      }
+
+      // 关闭所有次级窗口、菜单
+      allBoxClose() {
+        this.addItemBoxRemove(); // 新的搜索添加框
+        this.addDelremove(); //  增加/删除界面
+        this.editCodeBoxClose(); // code编辑框
+        this.addTitleEditBoxRemove(); //标题编辑框
+        this.addItemBoxRemove("#newSearchListBox"); // 添加新的搜索列表
+        this.boxClose("#iqxin-sortBox"); // 搜索列表排序
+        this.addItemBoxRemove("#importingBox"); //导入框
+        document.querySelector("#btnEle2").classList.remove("btnEle2active"); // 更多设置
+      }
+
+      // 窗口位置拖动
+      setDragNode(ele) {
+        var node = document.querySelector("#dragDom");
+
+        node.addEventListener("mousedown", function (event) {
+          ele.style.transition = "null";
+          // offsetLeft 距离 body 的位置, 得到的 dis 即鼠标到窗口左上角的位置
+          var disX = event.clientX - ele.offsetLeft;
+          var disY = event.clientY - ele.offsetTop;
+
+          var move = function (event) {
+            //鼠标的位置减去到左上角的位置 即窗口的位置
+            // console.log(event.clientX - disX,event.clientY - disY)
+            ele.style.left = event.clientX - disX + "px";
+            ele.style.top = event.clientY - disY + "px";
+          };
+
+          document.addEventListener("mousemove", move);
+          document.addEventListener("mouseup", function () {
+            ele.style.transition = "0.5s";
+            document.removeEventListener("mousemove", move);
+          });
+        });
+      }
+
+      // 拖动
+      domdragstart(e) {
+        if (~this.className.indexOf("sejtitle")) {
+          SettingPanel.dragEl = this.parentNode;
+        } else {
+          SettingPanel.dragEl = this;
+        }
+        e.dataTransfer.effectAllowed = "move";
+        e.dataTransfer.setData("text/html", SettingPanel.dragEl.innerHTML);
+      }
+      domdragenter(e) {
+        var target = e.target;
+        var targetClass = target.className;
+        if (~targetClass.indexOf("sejtitle")) {
+          target = target.parentNode;
+        }
+        target.classList.add("drop-over");
+      }
+      domdragover(e) {
+        if (e.preventDefault) {
+          e.preventDefault();
+        }
+        e.dataTransfer.dropEffect = "move";
+        return false;
+      }
+      domdragleave(e) {
+        var target = e.target;
+        var targetClass = target.className;
+        if (~targetClass.indexOf("sejtitle")) {
+          target = target.parentNode;
+        }
+        target.classList.remove("drop-over");
+      }
+      domdrop(e) {
+        var _this = e.target;
+        var that = _this.parentNode;
+        var pparentNode = that.parentNode;
+
+        // 防止跨区域移动
+        SettingPanel.prototype.domdropend();
+        if (SettingPanel.dragEl.className != that.className) {
+          console.log("移动对象 之前,现在: ", SettingPanel.dragEl.className);
+          console.log(that.className);
+          return;
+        }
+
+        // Sortable.js https://github.com/RubaXa/Sortable
+        var targetRect = _this.getBoundingClientRect(); //
+        var width = targetRect.right - targetRect.left; //目标节点的宽
+        var height = targetRect.bottom - targetRect.top; //目标节点的高
+        var domPosition = null;
+        if (~_this.className.indexOf("sejtitle")) {
+          if ((e.clientX - targetRect.left) / width > 0.5) {
+            domPosition = true;
+          } else {
+            domPosition = false;
+          }
+        } else {
+          if ((e.clientY - targetRect.top) / height > 0.5) {
+            domPosition = true;
+          } else {
+            domPosition = false;
+          }
+        }
+
+        SettingPanel.dragEl.style.transformOrigin = "top center";
+        SettingPanel.dragEl.style.animation = "sejopen 0.3s";
+
+        if (domPosition) {
+          if (pparentNode.lastChild == that) {
+            pparentNode.insertBefore(SettingPanel.dragEl, that);
+          } else {
+            pparentNode.insertBefore(
+              SettingPanel.dragEl,
+              that.nextElementSibling
+            );
+          }
+        } else {
+          that.parentNode.insertBefore(SettingPanel.dragEl, that);
+        }
+
+        // 重新绑定拖拽事件
+        SettingPanel.prototype.dragEvent();
+        return false;
+      }
+      domdropend() {
+        var dom = document.querySelector(".drop-over");
+        if (dom) {
+          dom.classList.remove("drop-over");
+        }
+      }
+
+      // 判断是否能连接至google
+      isOnline() {
+        console.log("this.online", this.online);
+        if (this.online) return;
+
+        var that = this;
+        var myImage = new Image();
+        myImage.src =
+          "https://www.google.com/s2/favicons?domain=www.baidu.com&" +
+          Math.random();
+        setTimeout(function () {
+          // console.log("取消加载");
+          console.log(myImage.width);
+          if (myImage.width) {
+            that.online = true;
+          } else {
+            myImage.src = undefined;
+          }
+        }, 2000);
+      }
+
+      // 重新加载工具
+      reloadSet() {
+        var elems = document.querySelectorAll(
+          "#sej-container, #settingLayerMask, sejspan.sej-drop-list"
+        );
+        if (!elems) return;
+        console.log("elems: " + elems);
+        // return;
+
+        [].forEach.call(elems, function (elem) {
+          elem.parentNode.removeChild(elem);
+        });
+
+        mainLogic();
+        this.showPopUp("保存成功");
+      }
+
+      // 设置按钮透明度设置
+      rangeChange(bool) {
+        var odom = document.querySelector("#setBtnOpacityRange");
+        if (settingData.setBtnOpacity < 0) {
+          odom.style.background =
+            "-webkit-linear-gradient(left,#bdbdbd,#c6c7c7) no-repeat, #fff";
+          odom.style.backgroundSize = odom.value * 100 + "% 100%";
+          document.querySelector(".iqxin-setBtnOpacityRangeValue").innerHTML =
+            "禁用";
+          settingData.setBtnOpacity = -odom.value;
+        } else {
+          odom.style.background =
+            "-webkit-linear-gradient(left,#3ABDC1,#83e7ea) no-repeat, #fff";
+          odom.style.backgroundSize = odom.value * 100 + "% 100%";
+          let value = odom.value;
+          let valueStr = "";
+          if (value == 0) {
+            valueStr = "0.00";
+          } else if (value == 1) {
+            valueStr = "1.00";
+          } else {
+            valueStr = odom.value.toString().padEnd(4, "0");
+          }
+          document.querySelector(".iqxin-setBtnOpacityRangeValue").innerHTML =
+            valueStr;
+          settingData.setBtnOpacity = odom.value;
+        }
+      }
+
+      // 窗口大小改变
+      windowResize() {
+        var eleStyle = window.getComputedStyle(this.ele, null);
+        var w = parseInt(eleStyle.width);
+        var h = parseInt(eleStyle.height) + 54;
+        var ww = document.documentElement.clientWidth;
+        var wh = document.documentElement.clientHeight;
+        var maskStyle = this.mask.style;
+
+        if (w >= ww) {
+          maskStyle.justifyContent = "stretch";
+        } else {
+          maskStyle.justifyContent = "center";
+        }
+        if (h >= wh) {
+          maskStyle.alignItems = "stretch";
+        } else {
+          maskStyle.alignItems = "center";
+        }
+      }
+      saveData() {
+        this.addTitleEditBoxRemove(); //标题栏处于编辑状态
+
+        var obj = {};
+        var parentdiv = document.querySelectorAll("#settingLayer .iqxin-items");
+        for (let i = 0; i < parentdiv.length; i++) {
+          var data = parentdiv[i].querySelectorAll(".sej-engine");
+          var id = parentdiv[i].id;
+          obj[id] = [];
+          for (let ii = 0; ii < data.length; ii++) {
+            if (data[ii].dataset.xin < 0) {
+              var ij = -ii;
+            } else {
+              ij = ii;
+            }
+            obj[id][ij] = {};
+            obj[id][ij].favicon = data[ii].dataset.iqxinimg;
+            obj[id][ij].name = data[ii].dataset.iqxintitle;
+            obj[id][ij].url = data[ii].dataset.iqxinlink;
+            if (data[ii].dataset.iqxintarget) {
+              obj[id][ij].blank = data[ii].dataset.iqxintarget;
+            }
+            if (data[ii].dataset.iqxindisabled) {
+              obj[id][ij].disable = data[ii].dataset.iqxindisabled;
+            }
+            if (data[ii].dataset.iqxingbk) {
+              obj[id][ij].gbk = data[ii].dataset.iqxingbk;
+            }
+          }
+        }
+
+        // 分类名称
+        var engineDetails = [];
+
+        // 分类排序
+        var odetails = document.querySelectorAll(".sejtitle");
+        var odetailsLength = odetails.length;
+        for (let i = 0; i < odetailsLength; i++) {
+          engineDetails[i] = [];
+          engineDetails[i][0] = odetails[i].firstChild.innerHTML;
+          engineDetails[i][1] = odetails[i].dataset.iqxintitle;
+          engineDetails[i][2] = odetails[i].dataset.xin >= 0 ? true : false;
+        }
+
+        // 新标签页全局设置
+        var onewtab = document.querySelector(
+          "#iqxin-globalNewtab"
+        ).selectedIndex;
+        var foldlist = document.querySelector("#iqxin-foldlist").checked;
+
+        // 以防不测,重新获取本地配置文件
+        var getData = GM_getValue("searchEngineJumpData");
+        getData.newtab = onewtab;
+        getData.foldlist = foldlist;
+        getData.setBtnOpacity = settingData.setBtnOpacity;
+        getData.center = document.querySelector("#iqxin-center").selectedIndex;
+        getData.fixedTop = document.querySelector("#iqxin-fixedTop").checked;
+        getData.allOpen = document.querySelector("#iqxin-allOpen-item").checked;
+        getData.fixedTopUpward = document.querySelector(
+          "#iqxin-fixedTopUpward-item"
+        ).checked;
+        getData.transtion = document.querySelector("#iqxin-transtion").checked;
+        getData.HideTheSameLink = document.querySelector(
+          "#iqxin-HideTheSameLink"
+        ).checked;
+        getData.selectSearch = document.querySelector(
+          "#iqxin-selectSearch"
+        ).checked;
+        getData.engineDetails = engineDetails;
+        getData.engineList = obj;
+
+        GM_setValue("searchEngineJumpData", getData);
+      }
+      // 此处的样式主要是设置界面
+      addGlobalStyle() {
+        // 关闭设置菜单中的所有动画效果
+        if (!settingData.transtion) {
+          GM_addStyle(
+            "#settingLayer," +
+              "#btnEle span," +
+              "#btnEle2," +
+              ".iqxin-set-del," +
+              "span.iqxin-additem," +
+              "#newSearchBox," +
+              ".addItemBoxBtn," +
+              "#xin-close," +
+              "#settingLayerMask{" +
+              "transition:none;" +
+              "}" +
+              "#settingLayerMask{" +
+              "backdrop-filter:none;" +
+              // "background-color: rgba(0,0,0,.7);" +
+              "}" +
+              ""
+          );
+        }
+      }
+      showPopUp(text, duration) {
+        new PopUp(text, duration);
+      }
+    }
+
+    class PopUp {
+      constructor(text, duration = 1500) {
+        this.popUp = document.createElement("iqxinDiv");
+        this.popUp.id = "iqixn-global-tip";
+        this.show(text);
+        setTimeout(() => {
+          this.destroy();
+        }, duration);
+      }
+      show(text) {
+        this.popUp.innerText = text;
+        document.body.appendChild(this.popUp);
+        this.popUp.style.opacity = 1;
+      }
+      destroy() {
+        this.popUp.style.opacity = 0;
+        const transitionTime =
+          parseFloat(getComputedStyle(this.popUp).transitionDuration) * 1000;
+        setTimeout(() => {
+          this.popUp.remove();
+        }, transitionTime);
+      }
+    }
+
+    class Style {
+      constructor() {
+        this.globalStyle = GM_getResourceText("GLOBAL_STYLE");
+        this.nonTransitionStyle = `.sej-engine,.sej-drop-list-trigger,.sej-drop-list{transition:none!important;}#sej-container{animation:none!important;}.sej-drop-list {backdrop-filter:none!important;}`;
+        this.addStyle(this.globalStyle);
+        if (!settingData.transtion) {
+          this.addStyle(this.nonTransitionStyle);
+        }
+        if (this.isDarkMode()) {
+          document.body.setAttribute("qxintheme", "dark");
+        }
+      }
+      addStyle(style) {
+        GM_addStyle(style);
+      }
+      isDarkMode() {
+        function getContrastYIQ(rgbColor) {
+          let r, g, b, a;
+          rgbColor = rgbColor.match(/rgba?\(([^)]+)\)/)[1];
+          rgbColor = rgbColor.split(/ *, */).map(Number);
+          [r, g, b, a] = rgbColor;
+          if (a < 0.5) {
+            return false;
+          }
+          const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+          return yiq < 128;
+        }
+
+        return (
+          document.getElementsByTagName("meta")?.["color-scheme"]?.content ===
+            "dark" ||
+          getContrastYIQ(getComputedStyle(document.body).backgroundColor)
+        );
+      }
+    }
+
+    const settings = new Settings();
+    const settingData = settings.settingData;
+    engineList = settingData.engineList;
+    const matchedRule = settings.getMatchedRule();
+    const style = new Style();
+
+    const jumpBar = new JumpBar(engineList, settingData, matchedRule);
+    if (jumpBar.container) {
+      new SettingButton(jumpBar.container, settingData);
+    } else {
+      return;
+    }
+  }
+})();

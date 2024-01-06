@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name           test 搜索引擎快捷跳转+
-// @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改)
-// @contributor    MUTED64
-// @description    Fork版本搜索引擎跳转脚本，优化一些使用体验
-// @version        5.31.15
+// @name           Test
+// @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改) & KParthSingh (modified)
+// @contributor    KParthSingh
+// @description    Fork version of the Fork version of the original search engine jump script
+// @version        release candidate 1
 // @created        2011-07-02
 // @lastUpdated    2023-06-13
 
