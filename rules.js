@@ -3,7 +3,7 @@
 // @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改) & KParthSingh (modified)
 // @contributor    KParthSingh
 // @description    Fork version of the Fork version of the original search engine jump script
-// @version        release candidate 1
+// @version        1.0
 // @created        2011-07-02
 // @lastUpdated    2023-06-13
 
