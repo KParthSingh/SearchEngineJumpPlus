@@ -287,7 +287,7 @@ span.iqxin-additem.iqxin-set-active {
   background: rgb(29, 29, 29);
   border-radius: 4px;
   color: #e8e8e8;
-  margin: -149px -170px;
+  margin: -149px -165px;
 }
 #newSearchListBox input,
 #newSearchBox input {
@@ -295,7 +295,7 @@ span.iqxin-additem.iqxin-set-active {
   padding: 4px 0 4px 5px;
   border-radius: 4px;
   outline: none;
-  width: 300px;
+  width: 250px;
 }
 #newSearchListBox input:focus,
 #newSearchBox input:focus {
