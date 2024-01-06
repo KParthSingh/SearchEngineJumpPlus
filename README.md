@@ -1,4 +1,4 @@
-# SearchEngineJumpPlus 搜索引擎快捷跳转+
+# SearchEngineJumpPlus+
 
 <div align="center">
 <a href="https://greasyfork.org/zh-CN/scripts/454280-searchenginejumpplus" target="_blank">
