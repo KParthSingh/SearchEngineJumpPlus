@@ -11,7 +11,7 @@
 This project is like a International version of [original SearchEngineJumpPlus](https://github.com/MUTED64/SearchEngineJumpPlus) forked after version 5.31.15.
 Originally it was created in Chinese language, so I translated it into English. Removed several Chinese websites and added new ones.
 
-## Instructions
+## Features
 
 ### Search Page Jump
 
