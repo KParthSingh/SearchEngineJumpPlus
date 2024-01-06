@@ -17,7 +17,7 @@ Originally it was created in Chinese language, so I translated it into English. 
 
 Once the script is enabled in the Script Manager, the jump bar will appear on supported search pages, allowing you to quickly jump to the appropriate search engine and perform a one-click search based on the current search box contents.
 
-! [SearchEngineJump](SearchEngineJump.png)
+![SearchEngineJump](SearchEngineJump.png)
 
 ### Crossword Search
 
