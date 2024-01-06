@@ -156,10 +156,10 @@
         ["Social", "sociality", true],
         ["Knowledge", "knowledge", true],
         ["Image", "image", true],
-        ["Scholar", "scholar", false],
         ["Shopping", "shopping", true],
-        ["Download", "download", false],
         ["News", "news", true],
+        ["Scholar", "scholar", false],
+        ["Download", "download", false],
         ["Other", "mine", false],
       ],
       engineList: engineList,
@@ -279,21 +279,6 @@
             this.modifyOutdatedSearchItems(
               "https://cn.bing.com/search?q=%s",
               "https://www.bing.com/search?q=%s"
-            );
-          }
-
-          // 5.31.11 更新
-          if (
-            this.#isVersionOutdated(this.#storedSettingData.version, "5.31.11")
-          ) {
-            this.addSearchItem(
-              {
-                name: "小红书",
-                url: "https://www.xiaohongshu.com/search_result/?keyword=%s",
-                favicon:
-                  "data:image/png;base64,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",
-              },
-              "sociality"
             );
           }
 
@@ -1392,20 +1377,20 @@
         var newDiv = document.createElement("div");
         newDiv.id = "newSearchBox";
         newDiv.style.cssText = "top:43%;opacity:0.1;";
-        newDiv.innerHTML = `<span>Name : </span><input id='iqxin-newTitle' placeholder='name' onfocus='this.select()' /> <br/><br/>
-             <span>链&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp&nbsp接 : </span><input id='iqxin-newLink' placeholder='必填' onfocus='this.select()' /> <br/><br/>
-             <span>图&nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp&nbsp标 : </span><input id='iqxin-newIcon' placeholder='选填,留空则自动获取' onfocus='this.select()' /> <br/><br/>
-             <span>打开方式 :
+        newDiv.innerHTML = `<span>Name : </span><input id='iqxin-newTitle' placeholder='Name required' onfocus='this.select()' /> <br/><br/>
+             <span>URL&nbsp;&nbsp;&nbsp: </span><input id='iqxin-newLink' placeholder='URL required' onfocus='this.select()' /> <br/><br/>
+             <span>Logo : </span><input id='iqxin-newIcon' placeholder='Optional, leave it blank to get it automatically.' onfocus='this.select()' /> <br/><br/>
+             <span>Open in :
              <select id="iqxin-newTarget" style="border-radius: 4px;border: none;padding: 2px 0 2px 2px">
-             <option value="default">新标签页打开</option>
-             <option value="newtab">当前页打开</option>
+             <option value="default">Current page</option>
+             <option value="newtab">New Tab</option>
              <select>
              </span>
              <br/><br/>
-             <span><a target='_blank' style='color:#999;' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>相关使用说明</a></span>
+             <span><a target='_blank' style='color:#999;' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>Instructions(change in future)</a></span>
              &nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp&nbsp;
-             <button id='addItemBoxEnter' class='addItemBoxEnter addItemBoxBtn iqxin-enterBtn'>确定</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
-             <button id='addItemBoxCancel' class='addItemBoxCancel addItemBoxBtn iqxin-closeBtn'>取消</button>`;
+             <button id='addItemBoxEnter' class='addItemBoxEnter addItemBoxBtn iqxin-enterBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
+             <button id='addItemBoxCancel' class='addItemBoxCancel addItemBoxBtn iqxin-closeBtn'>Close</button>`;
 
         this.ele.appendChild(newDiv);
         setTimeout(function () {
@@ -1545,14 +1530,14 @@
 
         newDiv.innerHTML =
           "" +
-          "<span>列表名称: </span><input id='iqxin-newSearchListName' onfocus='this.select()'>" +
+          "<span>List Name: </span><input id='iqxin-newSearchListName' onfocus='this.select()'>" +
           "<br><br>" +
-          "<span>内部名称: </span><input id='iqxin-newSearchListInnerName' onfocus='this.select()' value='" +
+          "<span>Internal Name: </span><input id='iqxin-newSearchListInnerName' onfocus='this.select()' value='" +
           hash +
           "'>" +
           "<br><br>" +
-          "<button id='addSearchListBoxEnter' class='addSearchListBoxEnter addItemBoxBtn'>确定</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp" +
-          "<button id='addSearchListBoxCancel' class='addSearchListBoxCancel addItemBoxBtn'>取消</button>" +
+          "<button id='addSearchListBoxEnter' class='addSearchListBoxEnter addItemBoxBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp" +
+          "<button id='addSearchListBoxCancel' class='addSearchListBoxCancel addItemBoxBtn'>Close</button>" +
           "";
         this.ele.appendChild(newDiv);
 
@@ -1631,7 +1616,7 @@
         var strblank;
         if (otarget) {
           strblank =
-            '<option value="default">新标签页打开</option><option value="newtab">当前页打开</option> ';
+            '<option value="default">Current page</option><option value="newtab">New Tab</option> ';
         } else {
           strblank =
             '<option value="default">Current page</option><option value="newtab" selected="selected">New Tab</option>';
