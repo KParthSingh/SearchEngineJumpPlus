@@ -40,6 +40,6 @@ At the end of the jump bar there is a settings button, click on it to enter the 
 ## Update history
 - Release 1.0
   
- - **Translation fully complete**
- - Added some links and removed some Chinese ones.
- - Added dark theme to configuration menu.
+-- **Translation fully complete**
+-- Added some links and removed some Chinese ones.
+-- Added dark theme to configuration menu.
