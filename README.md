@@ -38,8 +38,7 @@ At the end of the jump bar there is a settings button, click on it to enter the 
 ![Settings](Settings.png)
 
 ## Update history
-- Release 1.0
-  
--- **Translation fully complete**
--- Added some links and removed some Chinese ones.
--- Added dark theme to configuration menu.
+- Release 1.0 
+  - **Translation fully complete**
+  - Added some links and removed some Chinese ones.
+  - Added dark theme to configuration menu.
