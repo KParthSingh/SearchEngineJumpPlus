@@ -282,12 +282,12 @@ span.iqxin-additem.iqxin-set-active {
   position: fixed;
   z-index: 200000100;
   top: 50%;
-  left: 0%;
+  left: 50%;
   padding: 22px;
   background: rgb(29, 29, 29);
   border-radius: 4px;
   color: #e8e8e8;
-  margin: -149px -117px;
+  margin: -149px -170px;
 }
 #newSearchListBox input,
 #newSearchBox input {
@@ -295,6 +295,7 @@ span.iqxin-additem.iqxin-set-active {
   padding: 4px 0 4px 5px;
   border-radius: 4px;
   outline: none;
+  width: 300px;
 }
 #newSearchListBox input:focus,
 #newSearchBox input:focus {
