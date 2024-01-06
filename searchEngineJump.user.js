@@ -4,7 +4,6 @@
 // @contributor    KParthSingh
 // @description    This is like a International version of original chinese SearchEngineJumpPlus by https://github.com/MUTED64/SearchEngineJumpPlus
 // @version        1.0
-// @created        2011-07-02
  
 // @namespace      https://greasyfork.org/en/scripts/484068-searchenginejumpplus/
 // @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
@@ -1310,7 +1309,7 @@
         }, 500);
       }
       reset() {
-        if (confirm("将会删除用户设置！")) {
+        if (confirm("User settings will be reset！")) {
           GM_deleteValue("searchEngineJumpData");
           location.reload();
         }
