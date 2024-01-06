@@ -8,13 +8,14 @@
 </div>
 
 ## Project Description
-This project is like a International version of https://github.com/MUTED64/SearchEngineJumpPlus forked after version 5.31.15
+This project is like a International version of https://github.com/MUTED64/SearchEngineJumpPlus forked after version 5.31.15.
+Originally it was created in Chinese language, so I translated it into English. Removed several Chinese websites and added new ones.
 
 ## Instructions
 
 ### Search Page Jump
 
-After enabling the script in the script manager, when you visit a supported search page, the script's jump bar will be displayed on the page, and you can click the button to jump to the corresponding search engine, and automatically perform a quick one-click search according to the contents of the current search box.
+Once the script is enabled in the Script Manager, the jump bar will appear on supported search pages, allowing you to quickly jump to the appropriate search engine and perform a one-click search based on the current search box contents.
 
 ! [SearchEngineJump](SearchEngineJump.png)
 
