@@ -10,7 +10,7 @@
 // @namespace      https://greasyfork.org/en/scripts/454280-searchenginejumpplus
 // @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
 // @require        https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/toGBK.user.js
-// @require        https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/engineList.js
+// @require        https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/alpha/engineList.js
 // @require        https://greasyfork.org/scripts/456711-searchenginejumpplusrules/code/SearchEngineJumpPlusRules.js?version=1204556
 // @resource       GLOBAL_STYLE https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/GlobalStyle.css
 // @icon           data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFSElEQVR4nMWXX4hdVxXGf2vfe89kJg61ia0DYzMTMWnoQ0FJtKmtJsFixT8DBSmYtGMLgq0PCqMEKwmxYzSGyUPBB7XRNi0FC6JtwYovgcS0klJD8SHakoExYhLQFkwn9/aeOfv7fDi3SStJ5o4muN4O7L32b33rz94H/s8WS10cvR3yVQaY++wnkESkwDK2sMy1EwXDtzRRziBhu+dGDG48smSA5kUP//wmAFIkrNwiGMOsBzYAQwTzEEeBY8BJO1fYtF+4laGPv/i/Afz1C1sAYwngZiKmsDcDI0DrHUtL4DRwMGAmUnVcCtpHPsrQbS/1DZDe+VFHblKziIjYBjwD3Iu5ARBwBjgJnAkwMAa+z+ZZqXEX8VZg0T784aUDzH3uk0DtVQvlVsMjwGpMB3gauAu8ieB2YDPwxR5gF/gQ+MeoNUFzACI4d+imvgDOp0BVRWo2AW62eRi8wvY/wNtrgGhDL+7a/gIcBLYBu4HrsPdSzr8K/JlcLk2BaCQstSxN2VptuYO93an7WES0UyORGg1Wfu0QKivyQhfb56yhn4B3Ynew1kD1oDTfJF20vi8NYBvjMVubbWHrOdtPhwaAYPVvfs8Hf1u32bJbDtXVbgFvAj4AOgTGzhPhGMdV/wCvbtmAJSyttzRiuWv7CdttAlY/f/iimwdvfQGiAfmtczg/jnOJ8/txtRbnvgAu6FSPtg1AC3wGPAvgWGRYqiSowLwC1Ru4GoFyFPc3ZM8DfGPLB1jZXlhe74sS6AAc+O6vL+tg6LaX2LP/SSA6tkpcYeee36/0D/C7Ve9BwZs97iLMEMDAE5N07z1wSQebvl/y3KkAGDIUsrHpRp8ACeDGw38kZdPMPtrILhvZ1yZ5TZJxvnwuW40GzSSaDa1vJq1oJXVbKZ9qpv5qoO6Cqr5ULB+zfNrygOX7LS+PlCgeu+eimz/1w0yWaTTScIqYTEERcDoiXovFauddAAA22CeRDyKD/Bnkbd32PNgUj09S/GwrUMt+x14hiWVFI1LEVyPidggi4hfOnuv3nr8AEGC5sj1j+4TtAcu7i4HlDwLLqRawMmtmnidn6JYLGIa7C/mbwHeAgYATQexPjVCVxcZd7SUACDCEfRyznXoMr8Sawf4lcDdwI7AKWAdss/0r2dOyr6kFpCn7hiyPRlDY5mM7z10W4F1KFT+/p6ZwDkgT2HuN19Tz3yXWG+NnJ8uR9h0FSStSRAFBwAmbpu3xbP/T9rzkp2zvtt2RzcvfG15EAaC8/8m6FkgmpWdsTyD/COtv9esnj1haZXvEtiXP2d5jc6es+3qHv8/2uO1v2d4hedA2H/n2vxZX4LwS+78E1PcDqprAOPZao9Gxs5PNkc6dXUKnIuI1Z8+lRijLo8AR2+OWqeeBS8n7bE8bd2x4Zc97FwcAaP307vqyiXi7QzBi7OyXGel8GkJEBAFUWUREIXlnL/LCvgBheZ9h2lLHyvxp5rrFAZZiG3e16zliBm3vsD0lu6i5ja0awppWrjrKmeOPjAL/UQP/rf1h11BPJHckT/dkL+vDjeXC0pRy3qGcB22x9oHZKwcAcPTh5UimzrWnexGXlrCFlAvlakq5eiiX3eLtSXnFAABe3j1c/0PgTp1z77NUKmesjHMulKuttq9X/eq+sgAAx35wTZ0OqWNrWqr2KVelqoqcF3DOL1r5dStfHQCoW03K9ApuWrnam/PCnHN+StZDRHSK1jLgCnXBpeymr/8dS+SFbmH7eiu/TkQnNRrkqmL20XVXFwBg7QOzRASSsDJFaxndssPso+uu9tH92b8BowSyPc/iZtEAAAAASUVORK5CYII=
@@ -158,7 +158,6 @@
         ["Image", "image", true],
         ["Shopping", "shopping", true],
         ["News", "news", true],
-        ["Scholar", "scholar", false],
         ["Download", "download", false],
         ["Other", "mine", false],
       ],
@@ -1179,15 +1178,15 @@
 
         var btnStr2 =
           "<div>" +
-          "<span id='xin-reset' title='慎点,出厂重置'>Reset</span>" +
-          "<span id='xin-modification' title='edit 分享自己的配置或清空配置'>Configuration file</span>" +
+          "<span id='xin-reset' title='Be careful. This option resets settings'>Reset</span>" +
+          "<span id='xin-modification' title='Share or delete configuration file'>Configuration file</span>" +
           // "<span id='xin-importing' title='importing 导入更为专业的搜索引擎'>导入</span>" +
-          "<span id='xin-selectSearch' title='Only non-search pages will take effect, This setting requires to refresh the page'>" +
+          "<span id='xin-selectSearch' title='Only non-search pages will take effect, requires to refresh the page'>" +
           "<label>Word search<input id='iqxin-selectSearch' type='checkbox' name='' " +
           selectSearch_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-transtion' title='This setting requires to refresh the page'>" +
+          "<span id='xin-transtion' title='requires to refresh the page'>" +
           "<label>Animations<input id='iqxin-transtion' type='checkbox' name='' " +
           transition_checked +
           " style='vertical-align:middle;'></label>" +
@@ -1197,22 +1196,22 @@
           foldlist_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='iqxin-fixedTopS' title='fixedTop 当滚动页面时,固定到页面顶端。某些页面的样式存在问题'>" +
+          "<span id='iqxin-fixedTopS' title='Dev Note I am not sure what this option is supposed to accomplish.'>" +
           "<label>pin to top<input id='iqxin-fixedTop' type='checkbox' name='' " +
           fixedTop_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='iqxin-fixedTopUpward' title='After it is fixed to the top, it will only be displayed when scrolling upwards, This setting requires to refresh the page'>" +
+          "<span id='iqxin-fixedTopUpward' title='After it is fixed to the top, it will only be displayed when scrolling upwards, requires to refresh the page'>" +
           "<label>Pull-up display only<input id='iqxin-fixedTopUpward-item' type='checkbox' name='' " +
           fixedTopUpward_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-HideTheSameLink' title='隐藏同站链接,如果想在同一个搜索网站,但是想通过不同语言来搜索, 可以取消该选项'>" +
+          "<span id='xin-HideTheSameLink' title='Hide same-site links. If you want to search on the same search site but in different languages, you can uncheck this option.'>" +
           "<label>Hide same links<input id='iqxin-HideTheSameLink' type='checkbox' name='' " +
           HideTheSameLink_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-setBtnOpacity' title='设置按钮透明度,需要刷新页面'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
+          "<span id='xin-setBtnOpacity' title='Set button transparency, requires to refresh the page'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
           (settingData.setBtnOpacity < 0
             ? -settingData.setBtnOpacity
             : settingData.setBtnOpacity) +
@@ -1230,12 +1229,12 @@
           "<div class='btnEleLayer'>" +
           "<span class='feedback' title='(needs to change yet)'><a target='_blank' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>(change this)</a></span>" +
           "<span class='feedback' title='Give feedback on Github'><a target='_blank' href='https://github.com/KParthSingh/SearchEngineJumpPlus/'>GitHub</a></span>" +
-          "<span id='xin-allOpen' title='后台打开该搜索分类的所有网站'>" +
+          "<span id='xin-allOpen' title='Open all of the sites in this search category in the background'>" +
           "<label>One click search<input id='iqxin-allOpen-item' type='checkbox' name='' " +
           allOpen_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-centerDisplay' title='center 居中显示。主要是兼容AC-baidu:重定向优化百度搜狗谷歌搜索_去广告_favicon_双列'>Center：" +
+          "<span id='xin-centerDisplay' title='Force mode always keeps the toolbar centered'>Center：" +
           "<select id='iqxin-center'>" +
           "<option value='original'" +
           (settingData.center == 0 ? "selected" : "") +
@@ -1248,7 +1247,7 @@
           ">Automatic</option>" +
           "</select>" +
           "</span> " +
-          "<span id='xin-newtab' title='open newtab 是否采用新标签页打开的方式'>Open in：" +
+          "<span id='xin-newtab' title='Choose whether you want to open in a new tab or in the current page'>Open in：" +
           "<select id='iqxin-globalNewtab'>" +
           "<option value='globalDef'>current page</option>" +
           "<option value='globalNewtab'" +
@@ -1256,9 +1255,9 @@
           ">new tab</option>" +
           "</select>" +
           "</span> " +
-          "<span id='xin-addDel' title='add & del 增加新的或者删除现有的搜索'>Add / Delete</span> " +
-          "<span id='moreSet' title='more set'>Settings</span>" +
-          "<span id='xin-save' title='save & close'>Save & Close</span>" +
+          "<span id='xin-addDel' title='Add new or remove existing searches'>Add / Delete</span> " +
+          "<span id='moreSet' title='More settings'>Settings</span>" +
+          "<span id='xin-save' title='Save & Close'>Save & Close</span>" +
           "</div>";
         btnEle.innerHTML = btnStr;
         this.ele.appendChild(btnEle);
@@ -1736,53 +1735,51 @@
         }
       }
 
-      // 高级菜单,配置文件编辑界面
       editCodeBox() {
         console.log("原始数据： ", settingData);
         var userSetting = GM_getValue("searchEngineJumpData");
         var editbox = document.createElement("div");
-        // var sData =
         editbox.id = "iqxin-editCodeBox";
-        editbox.style.cssText =
-          "position:fixed;" +
-          "top:50%;left:50%;" +
-          "transform:translate(-50%,-50%);" +
-          "background:#333333;" +
-          "border-radius:4px;" +
-          "padding:10px 20px;";
+        var darkMode = new Style().isDarkMode();
+    
+        // Modify styles based on dark mode
+        if (darkMode) {
+            editbox.style.cssText =
+                "position:fixed;" +
+                "top:50%;left:50%;" +
+                "transform:translate(-50%,-50%);" +
+                "background:#333333;" +
+                "border-radius:10px;" +
+                "padding:10px 20px;";
+        } else {
+            // Styles for the default theme (light mode)
+            editbox.style.cssText =
+                "position:fixed;" +
+                "top:50%;left:50%;" +
+                "transform:translate(-50%,-50%);" +
+                "background:#DFDFDF;" +
+                "border-radius:10px;" +
+                "padding:10px 20px;";
+        }
+    
         var innerH =
-          " " +
-          "<p><span style='color:red;font-size:1.2em;'>! ! !</span></br>" +
-          "Here you have more options and more freedom,</br>" +
-          "but incorrect settings can cause the script to fail to run." +
-          "</p>" +
-          "<textarea wrap='off' cols='45' rows='20' style='overflow:auto;border-radius:4px;'>" +
-          JSON.stringify(userSetting, false, 4) +
-          "</textarea>" +
-          "<br>" +
-          "<button id='xin-reset'>Reset</button> &nbsp;&nbsp;&nbsp;" +
-          "<button id='xin-copyCode'>Copy</button> &nbsp;&nbsp;&nbsp;" +
-          "<button id='codeboxclose' class='iqxin-closeBtn'>Close</button> &nbsp;&nbsp;&nbsp;" +
-          "<button id='xin-codeboxsave' class='iqxin-enterBtn'>Save</button>" +
-          "";
+            " " +
+            "<p><span style='color:red;font-size:1.2em;'>! ! !</span></br>" +
+            "Here you have more options and more freedom,</br>" +
+            "but incorrect settings can cause the script to fail to run." +
+            "</p>" +
+            "<textarea wrap='off' cols='45' rows='20' style='overflow:auto;border-radius:4px;'>" +
+            JSON.stringify(userSetting, false, 4) +
+            "</textarea>" +
+            "<br>" +
+            "<button id='xin-reset'>Reset</button> &nbsp;&nbsp;&nbsp;" +
+            "<button id='xin-copyCode'>Copy</button> &nbsp;&nbsp;&nbsp;" +
+            "<button id='codeboxclose' class='iqxin-closeBtn'>Close</button> &nbsp;&nbsp;&nbsp;" +
+            "<button id='xin-codeboxsave' class='iqxin-enterBtn'>Save</button>" +
+            "";
         editbox.innerHTML = innerH;
         this.ele.appendChild(editbox);
-      }
-      editCodeBoxSave() {
-        var codevalue = document.querySelector(
-          "#iqxin-editCodeBox textarea"
-        ).value;
-        if (codevalue) {
-          GM_setValue("searchEngineJumpData", JSON.parse(codevalue));
-          // 刷新页面
-          setTimeout(function () {
-            location.reload();
-          }, 300);
-        } else {
-          // alert("输入为空");
-          this.reset();
-        }
-      }
+    }    
       editCodeBoxClose() {
         var box = document.querySelector("#iqxin-editCodeBox");
         if (box) {
