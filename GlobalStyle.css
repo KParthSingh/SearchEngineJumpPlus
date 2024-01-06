@@ -282,7 +282,7 @@ span.iqxin-additem.iqxin-set-active {
   position: fixed;
   z-index: 200000100;
   top: 50%;
-  left: 50%;
+  left: 0%;
   padding: 22px;
   background: rgb(29, 29, 29);
   border-radius: 4px;
