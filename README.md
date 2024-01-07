@@ -1,5 +1,5 @@
   <div class="row" align="center">
-<a href='https://www.microsoft.com/store/r/9PCSZTMTT55Z'><img src='Screenshots/GetItFromGreasyFork.png'alt='' />
+<a href='https://greasyfork.org/en/scripts/484068-searchenginejumpplus'><img src='Screenshots/GetItFromGreasyFork.png'alt='' />
   <a href='https://github.com/KParthSingh/SearchEngineJumpPlus/raw/master/searchEngineJump.user.js'><img src='https://github.com/Rise-Software/Rise-Media-Player/assets/74561130/60deb402-0c8e-4579-80e6-69cb7b19cd43'alt='Get it from GitHub' /></a>
 </div>
 
