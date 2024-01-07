@@ -8,6 +8,9 @@
 ## Project Description
 This project is like a International version of [original SearchEngineJumpPlus](https://github.com/MUTED64/SearchEngineJumpPlus) forked after version 5.31.15.
 Originally it was created in Chinese language, so I translated it into English. added new websites and Removed several Chinese ones.
+Also check out This [this script](https://greasyfork.org/en/scripts/789-select-text-inside-a-link-like-opera) it is cherry on top
+
+https://github.com/KParthSingh/SearchEngineJumpPlus/raw/master/searchEngineJump.user.js
 
 ## Features
 
