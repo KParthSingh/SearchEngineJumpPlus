@@ -7,22 +7,6 @@
 @author         KParthSingh
 ==/UserStyle== */
 
-/* Placeholder for dark theme styles */
-:root {
-  --background-color: #f5f5f5;
-  --text-color: #303030;
-}
-
-body[qxintheme="dark"] {
-  --background-color: #303030;
-  --text-color: #e0e0e0;
-}
-
-#newSearchBox {
-  background-color: var(--background-color);
-  color: var(--text-color);
-}
-
 #settingLayerMask {
   display: none;
   justify-content: center;
