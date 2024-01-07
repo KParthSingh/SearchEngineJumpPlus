@@ -1,16 +1,14 @@
-# SearchEngineJumpPlus+
-
-<div align="center">
-<a href="https://greasyfork.org/en/scripts/484068-searchenginejumpplus" target="_blank">
-<img src="https://img.shields.io/badge/Download-GreasyFork-blue?logo=Tampermonkey&style=for-the-badge" alt="GreasyFork"></a>
+  <div class="row" align="center">
+<a href='https://www.microsoft.com/store/r/9PCSZTMTT55Z'><img src='Screenshots/GetItFromGreasyFork.png'alt='' />
+  <a href='https://github.com/KParthSingh/SearchEngineJumpPlus/raw/master/searchEngineJump.user.js'><img src='https://github.com/Rise-Software/Rise-Media-Player/assets/74561130/60deb402-0c8e-4579-80e6-69cb7b19cd43'alt='Get it from GitHub' /></a>
 </div>
 
+# SearchEngineJumpPlus+
 ## Project Description
 This project is like a International version of [original SearchEngineJumpPlus](https://github.com/MUTED64/SearchEngineJumpPlus) forked after version 5.31.15.
 Originally it was created in Chinese language, so I translated it into English. added new websites and Removed several Chinese ones.
-Also check out This [this script](https://greasyfork.org/en/scripts/789-select-text-inside-a-link-like-opera) it is cherry on top
+Also check out This [this script](https://greasyfork.org/en/scripts/789-select-text-inside-a-link-like-opera)
 
-https://github.com/KParthSingh/SearchEngineJumpPlus/raw/master/searchEngineJump.user.js
 
 ## Features
 

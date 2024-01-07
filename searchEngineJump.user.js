@@ -1225,8 +1225,8 @@
  
         var btnStr =
           "<div class='btnEleLayer'>" +
-          "<span class='feedback' title='(needs to change yet)'><a target='_blank' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>(change this)</a></span>" +
           "<span class='feedback' title='Give feedback on Github'><a target='_blank' href='https://github.com/KParthSingh/SearchEngineJumpPlus/'>GitHub</a></span>" +
+          "<span class='feedback' title='Give feedback on Greasy Fork'><a target='_blank' href='https://greasyfork.org/en/scripts/484068-searchenginejumpplus'>Greasy Fork</a></span>" +
           "<span id='xin-allOpen' title='Open all of the sites in this search category in the background'>" +
           "<label>One click search<input id='iqxin-allOpen-item' type='checkbox' name='' " +
           allOpen_checked +
@@ -1384,7 +1384,7 @@
              <select>
              </span>
              <br/><br/>
-             <span><a target='_blank' style='color:#999;' href='https://greasyfork.org/en/scripts/454280-searchenginejumpplus'>Instructions(change in future)</a></span>
+             <span><a target='_blank' style='color:#999;' href='https://greasyfork.org/en/scripts/484068-searchenginejumpplus'>Instructions</a></span>
              &nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp&nbsp;
              <button id='addItemBoxEnter' class='addItemBoxEnter addItemBoxBtn iqxin-enterBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
              <button id='addItemBoxCancel' class='addItemBoxCancel addItemBoxBtn iqxin-closeBtn'>Close</button>`;
