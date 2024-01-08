@@ -1370,10 +1370,21 @@
       addItemBox() {
         this.isOnline();
         this.addItemBoxRemove();
- 
+      
         var newDiv = document.createElement("div");
         newDiv.id = "newSearchBox";
-        newDiv.style.cssText = "top:43%;opacity:0.1;";
+        newDiv.style.cssText = `
+          top: 43%;
+          background-color: #f5f5f5; /* Light background color */
+          color: #333; /* Dark text color */
+          /* Add other light mode styles here */
+        `;
+      
+        // Check for dark mode
+        if (this.isDarkMode()) {
+          newDiv.style.backgroundColor = '#333'; // Dark background color
+          newDiv.style.color = '#fff'; // Light text color
+        }
         newDiv.innerHTML = `<span>Name : </span><input id='iqxin-newTitle' placeholder='Name required' onfocus='this.select()' /> <br/><br/>
              <span>URL&nbsp;&nbsp;&nbsp: </span><input id='iqxin-newLink' placeholder='URL required' onfocus='this.select()' /> <br/><br/>
              <span>Logo : </span><input id='iqxin-newIcon' placeholder='Optional, leave it blank to get it automatically.' onfocus='this.select()' /> <br/><br/>
@@ -1384,17 +1395,35 @@
              <select>
              </span>
              <br/><br/>
-             <span><a target='_blank' style='color:#999;' href='https://greasyfork.org/en/scripts/484068-searchenginejumpplus'>Instructions</a></span>
+             <span><a target='_blank' style='color:#999;' href='https://github.com/KParthSingh/SearchEngineJumpPlus'>Instructions</a></span>
              &nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp&nbsp;
              <button id='addItemBoxEnter' class='addItemBoxEnter addItemBoxBtn iqxin-enterBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
              <button id='addItemBoxCancel' class='addItemBoxCancel addItemBoxBtn iqxin-closeBtn'>Close</button>`;
  
-        this.ele.appendChild(newDiv);
-        setTimeout(function () {
-          newDiv.style.cssText = "";
-        }, 10);
-        document.querySelector("#iqxin-newTitle").focus();
-      }
+             this.ele.appendChild(newDiv);
+             document.querySelector("#iqxin-newTitle").focus();
+           }
+           
+           // Function to check if the page is in dark mode
+           isDarkMode() {
+             function getContrastYIQ(rgbColor) {
+               let r, g, b, a;
+               rgbColor = rgbColor.match(/rgba?\(([^)]+)\)/)[1];
+               rgbColor = rgbColor.split(/ *, */).map(Number);
+               [r, g, b, a] = rgbColor;
+               if (a < 0.5) {
+                 return false;
+               }
+               const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+               return yiq < 128;
+             }
+           
+             return (
+               document.getElementsByTagName("meta")?.["color-scheme"]?.content === "dark" ||
+               getContrastYIQ(getComputedStyle(document.body).backgroundColor)
+             );
+           }
+      
       // 内部逻辑,：添加新的搜索
       addItemEnger() {
         var otitle, olink, oimg, oblank;
@@ -1520,11 +1549,22 @@
         }
         var newDiv = document.createElement("div");
         newDiv.id = "newSearchListBox";
- 
+        newDiv.style.cssText = `
+          background-color: #f5f5f5; /* Lighter background color */
+          color: #333; /* Dark text color */
+          /* Add other light mode styles here */
+        `;
+      
+        // Check for dark mode
+        if (this.isDarkMode()) {
+          newDiv.style.backgroundColor = '#333'; // Dark background color
+          newDiv.style.color = '#fff'; // Light text color
+          // Add other dark mode styles here
+        }
+      
         var myDate = new Date();
-        // var hash = "user" + myDate.getFullYear() + myDate.getMonth() + myDate.getDate() + myDate.getHours() +myDate.getMinutes()+myDate.getSeconds();
         var hash = "user" + myDate.getTime();
- 
+      
         newDiv.innerHTML =
           "" +
           "<span>List Name: </span><input id='iqxin-newSearchListName' onfocus='this.select()'>" +
@@ -1533,19 +1573,19 @@
           hash +
           "'>" +
           "<br><br>" +
-          "<button id='addSearchListBoxEnter' class='addSearchListBoxEnter addItemBoxBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp" +
-          "<button id='addSearchListBoxCancel' class='addSearchListBoxCancel addItemBoxBtn'>Close</button>" +
+          "<button id='addSearchListBoxEnter' class='addSearchListBoxEnter addItemBoxBtn iqxin-enterBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp" +
+          "<button id='addSearchListBoxCancel' class='addSearchListBoxCancel addItemBoxBtn iqxin-closeBtn'>Close</button>" +
           "";
+      
         this.ele.appendChild(newDiv);
- 
+      
         document.querySelector("#iqxin-newSearchListName").focus();
       }
+      
       addSearchListEnger() {
         var name = document.querySelector("#iqxin-newSearchListName").value;
-        var innerName = document.querySelector(
-          "#iqxin-newSearchListInnerName"
-        ).value;
- 
+        var innerName = document.querySelector("#iqxin-newSearchListInnerName").value;
+      
         if (innerName.length === 0) {
           alert("内部名称不能为空");
           return;
@@ -1553,7 +1593,7 @@
         if (name.length === 0) {
           name = innerName;
         }
- 
+      
         var odiv = document.createElement("div");
         odiv.id = innerName;
         odiv.className = "iqxin-items";
@@ -1580,20 +1620,19 @@
           '<span class="iqxin-additem iqxin-set-active">+</span>' +
           "</div>" +
           "";
- 
-        // this.boxClose("#newSearchListBox");
+      
         this.addItemBoxRemove("#newSearchListBox");
- 
+      
         var btnEle = document.querySelector("#btnEle");
         btnEle.parentNode.insertBefore(odiv, btnEle);
       }
- 
+      
       boxClose(ele) {
         var odiv = document.querySelector(ele);
         if (odiv) {
           odiv.parentNode.removeChild(odiv);
         }
-      }
+      }      
  
       // 界面 框：修改框
       addEditBox(e) {
@@ -1626,9 +1665,20 @@
  
         var newDiv = document.createElement("div");
         newDiv.id = "newSearchBox";
-        // 从鼠标点击所在的项目展开菜单(2021-03-16,从上线至今,动画一直有卡顿现象)
-        // newDiv.style.cssText = "top:"+(e.screenY-120) +"px;left:"+(e.screenX-140) +"px;";
-        newDiv.style.cssText = "top:43%;opacity:0.1;";
+        newDiv.style.cssText = `
+          top: 43%;
+          background-color: #f5f5f5; /* Lighter background color */
+          color: #333; /* Dark text color */
+          /* Add other light mode styles here */
+        `;
+        
+        // Check for dark mode
+        if (this.isDarkMode()) {
+          newDiv.style.backgroundColor = '#333'; // Dark background color
+          newDiv.style.color = '#fff'; // Light text color
+          // Add other dark mode styles here
+        }
+        
         var innerHTML = `
           <span>Name : </span><input id="iqxin-newTitle" placeholder="Name required" onfocus="this.select()" value="${otitle}" /> <br/><br/>
           <span>URL&nbsp;&nbsp;&nbsp: </span><input id="iqxin-newLink" placeholder="URL required" onfocus="this.select()" value="${olink}" /> <br/><br/>
@@ -1644,14 +1694,12 @@
             <button id="editItemBoxEnter" class="editItemBoxEnter addItemBoxBtn iqxin-enterBtn">Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
           <button id="addItemBoxCancel" class="addItemBoxCancel addItemBoxBtn iqxin-closeBtn">Close</button>
           `;
- 
+        
         newDiv.innerHTML = innerHTML;
- 
+        
         this.ele.appendChild(newDiv);
-        setTimeout(function () {
-          newDiv.style.cssText = "";
-        }, 10);
-        document.querySelector("#iqxin-newTitle").select();
+        document.querySelector("#iqxin-newTitle").focus();
+        
       }
       addEditBoxEnger() {
         var otitle, olink, oimg, oblank, ogbk;
