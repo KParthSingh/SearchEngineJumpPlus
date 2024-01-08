@@ -299,8 +299,15 @@ span.iqxin-additem.iqxin-set-active {
 }
 #newSearchListBox input:focus,
 #newSearchBox input:focus {
-  background: #f1d2d2;
-  transition: 0.5s;
+  background: var(--background-active-enable-qxin); /* Default theme background color for focused input */
+  transition: 0.5s; /* Transition effect */
+}
+
+/* Apply dark theme colors for focused input boxes when the dark mode is active */
+body[qxintheme="dark"] #newSearchListBox input:focus,
+body[qxintheme="dark"] #newSearchBox input:focus {
+  background: var(--background-active-disable-qxin); /* Dark theme background color for focused input */
+  /* Add other styles for dark mode */
 }
 .addItemBoxBtn {
   cursor: pointer;
