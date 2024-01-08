@@ -297,27 +297,10 @@ span.iqxin-additem.iqxin-set-active {
   outline: none;
   width: 250px;
 }
-/* Define variables for different theme colors */
-:root {
-  --light-theme-bg: #f1d2d2; /* Light theme background color */
-  --dark-theme-bg: #333; /* Dark theme background color */
-  /* Add other theme colors here */
-}
-
-/* Apply theme-specific colors for focused input boxes */
 #newSearchListBox input:focus,
 #newSearchBox input:focus {
-  background: var(--light-theme-bg); /* Default to light theme background color */
-  transition: 0.5s; /* Transition effect */
-}
-
-/* Apply dark theme colors when the dark mode is active */
-body[qxintheme="dark"] #newSearchListBox input:focus,
-body[qxintheme="dark"] #newSearchBox input:focus {
-  background: var(--dark-theme-bg); /* Change to dark theme background color */
-  /* Add other styles for dark mode */
-}
-
+  background: #f1d2d2;
+  transition: 0.5s;
 }
 .addItemBoxBtn {
   cursor: pointer;
