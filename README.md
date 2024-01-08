@@ -41,6 +41,7 @@ At the end of the jump bar there is a settings button, click on it to enter the 
   - Added dark/light theme are implemented in addItemBox, addEditBox and addSearchListBox
   - Now active text boxes also follow dark/light theme system
   - Fix: Save and close button animations in addSearchListBox 
+  - removed a more Chinese links
 
 - Release 1.0 
   - **Translation fully complete**
