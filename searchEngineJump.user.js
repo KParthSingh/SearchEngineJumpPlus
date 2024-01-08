@@ -3,7 +3,7 @@
 // @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改) & KParthSingh
 // @contributor    KParthSingh
 // @description    This is like a International version of original chinese SearchEngineJumpPlus by https://github.com/MUTED64/SearchEngineJumpPlus
-// @version        1.0
+// @version        1.01
  
 // @namespace      https://greasyfork.org/en/scripts/484068-searchenginejumpplus/
 // @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
