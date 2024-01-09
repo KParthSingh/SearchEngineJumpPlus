@@ -557,7 +557,7 @@ body[qxintheme="dark"] {
   color: var(--glass-hover-color);
 }
 .sej-engine:hover {
-  background-color: var(--background-hover-color-qxin);
+  background-color: var(--glass-hover-color);
 }
 .sej-drop-list > .sej-engine {
   display: flex;
