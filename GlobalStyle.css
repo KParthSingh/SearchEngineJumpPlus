@@ -454,9 +454,10 @@ span#setBtn:hover {
   color: var(--glass-font-color);
   background: var(--glass-background);
   backdrop-filter: blur(11.6px);
-  -webkit-backdrop-filter: blur(11.6px);
   width: max-content !important;
   border-radius: 8px;
+  border-width: thin;
+  border-color: var(--border-color-sej);
   overflow: hidden;
   box-shadow: 0 0 0.6em var(--box-shadow-color-sej);
   height: fit-content;
@@ -499,6 +500,7 @@ body {
 
   --glass-background: rgba(233, 233, 233, 0.41);
   --glass-font-color: #000000;
+  --glass-border-color: rgba(233, 233, 233, 0.41);
 }
 body[qxintheme="dark"] {
   --font-color-qxin: #bdc1bc;
@@ -515,6 +517,7 @@ body[qxintheme="dark"] {
 
   --glass-background: rgba(40, 40, 40, 0.41);
   --glass-font-color: #ffffff;
+  -glass-border-color: rgba(40, 40, 40, 0.41);
 }
 /* 滑词搜索样式 */
 #sej-container.selectSearch {
