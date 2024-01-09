@@ -450,6 +450,15 @@ span#setBtn:hover {
 #setBtn:hover svg {
   transform: rotate(-30deg); /* Adjust the angle as desired */
 }
+/* Add a new animation for the hover effect on icons */
+@keyframes sejrotate {
+  from {
+    transform: rotate(0); /* Initial state, no rotation */
+  }
+  to {
+    transform: rotate(-10deg); /* Rotate to the left by 10 degrees */
+  }
+}
 #sej-container {
   display: flex;
   align-items: center;
@@ -473,6 +482,12 @@ span#setBtn:hover {
   flex-wrap: wrap;
   justify-content: center;
   user-select: none;
+}
+/* Apply hover animation only to icons */
+#sej-container .sej-engine-icon:hover {
+  animation-name: sejrotate; /* Apply the new rotation animation on icon hover */
+  animation-duration: 0.3s; /* Duration for the rotation animation */
+  animation-timing-function: ease-in-out; /* Timing function for the animation */
 }
 /* 给用户的提示 */
 #iqixn-global-tip {
