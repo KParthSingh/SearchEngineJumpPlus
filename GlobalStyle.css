@@ -429,6 +429,19 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
 .xin-importing-item {
   cursor: pointer;
 }
+@keyframes iconAnimation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Apply the animation to the #setBtn */
 #setBtn {
   transition: 0.5s;
   padding: 0 1em;
@@ -436,6 +449,8 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
   align-items: center;
   cursor: pointer;
   display: flex;
+  /* Apply the animation */
+  animation: iconAnimation 1.5s ease-in-out infinite; /* Adjust duration and timing function as needed */
 }
 span#setBtn:hover {
   opacity: 1;
