@@ -501,7 +501,7 @@ body {
   --glass-background: rgba(255, 255, 255, 0.5);
   --glass-font-color: #000000;
   --glass-border-color: rgba(255, 255, 255, 0.5);
-  --glass-hover-color: rgba(255, 255, 255, 0.2);
+  --glass-hover-color: rgba(255, 255, 255, 0.4);
 }
 body[qxintheme="dark"] {
   --font-color-qxin: #bdc1bc;
@@ -519,7 +519,7 @@ body[qxintheme="dark"] {
   --glass-background: rgba(40, 40, 40, 0.5);
   --glass-font-color: #ffffff;
   --glass-border-color: rgba(40, 40, 40, 0.41);
-  --glass-hover-color: rgba(80, 80, 80, 0.2);
+  --glass-hover-color: rgba(80, 80, 80, 0.4);
 }
 /* 滑词搜索样式 */
 #sej-container.selectSearch {
@@ -567,6 +567,9 @@ body[qxintheme="dark"] {
 .sej-engine-icon {
   width: 16px;
   margin: 0;
+}
+.sej-engine-icon:hover{
+  transform: scale(1.1);
 }
 
 .sej-drop-list {
