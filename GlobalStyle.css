@@ -501,7 +501,7 @@ body {
   --glass-background: rgba(255, 255, 255, 0.5);
   --glass-font-color: #000000;
   --glass-border-color: rgba(255, 255, 255, 0.5);
-  --glass-hover-color: rgba(255, 255, 255, 0.65);
+  --glass-hover-color: rgba(255, 255, 255, 0.2);
 }
 body[qxintheme="dark"] {
   --font-color-qxin: #bdc1bc;
@@ -516,10 +516,10 @@ body[qxintheme="dark"] {
   --box-shadow-color-sej: hsla(0, 0%, 70%, 10%);
   --border-color-sej: #3b4547;
 
-  --glass-background: rgba(40, 40, 40, 0.41);
+  --glass-background: rgba(40, 40, 40, 0.5);
   --glass-font-color: #ffffff;
   --glass-border-color: rgba(40, 40, 40, 0.41);
-  --glass-hover-color: rgba(80, 80, 80, 0.6);
+  --glass-hover-color: rgba(80, 80, 80, 0.2);
 }
 /* 滑词搜索样式 */
 #sej-container.selectSearch {
@@ -544,7 +544,7 @@ body[qxintheme="dark"] {
   align-items: center;
   height: 2.6em;
   text-decoration: none !important;
-  color: var(--font-color-qxin) !important;
+  color: var(--glass-font-color) !important;
   cursor: pointer;
 }
 .sej-drop-list a:visited,
@@ -557,7 +557,7 @@ body[qxintheme="dark"] {
   color: var(--glass-hover-color);
 }
 .sej-engine:hover {
-  background-color: var(--glass-hover-color);
+  background-color: var(--background-hover-color-qxin);
 }
 .sej-drop-list > .sej-engine {
   display: flex;
