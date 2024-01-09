@@ -450,15 +450,16 @@ span#setBtn:hover {
   font-size: 13px;
   font-family: sans-serif;
   transform-origin: top center;
-  animation: sejopen 0.3s;
-  background: rgba(0, 0, 0, 0.22);
+  animation: sejopen 0.2s;
+  color: var(--glass-font-color);
+  background: var(--glass-background);
   backdrop-filter: blur(11.6px);
   -webkit-backdrop-filter: blur(11.6px);
   width: max-content !important;
-  border-radius: 16px;
+  border-radius: 8px;
   border-width: thin;
   border-style: solid;
-  border: 1px solid rgba(0, 0, 0, 0.42);
+  border-color: var(--border-color-sej);
   overflow: hidden;
   box-shadow: 0 0 0.6em var(--box-shadow-color-sej);
   height: fit-content;
@@ -498,6 +499,9 @@ body {
   --background-setting-qxin: #fff;
   --box-shadow-color-sej: hsla(0, 0%, 0%, 7%);
   --border-color-sej: #e1e6ea;
+
+  --glass-background: rgba(233, 233, 233, 0.41);
+  --glass-font-color: #000000;
 }
 body[qxintheme="dark"] {
   --font-color-qxin: #bdc1bc;
@@ -511,6 +515,9 @@ body[qxintheme="dark"] {
   --background-setting-qxin: #202124;
   --box-shadow-color-sej: hsla(0, 0%, 70%, 10%);
   --border-color-sej: #3b4547;
+
+  --glass-background: rgba(40, 40, 40, 0.41);
+  --glass-font-color: #ffffff;
 }
 /* 滑词搜索样式 */
 #sej-container.selectSearch {
