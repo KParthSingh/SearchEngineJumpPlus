@@ -465,7 +465,7 @@ span#setBtn:hover {
   position: relative;
   z-index: 2;
   padding: 0;
-  font-size: 13px;
+  font-size: 14px;
   font-family: sans-serif;
   transform-origin: top center;
   animation: sejopen 0.2s;
