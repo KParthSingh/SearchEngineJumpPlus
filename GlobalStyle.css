@@ -429,6 +429,7 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
 .xin-importing-item {
   cursor: pointer;
 }
+/* Define keyframes for the animation */
 @keyframes iconAnimation {
   0% {
     transform: scale(1);
@@ -441,17 +442,21 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
   }
 }
 
-/* Apply the animation to the #setBtn */
+/* Apply the animation when hovering over #setBtn */
 #setBtn {
-  transition: 0.5s;
   padding: 0 1em;
   height: 2.6em;
   align-items: center;
   cursor: pointer;
   display: flex;
-  /* Apply the animation */
+  transition: transform 0.5s;
+}
+
+/* Apply the animation only on hover */
+#setBtn:hover {
   animation: iconAnimation 1.5s ease-in-out infinite; /* Adjust duration and timing function as needed */
 }
+
 span#setBtn:hover {
   opacity: 1;
   background-color: var(--background-hover-color-qxin);
