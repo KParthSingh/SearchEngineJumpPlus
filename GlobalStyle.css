@@ -563,15 +563,15 @@ body[qxintheme="dark"] {
   display: flex;
   justify-content: flex-start;
 }
-
 .sej-engine-icon {
   width: 16px;
   margin: 0;
-}
-.sej-engine-icon:hover{
-  transform: scale(1.1);
+  transition: transform 0.3s ease-in-out; /* Adding transition for smooth animation */
 }
 
+.sej-engine-icon:hover {
+  transform: scale(1.2); /* Scale the icon slightly on hover */
+}
 .sej-drop-list {
   position: absolute;
   display: none;
