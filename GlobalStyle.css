@@ -430,7 +430,7 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
   cursor: pointer;
 }
 /* Define keyframes for the animation */
-@keyframes iconAnimation {
+@keyframes iconScale {
   0% {
     transform: scale(1);
   }
@@ -442,19 +442,14 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
   }
 }
 
-/* Apply the animation when hovering over #setBtn */
-#setBtn {
-  padding: 0 1em;
-  height: 2.6em;
-  align-items: center;
-  cursor: pointer;
-  display: flex;
+/* Apply the animation to the #setBtn icon */
+#setBtn svg {
   transition: transform 0.5s;
 }
 
 /* Apply the animation only on hover */
-#setBtn:hover {
-  animation: iconAnimation 1.5s ease-in-out infinite; /* Adjust duration and timing function as needed */
+#setBtn:hover svg {
+  animation: iconScale 1.5s ease-in-out infinite; /* Adjust duration and timing function as needed */
 }
 
 span#setBtn:hover {
