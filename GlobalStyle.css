@@ -457,7 +457,7 @@ span#setBtn:hover {
   width: max-content !important;
   border-radius: 8px;
   border-width: thin;
-  border-color: var(--border-color-sej);
+  border-color: var(--glass-border-color);
   overflow: hidden;
   box-shadow: 0 0 0.6em var(--box-shadow-color-sej);
   height: fit-content;
@@ -498,9 +498,9 @@ body {
   --box-shadow-color-sej: hsla(0, 0%, 0%, 7%);
   --border-color-sej: #e1e6ea;
 
-  --glass-background: rgba(233, 233, 233, 0.41);
+  --glass-background: rgba(255, 255, 255, 0.623);
   --glass-font-color: #000000;
-  --glass-border-color: rgba(233, 233, 233, 0.41);
+  --glass-border-color: rgba(255, 255, 255, 0.623);
 }
 body[qxintheme="dark"] {
   --font-color-qxin: #bdc1bc;
@@ -517,7 +517,7 @@ body[qxintheme="dark"] {
 
   --glass-background: rgba(40, 40, 40, 0.41);
   --glass-font-color: #ffffff;
-  -glass-border-color: rgba(40, 40, 40, 0.41);
+  --glass-border-color: rgba(40, 40, 40, 0.41);
 }
 /* 滑词搜索样式 */
 #sej-container.selectSearch {
