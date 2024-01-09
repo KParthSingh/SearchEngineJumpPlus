@@ -146,6 +146,12 @@ const searchEngineJumpPlusEngines = {
       favicon:
         "",
     },
+    {
+      name: "Shhhh!",
+      url: "PlD",
+      favicon:
+        "",
+    },
   ],
   shopping: [
     {
