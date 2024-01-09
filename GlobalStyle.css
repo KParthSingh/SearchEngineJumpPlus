@@ -457,9 +457,6 @@ span#setBtn:hover {
   -webkit-backdrop-filter: blur(11.6px);
   width: max-content !important;
   border-radius: 8px;
-  border-width: thin;
-  border-style: solid;
-  border-color: var(--border-color-sej);
   overflow: hidden;
   box-shadow: 0 0 0.6em var(--box-shadow-color-sej);
   height: fit-content;
