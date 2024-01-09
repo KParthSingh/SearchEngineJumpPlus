@@ -429,32 +429,26 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
 .xin-importing-item {
   cursor: pointer;
 }
-/* Define keyframes for the animation */
-@keyframes iconScale {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
+#setBtn {
+  transition: 0.5s;
+  padding: 0 1em;
+  height: 2.6em;
+  align-items: center;
+  cursor: pointer;
+  display: flex;
 }
-
-/* Apply the animation to the #setBtn icon */
-#setBtn svg {
-  transition: transform 0.5s;
-}
-
-/* Apply the animation only on hover */
-#setBtn:hover svg {
-  animation: iconScale 1.5s ease-in-out infinite; /* Adjust duration and timing function as needed */
-}
-
 span#setBtn:hover {
   opacity: 1;
   background-color: var(--background-hover-color-qxin);
+  
+}
+#setBtn svg {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Apply the rotation when hovering */
+#setBtn:hover svg {
+  transform: rotate(-10deg); /* Adjust the angle as desired */
 }
 #sej-container {
   display: flex;
