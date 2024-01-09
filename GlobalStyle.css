@@ -498,9 +498,10 @@ body {
   --box-shadow-color-sej: hsla(0, 0%, 0%, 7%);
   --border-color-sej: #e1e6ea;
 
-  --glass-background: rgba(255, 255, 255, 0.623);
+  --glass-background: rgba(255, 255, 255, 0.5);
   --glass-font-color: #000000;
-  --glass-border-color: rgba(255, 255, 255, 0.623);
+  --glass-border-color: rgba(255, 255, 255, 0.5);
+  --glass-hover-color: rgba(255, 255, 255, 0.65);
 }
 body[qxintheme="dark"] {
   --font-color-qxin: #bdc1bc;
@@ -518,6 +519,7 @@ body[qxintheme="dark"] {
   --glass-background: rgba(40, 40, 40, 0.41);
   --glass-font-color: #ffffff;
   --glass-border-color: rgba(40, 40, 40, 0.41);
+  --glass-hover-color: rgba(80, 80, 80, 0.6);
 }
 /* 滑词搜索样式 */
 #sej-container.selectSearch {
@@ -552,7 +554,7 @@ body[qxintheme="dark"] {
 #sej-container a:link,
 #sej-container a:visited,
 #sej-container a:hover {
-  color: var(--font-color-qxin);
+  color: var(--glass-hover-color);
 }
 .sej-engine:hover {
   background-color: var(--background-hover-color-qxin);
