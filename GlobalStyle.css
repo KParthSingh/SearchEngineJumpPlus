@@ -443,12 +443,12 @@ span#setBtn:hover {
   
 }
 #setBtn svg {
-  transition: transform 0.3s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 /* Apply the rotation when hovering */
 #setBtn:hover svg {
-  transform: rotate(-10deg); /* Adjust the angle as desired */
+  transform: rotate(-30deg); /* Adjust the angle as desired */
 }
 #sej-container {
   display: flex;
