@@ -1,21 +1,20 @@
   <div class="row" align="center">
-<a href='https://greasyfork.org/en/scripts/484068-searchenginejumpplus'><img src='Screenshots/GetItFromGreasyFork.png'alt='' />
+<a href='https://greasyfork.org/en/scripts/484068-searchenginejumpplus'><img src='Screenshots/GetItFromGreasyFork.png'alt='Get it from Greasy Fork' /> 
+<a href='https://github.com/KParthSingh/SearchEngineJumpPlus/raw/master/searchEngineJump.user.js'><img src='https://github.com/Rise-Software/Rise-Media-Player/assets/74561130/60deb402-0c8e-4579-80e6-69cb7b19cd43'alt='Get it from GitHub' />
 </div>
 
-# SearchEngineJumpPlus+
+
+# SearchEngine JumpBar
 ## Project Description
 This project is like a International version of [original SearchEngineJumpPlus](https://github.com/MUTED64/SearchEngineJumpPlus) forked after version 5.31.15.
 Originally it was created in Chinese language, so I translated it into English. added new websites and Removed several Chinese ones.
-Also check out This [this script](https://greasyfork.org/en/scripts/789-select-text-inside-a-link-like-opera)
-
-
-## Features
+Also check out this [script](https://greasyfork.org/en/scripts/789-select-text-inside-a-link-like-opera)
 
 ### Jump Search Page
 
 Once the script is enabled in the Script Manager, the jump bar will appear on supported search pages, allowing you to quickly jump to the appropriate search engine and perform a one-click search based on the current search box contents.
 
-![SearchEngineJump](Screenshots/SearchEngineJump.png)
+![jumpBar](Screenshots/Jumpbar.png)
 
 ### Crossword Search
 
@@ -35,15 +34,12 @@ At the end of the jump bar there is a settings button, click on it to enter the 
 
 ![Settings](Screenshots/Settings.png)
 
-## Update history
-
-- Release 1.01
-  - Added dark/light theme are implemented in addItemBox, addEditBox and addSearchListBox
-  - Now active text boxes also follow dark/light theme system
-  - Fix: Save and close button animations in addSearchListBox 
-  - removed more Chinese links
-
-- Release 1.0 
-  - **Translation fully complete**
-  - Added some links and removed some Chinese ones.
-  - Added dark theme to configuration menu.
+## Current release 1.1
+- What's new
+  - Changed the position of reset button to the upper list
+  - Gave Jumpbar a sexy glassy look
+  - Added a hover effect that makes Jumpbar items stand out
+  - Added a rotating to the setting icon when hovered over
+  - Refreshed 15 logos
+- fixes
+  - Made the buttons in configuration menu design consistent

@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name           SearchEngineJumpPlus
-// @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改) & KParthSingh
+// @name           SearchEngineJumpPlus International
+// @author         KParthSingh & NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改)
 // @contributor    KParthSingh
 // @description    This is like a International version of original chinese SearchEngineJumpPlus by https://github.com/MUTED64/SearchEngineJumpPlus
-// @version        1.01
+// @version        1.1
  
 // @namespace      https://greasyfork.org/en/scripts/484068-searchenginejumpplus/
 // @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
 // @require        https://greasyfork.org/scripts/408009-togbk/code/toGBK.js?version=832799
-// @require        https://update.greasyfork.org/scripts/484066/1308270/EngineListForSearchEngineJumpPlus.js
+// @require        https://gist.githubusercontent.com/KParthSingh/8d0b575a1e6c966472b0f7c792c6bd09/raw/85456f3db321db7d446a0540dbf688e402688c7c/gistfile1.txt
 // @require        https://update.greasyfork.org/scripts/484072/1307338/RulesForSearchEngineJumpPlus.js
-// @resource       GLOBAL_STYLE https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/GlobalStyle.css
+// @resource       GLOBAL_STYLE https://gist.githubusercontent.com/KParthSingh/720d29fbfcbfa7188a55c0c6da61edba/raw/365ddd78adb7830677c0b72e1eba7b744a16f84c/gistfile1.txt
 // @icon           data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFSElEQVR4nMWXX4hdVxXGf2vfe89kJg61ia0DYzMTMWnoQ0FJtKmtJsFixT8DBSmYtGMLgq0PCqMEKwmxYzSGyUPBB7XRNi0FC6JtwYovgcS0klJD8SHakoExYhLQFkwn9/aeOfv7fDi3SStJ5o4muN4O7L32b33rz94H/s8WS10cvR3yVQaY++wnkESkwDK2sMy1EwXDtzRRziBhu+dGDG48smSA5kUP//wmAFIkrNwiGMOsBzYAQwTzEEeBY8BJO1fYtF+4laGPv/i/Afz1C1sAYwngZiKmsDcDI0DrHUtL4DRwMGAmUnVcCtpHPsrQbS/1DZDe+VFHblKziIjYBjwD3Iu5ARBwBjgJnAkwMAa+z+ZZqXEX8VZg0T784aUDzH3uk0DtVQvlVsMjwGpMB3gauAu8ieB2YDPwxR5gF/gQ+MeoNUFzACI4d+imvgDOp0BVRWo2AW62eRi8wvY/wNtrgGhDL+7a/gIcBLYBu4HrsPdSzr8K/JlcLk2BaCQstSxN2VptuYO93an7WES0UyORGg1Wfu0QKivyQhfb56yhn4B3Ynew1kD1oDTfJF20vi8NYBvjMVubbWHrOdtPhwaAYPVvfs8Hf1u32bJbDtXVbgFvAj4AOgTGzhPhGMdV/wCvbtmAJSyttzRiuWv7CdttAlY/f/iimwdvfQGiAfmtczg/jnOJ8/txtRbnvgAu6FSPtg1AC3wGPAvgWGRYqiSowLwC1Ru4GoFyFPc3ZM8DfGPLB1jZXlhe74sS6AAc+O6vL+tg6LaX2LP/SSA6tkpcYeee36/0D/C7Ve9BwZs97iLMEMDAE5N07z1wSQebvl/y3KkAGDIUsrHpRp8ACeDGw38kZdPMPtrILhvZ1yZ5TZJxvnwuW40GzSSaDa1vJq1oJXVbKZ9qpv5qoO6Cqr5ULB+zfNrygOX7LS+PlCgeu+eimz/1w0yWaTTScIqYTEERcDoiXovFauddAAA22CeRDyKD/Bnkbd32PNgUj09S/GwrUMt+x14hiWVFI1LEVyPidggi4hfOnuv3nr8AEGC5sj1j+4TtAcu7i4HlDwLLqRawMmtmnidn6JYLGIa7C/mbwHeAgYATQexPjVCVxcZd7SUACDCEfRyznXoMr8Sawf4lcDdwI7AKWAdss/0r2dOyr6kFpCn7hiyPRlDY5mM7z10W4F1KFT+/p6ZwDkgT2HuN19Tz3yXWG+NnJ8uR9h0FSStSRAFBwAmbpu3xbP/T9rzkp2zvtt2RzcvfG15EAaC8/8m6FkgmpWdsTyD/COtv9esnj1haZXvEtiXP2d5jc6es+3qHv8/2uO1v2d4hedA2H/n2vxZX4LwS+78E1PcDqprAOPZao9Gxs5PNkc6dXUKnIuI1Z8+lRijLo8AR2+OWqeeBS8n7bE8bd2x4Zc97FwcAaP307vqyiXi7QzBi7OyXGel8GkJEBAFUWUREIXlnL/LCvgBheZ9h2lLHyvxp5rrFAZZiG3e16zliBm3vsD0lu6i5ja0awppWrjrKmeOPjAL/UQP/rf1h11BPJHckT/dkL+vDjeXC0pRy3qGcB22x9oHZKwcAcPTh5UimzrWnexGXlrCFlAvlakq5eiiX3eLtSXnFAABe3j1c/0PgTp1z77NUKmesjHMulKuttq9X/eq+sgAAx35wTZ0OqWNrWqr2KVelqoqcF3DOL1r5dStfHQCoW03K9ApuWrnam/PCnHN+StZDRHSK1jLgCnXBpeymr/8dS+SFbmH7eiu/TkQnNRrkqmL20XVXFwBg7QOzRASSsDJFaxndssPso+uu9tH92b8BowSyPc/iZtEAAAAASUVORK5CYII=
 // @license        MIT
  
@@ -156,8 +156,8 @@
         ["Image", "image", true],
         ["Shopping", "shopping", true],
         ["News", "news", true],
-        ["Download", "download", false],
         ["Other", "mine", false],
+        ["Placeholder", "download", false],
       ],
       engineList: engineList,
     };
@@ -535,7 +535,7 @@
         this.settingButtonElement?.addEventListener("click", () =>
           this.#activateSettingButton()
         );
-        GM_registerMenuCommand("设置菜单", () => this.#activateSettingButton());
+        GM_registerMenuCommand("Settings", () => this.#activateSettingButton());
       }
       #addButtonToJumpBar() {
         if (this.settingData.setBtnOpacity >= 0) {
@@ -1176,7 +1176,6 @@
  
         var btnStr2 =
           "<div>" +
-          "<span id='xin-reset' title='Be careful. This option resets settings'>Reset</span>" +
           "<span id='xin-modification' title='Share or delete configuration file'>Configuration file</span>" +
           // "<span id='xin-importing' title='importing 导入更为专业的搜索引擎'>导入</span>" +
           "<span id='xin-selectSearch' title='Only non-search pages will take effect, Requires to refresh the page'>" +
@@ -1194,7 +1193,7 @@
           foldlist_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='iqxin-fixedTopS' title='Dev Note I am not sure what this option is supposed to accomplish.'>" +
+          "<span id='iqxin-fixedTopS' title='Dev note I am not sure what exactly this option is supposed to accomplish.'>" +
           "<label>pin to top<input id='iqxin-fixedTop' type='checkbox' name='' " +
           fixedTop_checked +
           " style='vertical-align:middle;'></label>" +
@@ -1209,7 +1208,7 @@
           HideTheSameLink_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-setBtnOpacity' title='Set button transparency, Requires to refresh the page'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
+          "<span id='xin-setBtnOpacity' title='Setting button transparency, Requires to refresh the page'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
           (settingData.setBtnOpacity < 0
             ? -settingData.setBtnOpacity
             : settingData.setBtnOpacity) +
@@ -1254,6 +1253,7 @@
           "</select>" +
           "</span> " +
           "<span id='xin-addDel' title='Add new or remove existing searches'>Add / Delete</span> " +
+          "<span id='xin-reset' title='Be careful. This option resets settings'>Reset</span>" +
           "<span id='moreSet' title='More settings'>Settings</span>" +
           "<span id='xin-save' title='Save & Close'>Save & Close</span>" +
           "</div>";
@@ -1267,13 +1267,41 @@
           "height:16px;width:97%;position:absolute;top:0;cursor:move;";
         this.ele.appendChild(dragDom);
  
-        // 增加搜索列表
         var nSearchList = document.createElement("div");
+
+        // Set the id for the created div element
         nSearchList.id = "nSearchList";
-        nSearchList.style.cssText =
-          "visibility:hidden;opacity:0;transition:0.3s;position:absolute;bottom:10%;right:5%;padding:5px 10px;border-radius:4px;border:1px solid #EC6D51;color:#ec6d51;cursor:pointer;background:#fff;";
+        
+        // Set the inner HTML content
         nSearchList.innerHTML = "new list";
+        
+        // Append the div element to a parent element (assuming `this.ele` is the parent element)
         this.ele.appendChild(nSearchList);
+        
+        // Add CSS styles to the created div element
+        nSearchList.style.visibility = "hidden";
+        nSearchList.style.opacity = "0";
+        nSearchList.style.transition = "all 0.3s ease 0s";
+        nSearchList.style.position = "absolute";
+        nSearchList.style.bottom = "17%";
+        nSearchList.style.right = "2%";
+        nSearchList.style.padding = "6px 10px";
+        nSearchList.style.borderRadius = "4px";
+        nSearchList.style.border = "1px solid rgb(255, 0, 2)";
+        nSearchList.style.color = "rgb(255, 255, 255)";
+        nSearchList.style.cursor = "pointer";
+        nSearchList.style.background = "rgb(255, 0, 1)";
+        
+        // Add hover animation through JavaScript
+        nSearchList.addEventListener("mouseenter", function() {
+          nSearchList.style.background = "rgb(255, 255, 255)";
+          nSearchList.style.color = "rgb(255, 0, 1)";
+        });
+        
+        nSearchList.addEventListener("mouseleave", function() {
+          nSearchList.style.color = "rgb(255, 255, 255)";
+          nSearchList.style.background = "rgb(255, 0, 1)";
+        });
  
         // 关闭按钮
         if (settingData.closeBtn) {
@@ -1396,7 +1424,7 @@
              </span>
              <br/><br/>
              <span><a target='_blank' style='color:#999;' href='https://github.com/KParthSingh/SearchEngineJumpPlus'>Instructions</a></span>
-             &nbsp;&nbsp;&nbsp&nbsp&nbsp&nbsp&nbsp;
+             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
              <button id='addItemBoxEnter' class='addItemBoxEnter addItemBoxBtn iqxin-enterBtn'>Save</button>&nbsp;&nbsp;&nbsp&nbsp&nbsp;&nbsp
              <button id='addItemBoxCancel' class='addItemBoxCancel addItemBoxBtn iqxin-closeBtn'>Close</button>`;
  
@@ -1815,17 +1843,48 @@
             "but incorrect settings can cause the script to fail to run." +
             "</p>" +
             "<textarea wrap='off' cols='45' rows='20' style='overflow:auto;border-radius:4px;'>" +
-            JSON.stringify(userSetting, false, 4) +
+            JSON.stringify(userSetting, null, 4) +
             "</textarea>" +
             "<br>" +
             "<button id='xin-reset'>Reset</button> &nbsp;&nbsp;&nbsp;" +
             "<button id='xin-copyCode'>Copy</button> &nbsp;&nbsp;&nbsp;" +
             "<button id='codeboxclose' class='iqxin-closeBtn'>Close</button> &nbsp;&nbsp;&nbsp;" +
-            "<button id='xin-codeboxsave' class='iqxin-enterBtn'>Save</button>" +
-            "";
+            "<button id='xin-codeboxsave' class='iqxin-enterBtn'>Save</button> &nbsp;&nbsp;&nbsp;" +
+            "<button id='exportJson'>Export</button>"; // Include Export button
         editbox.innerHTML = innerH;
+    
+        // Attach exportConfig function to the Export button
+        editbox.querySelector('#exportJson').addEventListener('click', function () {
+            var jsonData = JSON.stringify(userSetting, null, 4);
+            var blob = new Blob([jsonData], { type: "application/json" });
+            var url = URL.createObjectURL(blob);
+    
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = "SEjumpbar.txt";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
+    
         this.ele.appendChild(editbox);
-    }    
+    }
+      editCodeBoxSave() {
+        var codevalue = document.querySelector(
+          "#iqxin-editCodeBox textarea"
+        ).value;
+        if (codevalue) {
+          GM_setValue("searchEngineJumpData", JSON.parse(codevalue));
+          // 刷新页面
+          setTimeout(function () {
+            location.reload();
+          }, 300);
+        } else {
+          // alert("输入为空");
+          this.reset();
+        }
+      }
       editCodeBoxClose() {
         var box = document.querySelector("#iqxin-editCodeBox");
         if (box) {
@@ -1863,8 +1922,8 @@
         var target = e.target;
         target.dataset.xin = -parseInt(target.dataset.xin);
         target.dataset.xin > 0
-          ? this.showPopUp("启用")
-          : this.showPopUp("禁用");
+          ? this.showPopUp("Enabled")
+          : this.showPopUp("Disabled");
       }
       // 点击事件   此处的 if 需要根据实际情况替换成 elseif (switch)
       domClick(e) {
@@ -1893,8 +1952,8 @@
             ? ""
             : "true";
           e.target.dataset.iqxindisabled
-            ? this.showPopUp("禁用")
-            : this.showPopUp("启用");
+            ? this.showPopUp("Disabled")
+            : this.showPopUp("Enabled");
         }
         if (~targetClass.indexOf("addItemBoxCancel")) {
           this.addItemBoxRemove();
@@ -1940,7 +1999,7 @@
           this.editCodeBoxSave();
         } else if (targetid === "xin-copyCode") {
           GM_setClipboard(JSON.stringify(settingData, false, 4));
-          this.showPopUp("复制成功");
+          this.showPopUp("Copied successfully");
         }
  
         //  点击更多菜单
@@ -2134,7 +2193,7 @@
         });
  
         mainLogic();
-        this.showPopUp("保存成功");
+        this.showPopUp("Saved");
       }
  
       // 设置按钮透明度设置
