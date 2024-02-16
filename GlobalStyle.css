@@ -459,7 +459,7 @@ span#setBtn:hover {
   position: relative;
   z-index: 2;
   padding: 0;
-  font-size: 13px;
+  font-size: 14px;
   font-family: sans-serif;
   transform-origin: top center;
   animation: sejopen 0.2s;
@@ -477,6 +477,12 @@ span#setBtn:hover {
   flex-wrap: wrap;
   justify-content: center;
   user-select: none;
+}
+/* Apply hover animation only to icons */
+#sej-container .sej-engine-icon:hover {
+  animation-name: sejrotate; /* Apply the new rotation animation on icon hover */
+  animation-duration: 0.3s; /* Duration for the rotation animation */
+  animation-timing-function: ease-in-out; /* Timing function for the animation */
 }
 /* 给用户的提示 */
 #iqixn-global-tip {
