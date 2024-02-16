@@ -1,16 +1,16 @@
 // ==UserScript==
-// @name           SearchEngine JumpBar
-// @author         NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改) & KParthSingh
+// @name           SearchEngineJumpPlus International
+// @author         KParthSingh & NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改)
 // @contributor    KParthSingh
 // @description    This is like a International version of original chinese SearchEngineJumpPlus by https://github.com/MUTED64/SearchEngineJumpPlus
-// @version        1.01
+// @version        1.1
  
 // @namespace      https://greasyfork.org/en/scripts/484068-searchenginejumpplus/
 // @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
 // @require        https://greasyfork.org/scripts/408009-togbk/code/toGBK.js?version=832799
-// @require        https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/Alpha/engineList.js
+// @require        https://gist.githubusercontent.com/KParthSingh/8d0b575a1e6c966472b0f7c792c6bd09/raw/85456f3db321db7d446a0540dbf688e402688c7c/gistfile1.txt
 // @require        https://update.greasyfork.org/scripts/484072/1307338/RulesForSearchEngineJumpPlus.js
-// @resource       GLOBAL_STYLE https://raw.githubusercontent.com/KParthSingh/SearchEngineJumpPlus/master/GlobalStyle.css
+// @resource       GLOBAL_STYLE https://gist.githubusercontent.com/KParthSingh/720d29fbfcbfa7188a55c0c6da61edba/raw/365ddd78adb7830677c0b72e1eba7b744a16f84c/gistfile1.txt
 // @icon           data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAFSElEQVR4nMWXX4hdVxXGf2vfe89kJg61ia0DYzMTMWnoQ0FJtKmtJsFixT8DBSmYtGMLgq0PCqMEKwmxYzSGyUPBB7XRNi0FC6JtwYovgcS0klJD8SHakoExYhLQFkwn9/aeOfv7fDi3SStJ5o4muN4O7L32b33rz94H/s8WS10cvR3yVQaY++wnkESkwDK2sMy1EwXDtzRRziBhu+dGDG48smSA5kUP//wmAFIkrNwiGMOsBzYAQwTzEEeBY8BJO1fYtF+4laGPv/i/Afz1C1sAYwngZiKmsDcDI0DrHUtL4DRwMGAmUnVcCtpHPsrQbS/1DZDe+VFHblKziIjYBjwD3Iu5ARBwBjgJnAkwMAa+z+ZZqXEX8VZg0T784aUDzH3uk0DtVQvlVsMjwGpMB3gauAu8ieB2YDPwxR5gF/gQ+MeoNUFzACI4d+imvgDOp0BVRWo2AW62eRi8wvY/wNtrgGhDL+7a/gIcBLYBu4HrsPdSzr8K/JlcLk2BaCQstSxN2VptuYO93an7WES0UyORGg1Wfu0QKivyQhfb56yhn4B3Ynew1kD1oDTfJF20vi8NYBvjMVubbWHrOdtPhwaAYPVvfs8Hf1u32bJbDtXVbgFvAj4AOgTGzhPhGMdV/wCvbtmAJSyttzRiuWv7CdttAlY/f/iimwdvfQGiAfmtczg/jnOJ8/txtRbnvgAu6FSPtg1AC3wGPAvgWGRYqiSowLwC1Ru4GoFyFPc3ZM8DfGPLB1jZXlhe74sS6AAc+O6vL+tg6LaX2LP/SSA6tkpcYeee36/0D/C7Ve9BwZs97iLMEMDAE5N07z1wSQebvl/y3KkAGDIUsrHpRp8ACeDGw38kZdPMPtrILhvZ1yZ5TZJxvnwuW40GzSSaDa1vJq1oJXVbKZ9qpv5qoO6Cqr5ULB+zfNrygOX7LS+PlCgeu+eimz/1w0yWaTTScIqYTEERcDoiXovFauddAAA22CeRDyKD/Bnkbd32PNgUj09S/GwrUMt+x14hiWVFI1LEVyPidggi4hfOnuv3nr8AEGC5sj1j+4TtAcu7i4HlDwLLqRawMmtmnidn6JYLGIa7C/mbwHeAgYATQexPjVCVxcZd7SUACDCEfRyznXoMr8Sawf4lcDdwI7AKWAdss/0r2dOyr6kFpCn7hiyPRlDY5mM7z10W4F1KFT+/p6ZwDkgT2HuN19Tz3yXWG+NnJ8uR9h0FSStSRAFBwAmbpu3xbP/T9rzkp2zvtt2RzcvfG15EAaC8/8m6FkgmpWdsTyD/COtv9esnj1haZXvEtiXP2d5jc6es+3qHv8/2uO1v2d4hedA2H/n2vxZX4LwS+78E1PcDqprAOPZao9Gxs5PNkc6dXUKnIuI1Z8+lRijLo8AR2+OWqeeBS8n7bE8bd2x4Zc97FwcAaP307vqyiXi7QzBi7OyXGel8GkJEBAFUWUREIXlnL/LCvgBheZ9h2lLHyvxp5rrFAZZiG3e16zliBm3vsD0lu6i5ja0awppWrjrKmeOPjAL/UQP/rf1h11BPJHckT/dkL+vDjeXC0pRy3qGcB22x9oHZKwcAcPTh5UimzrWnexGXlrCFlAvlakq5eiiX3eLtSXnFAABe3j1c/0PgTp1z77NUKmesjHMulKuttq9X/eq+sgAAx35wTZ0OqWNrWqr2KVelqoqcF3DOL1r5dStfHQCoW03K9ApuWrnam/PCnHN+StZDRHSK1jLgCnXBpeymr/8dS+SFbmH7eiu/TkQnNRrkqmL20XVXFwBg7QOzRASSsDJFaxndssPso+uu9tH92b8BowSyPc/iZtEAAAAASUVORK5CYII=
 // @license        MIT
  
@@ -1176,7 +1176,6 @@
  
         var btnStr2 =
           "<div>" +
-          "<span id='xin-reset' title='Be careful. This option resets settings'>Reset</span>" +
           "<span id='xin-modification' title='Share or delete configuration file'>Configuration file</span>" +
           // "<span id='xin-importing' title='importing 导入更为专业的搜索引擎'>导入</span>" +
           "<span id='xin-selectSearch' title='Only non-search pages will take effect, Requires to refresh the page'>" +
@@ -1194,7 +1193,7 @@
           foldlist_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='iqxin-fixedTopS' title='Dev Note I am not sure what this option is supposed to accomplish.'>" +
+          "<span id='iqxin-fixedTopS' title='Dev note I am not sure what exactly this option is supposed to accomplish.'>" +
           "<label>pin to top<input id='iqxin-fixedTop' type='checkbox' name='' " +
           fixedTop_checked +
           " style='vertical-align:middle;'></label>" +
@@ -1209,7 +1208,7 @@
           HideTheSameLink_checked +
           " style='vertical-align:middle;'></label>" +
           "</span>" +
-          "<span id='xin-setBtnOpacity' title='Set button transparency, Requires to refresh the page'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
+          "<span id='xin-setBtnOpacity' title='Setting button transparency, Requires to refresh the page'>Transparency<input type='range' step='0.05'  min='0' max='1' value='" +
           (settingData.setBtnOpacity < 0
             ? -settingData.setBtnOpacity
             : settingData.setBtnOpacity) +
@@ -1254,6 +1253,7 @@
           "</select>" +
           "</span> " +
           "<span id='xin-addDel' title='Add new or remove existing searches'>Add / Delete</span> " +
+          "<span id='xin-reset' title='Be careful. This option resets settings'>Reset</span>" +
           "<span id='moreSet' title='More settings'>Settings</span>" +
           "<span id='xin-save' title='Save & Close'>Save & Close</span>" +
           "</div>";
@@ -1850,7 +1850,7 @@
             "<button id='xin-copyCode'>Copy</button> &nbsp;&nbsp;&nbsp;" +
             "<button id='codeboxclose' class='iqxin-closeBtn'>Close</button> &nbsp;&nbsp;&nbsp;" +
             "<button id='xin-codeboxsave' class='iqxin-enterBtn'>Save</button> &nbsp;&nbsp;&nbsp;" +
-            "<button id='exportJson'>Export JSON</button>"; // Include Export button
+            "<button id='exportJson'>Export</button>"; // Include Export button
         editbox.innerHTML = innerH;
     
         // Attach exportConfig function to the Export button
@@ -2193,7 +2193,7 @@
         });
  
         mainLogic();
-        this.showPopUp("保存成功");
+        this.showPopUp("Saved");
       }
  
       // 设置按钮透明度设置

@@ -1,8 +1,7 @@
 /* ==UserStyle==
-@name           SearchEngineJumpPlusGlobalStyle
-@description    SearchEngineJumpPlus Global style
-@version        1.01
-@namespace      https://greasyfork.org/en/scripts/484068-searchenginejumpplus/
+@name           SearchEngineJumpBarGlobalStyle
+@description    SearchEngineJumpBar Global style
+@version        2.0
 @license        MIT
 @author         KParthSingh
 ==/UserStyle== */
@@ -299,16 +298,20 @@ span.iqxin-additem.iqxin-set-active {
 }
 #newSearchListBox input:focus,
 #newSearchBox input:focus {
-  background: var(--background-active-enable-qxin); /* Default theme background color for focused input */
-  transition: 0.5s; /* Transition effect */
+  background: #ffffff; /* Default theme background color for focused input */
 }
-
+#newSearchBox input {
+  background: #EBEBEB;
+}
 /* Apply dark theme colors for focused input boxes when the dark mode is active */
 body[qxintheme="dark"] #newSearchListBox input:focus,
 body[qxintheme="dark"] #newSearchBox input:focus {
-  background: var(--background-active-disable-qxin); /* Dark theme background color for focused input */
-  /* Add other styles for dark mode */
+  background: #292929; /* Dark theme background color for focused input */
 }
+body[qxintheme="dark"] #newSearchBox input {
+  background: #474747;
+}
+#iqxin-editCodeBox button,
 .addItemBoxBtn {
   cursor: pointer;
   background: #fff;
@@ -339,18 +342,20 @@ body[qxintheme="dark"] #newSearchBox input:focus {
 .iqxin-enterBtn {
   box-sizing: border-box;
 }
+#codeboxclose:hover,
+#xin-reset:hover,
 .iqxin-closeBtn:hover {
   background: #ff6565;
   border-color: #ff6565;
   color: #fff;
 }
+#xin-copyCode:hover,
+#xin-codeboxsave:hover,
+#exportJson:hover,
 .iqxin-enterBtn:hover {
   background: #84bb84;
   border-color: #84bb84;
   color: #fff;
-}
-#iqxin-editCodeBox button {
-  cursor: pointer;
 }
 #xin-close {
   background: white;
@@ -364,7 +369,7 @@ body[qxintheme="dark"] #newSearchBox input:focus {
   padding: 10px;
   border: 3px solid #3abdc1;
   border-radius: 50%;
-  transition: 0.5s;
+  transition: 0.2s;
   top: -20px;
   right: -20px;
   position: absolute;
@@ -439,7 +444,14 @@ input#setBtnOpacityRange[type="range"]::-webkit-slider-thumb {
 }
 span#setBtn:hover {
   opacity: 1;
-  background-color: var(--background-hover-color-qxin);
+  background-color: var(--glass-hover-color);
+}
+#setBtn svg {
+  transition: transform 0.1s ease-in-out;
+}
+/* Apply the rotation when hovering */
+#setBtn:hover svg {
+  transform: rotate(-35deg); /* Adjust the angle as desired */
 }
 #sej-container {
   display: flex;
@@ -457,7 +469,8 @@ span#setBtn:hover {
   width: max-content !important;
   border-radius: 8px;
   border-width: thin;
-  border-color: var(--glass-border-color);
+  border-style: solid;
+  border-color: var(--border-color-sej);
   overflow: hidden;
   box-shadow: 0 0 0.6em var(--box-shadow-color-sej);
   height: fit-content;
@@ -546,6 +559,16 @@ body[qxintheme="dark"] {
   text-decoration: none !important;
   color: var(--glass-font-color) !important;
   cursor: pointer;
+  transition: transform 0.1s ease-out;
+}
+.sej-engine-icon {
+  width: 15px;
+  margin: 0;
+  transition: transform 0.1s ease-out; /* Transition for icon */
+}
+/* Animation specifically for icons */
+.sej-engine:hover .sej-engine-icon {
+  transform: scale(1.15); /* Adjust the scale as desired */
 }
 .sej-drop-list a:visited,
 .sej-drop-list a:hover,
@@ -558,14 +581,11 @@ body[qxintheme="dark"] {
 }
 .sej-engine:hover {
   background-color: var(--glass-hover-color);
+  transform: scale(1.04);
 }
 .sej-drop-list > .sej-engine {
   display: flex;
   justify-content: flex-start;
-}
-.sej-engine-icon {
-  width: 16px;
-  margin: 0;
 }
 .sej-drop-list {
   position: absolute;
@@ -583,7 +603,7 @@ body[qxintheme="dark"] {
   overflow: hidden;
   border-radius: 8px;
   border-width: thin;
-  border-color: var(--glass-border-color);
+  border-color: var(--border-color-sej);
   user-select: none;
 }
 @keyframes sejopen {
