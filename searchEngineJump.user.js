@@ -3,7 +3,7 @@
 // @author         KParthSingh & NLF & 锐经(修改) & iqxin(修改) & MUTED64(修改)
 // @contributor    KParthSingh
 // @description    This is like a International version of original chinese SearchEngineJumpPlus by https://github.com/MUTED64/SearchEngineJumpPlus
-// @version        1.1
+// @version        1.2
  
 // @namespace      https://greasyfork.org/en/scripts/484068-searchenginejumpplus/
 // @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
@@ -2387,6 +2387,11 @@
         GM_addStyle(style);
       }
       isDarkMode() {
+        if (document.documentElement.hasAttribute("dark")) return true;
+        if (window.location.hostname.includes("spotify.com")) return true;
+        if (document.documentElement.classList.contains("theme-dark")) return true;
+
+
         function getContrastYIQ(rgbColor) {
           let r, g, b, a;
           rgbColor = rgbColor.match(/rgba?\(([^)]+)\)/)[1];
