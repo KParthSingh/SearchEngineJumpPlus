@@ -34,12 +34,8 @@ At the end of the jump bar there is a settings button, click on it to enter the 
 
 ![Settings](Screenshots/Settings.png)
 
-## Current release 1.1
-- What's new
-  - Changed the position of reset button to the upper list
-  - Gave Jumpbar a sexy glassy look
-  - Added a hover effect that makes Jumpbar items stand out
-  - Added a rotating to the setting icon when hovered over
-  - Refreshed 15 logos
+## Current release 1.2
+
 - fixes
-  - Made the buttons in configuration menu design consistent
+  - dark detection of Youtube, Reddit and Spotify was previously not working.
+  - Subtle icons updates.
