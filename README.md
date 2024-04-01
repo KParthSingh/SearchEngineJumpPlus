@@ -18,7 +18,7 @@ Once the script is enabled in the Script Manager, the jump bar will appear on su
 
 ### Crossword Search
 
-When you visit other pages which don't support the search box, the script will enable the search function by default, when you use the mouse to scratch the words on the page, a small bar will pop up at the top of the page, then you can click the button to jump to the corresponding search engine, and automatically perform a quick one-click search according to the content of the current search words.
+When you visit other pages which don't support the search box, the script will enable the search function by default, when you select words on the page, a small bar will pop up at the top of the page, then you can click the button to jump to the corresponding search engine, and automatically perform a quick one-click search according to the content of the current search words.
 
 ![SelectSearch](Screenshots/SelectSearch.png)
 
