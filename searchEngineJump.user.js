@@ -6,7 +6,7 @@
 // @version        1.2
  
 // @namespace      https://greasyfork.org/en/scripts/484068-searchenginejumpplus/
-// @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus/
+// @homepage       https://github.com/KParthSingh/SearchEngineJumpPlus-International
 // @require        https://greasyfork.org/scripts/408009-togbk/code/toGBK.js?version=832799
 // @require        https://gist.githubusercontent.com/KParthSingh/8d0b575a1e6c966472b0f7c792c6bd09/raw/85456f3db321db7d446a0540dbf688e402688c7c/gistfile1.txt
 // @require        https://update.greasyfork.org/scripts/484072/1307338/RulesForSearchEngineJumpPlus.js
@@ -2389,8 +2389,9 @@
       isDarkMode() {
         if (document.documentElement.hasAttribute("dark")) return true;
         if (window.location.hostname.includes("spotify.com")) return true;
+        if (window.location.hostname.includes("discord.com")) return true;
         if (document.documentElement.classList.contains("theme-dark")) return true;
-
+        if (window.matchMedia('(color-scheme: light)').matches) return false;
 
         function getContrastYIQ(rgbColor) {
           let r, g, b, a;
