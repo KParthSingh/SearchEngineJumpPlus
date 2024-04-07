@@ -34,8 +34,9 @@ At the end of the jump bar there is a settings button, click on it to enter the 
 
 ![Settings](Screenshots/Settings.png)
 
-## Current release 1.2
+## Current release 1.3
 
 - fixes
-  - dark detection of Youtube, Reddit and Spotify was previously not working.
-  - Subtle icons updates.
+  - Fixed theme detection for discord and twitter
+  - Updated youtube icon
+  - Some host changes
