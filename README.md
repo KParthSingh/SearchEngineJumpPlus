@@ -8,7 +8,6 @@
 SearchEngineJumpPlus-International is the international version of the [original SearchEngineJumpPlus](https://github.com/MUTED64/SearchEngineJumpPlus) It's a fork based on version 5.31.15. Originally created in Chinese for Chinese users, I have translated it into English. Additionally, I've added new websites relevant to international users and removed several Chinese ones.
 
 This script works best with the [Select Text Inside a Link Like Opera script](https://greasyfork.org/en/scripts/789-select-text-inside-a-link-like-opera).
-## install
 
 ## Features
 
