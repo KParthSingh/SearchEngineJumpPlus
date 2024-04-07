@@ -3,14 +3,14 @@
 <a href='https://github.com/KParthSingh/SearchEngineJumpPlus/raw/master/searchEngineJump.user.js'><img src='https://github.com/Rise-Software/Rise-Media-Player/assets/74561130/60deb402-0c8e-4579-80e6-69cb7b19cd43'alt='Get it from GitHub' />
 </div>
 
-# Description
+## Description
 
 SearchEngineJumpPlus-International is the international version of the [original SearchEngineJumpPlus](https://github.com/MUTED64/SearchEngineJumpPlus) It's a fork based on version 5.31.15. Originally created in Chinese for Chinese users, I have translated it into English. Additionally, I've added new websites relevant to international users and removed several Chinese ones.
 
 This script works best with the [Select Text Inside a Link Like Opera script](https://greasyfork.org/en/scripts/789-select-text-inside-a-link-like-opera).
-# install
+## install
 
-# Features
+## Features
 
 ### Jump Search Page
 Once the script is enabled in the Script Manager, the jump bar will appear on supported search pages, allowing you to quickly jump to the appropriate search engine and perform a one-click search based on the current search box contents.
