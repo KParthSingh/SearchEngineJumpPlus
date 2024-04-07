@@ -1,3 +1,11 @@
+/* ==UserStyle==
+@name           EngineListForSearchEngineJumpPlusInt
+@description    SearchEngineJumpPlusInt Engine List
+@version        1
+@license        MIT
+@author         KParthSingh
+==/UserStyle== */
+
 const searchEngineJumpPlusEngines = {
   web: [
     {
