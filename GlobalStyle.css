@@ -519,7 +519,7 @@ body {
   --box-shadow-color-sej: hsla(0, 0%, 0%, 7%);
   --border-color-sej: #e1e6ea;
 
-  --glass-background: rgba(255, 255, 255, 0.5);
+  --glass-background: rgba(255, 255, 255, 0.65);
   --glass-font-color: #000000;
   --glass-border-color: rgba(255, 255, 255, 0.5);
   --glass-hover-color: rgba(80, 80, 80, 0.1);
@@ -537,7 +537,7 @@ body[qxintheme="dark"] {
   --box-shadow-color-sej: hsla(0, 0%, 70%, 10%);
   --border-color-sej: #3b4547;
 
-  --glass-background: rgba(40, 40, 40, 0.5);
+  --glass-background: rgba(40, 40, 40, 0.7);
   --glass-font-color: #ffffff;
   --glass-border-color: rgba(40, 40, 40, 0.41);
   --glass-hover-color: rgba(255, 255, 255, 0.1);
