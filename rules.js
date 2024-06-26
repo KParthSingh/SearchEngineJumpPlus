@@ -1,30 +1,30 @@
 /*
-  把搜索引擎工具栏插入到指定网站的规则
+   Rules for inserting the search engine toolbar into a specified website
 
-  name: 字符串，要加载的网站名称，方便查找
-  enabled: 布尔，是否启用
-  url: 正则表达式，用于匹配网址
-  engineList: 字符串，搜索引擎类型，可选值['web','music','video','image','download','shopping','translate','knowledge','sociality']
-  class: 字符串，添加一个class, 用来使用目标网站的样式
-  fixedTop: 数字，可选，固定在顶部的高度，单位 px
-  style: CSS样式，可选，自定义样式
-  style_ACBaidu: CSS样式，可选，自定义样式，在强制居中模式下启用，兼容 AC_Baidu 脚本
-  style_ZhihuChenglinzhi: CSS样式，可选，自定义样式，在强制居中模式下启用，兼容知乎排版优化脚本
-  insertIntoDoc: 对象，插入文档相关
-    target: 字符串，选中插入到原网页时所用的定位元素
-      可以使用 xpath 匹配，如: '//*[@id="subform_ctrl"]'
-      或者可以使用 css 匹配（需要加上 'css;' 的前缀），如: 'css;#subform_ctrl'
-      或传入一个函数并使用返回值来选中，如: () => document.querySelector('#subform_ctrl')
-    keyword: 字符串或函数，选中获取搜索框
-      可以使用 xpath 选中一个 form input 元素
-      或者可以使用 css 选中 input 元素（需要加上 'css;' 的前缀）
-      或传入一个函数并使用返回值来选中 input 元素
-    where: 字符串，插入到目标元素的位置,可选值['beforeBegin','afterBegin','beforeEnd','afterEnd']
-      'beforeBegin'(插入到给定元素的前面)
-      'afterBegin'(作为给定元素的第一个子元素)
-      'beforeEnd' (作为给定元素的最后一个子元素)
-      'afterEnd'(插入到给定元素的后面);
-  stylish: CSS样式，可选，修改原网页样式以适应搜索引擎跳转工具栏
+   name: string, the name of the website to be loaded, easy to find
+   enabled: Boolean, whether to enable
+   url: regular expression, used to match URLs
+   engineList: string, search engine type, optional value ['web','music','video','image','download','shopping','translate','knowledge','sociality']
+   class: string, add a class to use the style of the target website
+   fixedTop: number, optional, fixed height at the top, unit px
+   style: CSS style, optional, custom style
+   style_ACBaidu: CSS style, optional, custom style, enabled in forced center mode, compatible with AC_Baidu script
+   style_ZhihuChenglinzhi: CSS style, optional, custom style, enabled in forced centering mode, compatible with Zhihu layout optimization script
+   insertIntoDoc: object, related to inserting documents
+     target: string, select the positioning element used when inserting into the original web page
+       You can use xpath matching, such as: '//*[@id="subform_ctrl"]'
+       Or you can use css matching (need to be prefixed with 'css;'), such as: 'css;#subform_ctrl'
+       Or pass in a function and use the return value to select, such as: () => document.querySelector('#subform_ctrl')
+     keyword: string or function, select the get search box
+       You can use xpath to select a form input element
+       Or you can use css to select the input element (need to be prefixed with 'css;')
+       Or pass in a function and use the return value to select the input element
+     where: string, inserted into the position of the target element, optional value ['beforeBegin', 'afterBegin', 'beforeEnd', 'afterEnd']
+       'beforeBegin'(insert before the given element)
+       'afterBegin' (as the first child element of the given element)
+       'beforeEnd' (as the last child element of the given element)
+       'afterEnd'(insert after the given element);
+   stylish: CSS style, optional, modify the original web page style to adapt to the search engine jump toolbar
 */
 
 const webRules = [
