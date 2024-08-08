@@ -1,4 +1,7 @@
 ## Update history
+- Release 1.02
+  - Google translator link fixed
+  - Improved small visuals
 
 - Release 1.01
   - Added dark/light theme are implemented in addItemBox, addEditBox and addSearchListBox
