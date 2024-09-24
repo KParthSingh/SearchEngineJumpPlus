@@ -128,7 +128,7 @@ const webRules = [
     engineList: "web",
     style: `
       margin-top: 1em;
-      left: 160px;
+      left: 190px;
       position: sticky;
       top: 0.5em;
     `,
